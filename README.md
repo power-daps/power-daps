@@ -1,0 +1,119 @@
+# Say Hello to Jam!
+
+## Installation
+On a Mac: `brew install jam`
+
+On CentOS or Redhat: `yum install jam`
+
+On Ubuntu or Debian: `apt-get install jam`
+
+## Usage
+
+### Creating something new
+
+`jam create suite`
+
+`jam create app <app-name>`
+
+`jam create data-source <app-name>/<data-source-name>[:<data-source-type>]` where `<data-source-type>` is `postgres`, `mysql`, `oracle`, `mongodb`, `cassandra`, `csv-fetch` etc.
+
+### Working with existing application suites
+
+The basic structure for using Jam is: `jam <target>`. This will run all preceding targets in the chain, unless you tell it to only run that target by running `jam only <target>`. Only targets that need to run will run unless you force it by running `jam force <target>`. If you only want to force one target, run `jam force only <target>`.
+
+
+The following targets are provided by default for Java development:
+
+1. `deps`: Resolve, download and verify dependencies.
+2. `compile`: Compile application and test code for compiled languages.
+3. `unit-test`: Run unit tests.
+4. `package`: Package the jar or the war or the pip or the gem or the rpm or the docker image.
+5. `deploy`: Spin up necessary environment, and deploy the necessary components and apps.
+6. `functional-test`: Run functional tests on the deployed app.
+
+
+
+## Appendix
+
+Complete target tree:
+
+* `all` or `default` or if you omit a target
+   * `deps`
+      * `resolve-deps`
+      * `download-deps`
+      * `verify-deps`
+   * `validate`
+   * `compile`
+      * `compile-app`
+      * `compile-test`
+   * `unit-test`
+   * `package` or `jar` or `war`
+   * `deploy`
+      * `deploy-machines`
+         * `check-machines`
+         * `stop-machines`
+         * `clean-machines`
+         * `start-machines`
+      * `deploy-dependencies`
+      * `load-data`
+         * `check-data-stores`
+         * `clean-data-stores`
+         * `create-schema`
+         * `populate-data`
+         * `migrate-schema`
+         * `migrate-data`
+   * `component-test`
+   * `contract-test`
+   * `integration-test`
+   * `functional-test`
+
+
+### Details of what happens when creating a new application suite
+
+Create a new suite by running `jam create suite [dir]`. This will create the following directory structure in the current directory or the specified directory:
+
+* `apps`
+* `bin`
+* `dashboard`
+* `env`
+* `test`
+   * `integration-test`
+   * `functional-test`
+
+### Details of what happens when creating a new application in the current suite
+
+`jam create app <name>` will create the following structure under the `<name>` directory under `apps`:
+
+* `config`
+ * `identity`
+* `data`
+ * `sources`
+     * `sample-rdbms`
+         * `schema-migrations`
+             * `000-initial-schema.sql`
+         * `data-migrations`
+             * `000-000-initial-data.sql`
+* `src`
+* `test`
+     * `unit-test`
+     * `component-test`
+     * `contract-test`
+
+
+### Creating a data source for an app
+
+`jam create data-source <app-name>/<data-source-name>[:<data-source-type>]` where `<data-source-type>` is `postgres`, `mysql`, `oracle`, `mongodb`, `cassandra`, `csv-fetch` etc.
+
+`csv-fetch` will allow you to setup a periodic sftp download of CSV files from multiple sources and load them into a particular location accessible to the application.
+
+
+
+
+
+
+
+
+
+
+
+
