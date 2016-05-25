@@ -1,11 +1,11 @@
-# Daps from Dap!
+# Power Daps
 
 ## Installation
-On a Mac: `brew install dap`
+On a Mac: `brew install power-daps`
 
-On CentOS or Redhat: `yum install dap`
+On CentOS or Redhat: `yum install power-daps`
 
-On Ubuntu or Debian: `apt-get install dap`
+On Ubuntu or Debian: `apt-get install power-daps`
 
 ## Usage
 
