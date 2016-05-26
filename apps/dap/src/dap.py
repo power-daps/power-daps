@@ -9,14 +9,11 @@ if actions_dir not in sys.path:
      sys.path.insert(0, actions_dir)
 
 import actions
-from actions import unit_test_action
-
-def run_action(action):
-    unit_test_action.run()
+from actions import unit_test_action, deps_action
 
 def main(argv):
-    run_action("test")
-
+    deps_action.run()
+    unit_test_action.run()
 
 if __name__ == '__main__':
     main(sys.argv[1:])

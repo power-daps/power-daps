@@ -6,7 +6,8 @@ verbose = False
 
 def run_command( command ):
     exit_code = 0
-    print_verbose("Running command " + str(command))
+    output = ""
+    print_info("Running command " + str(command))
     try:
         output = str(subprocess.check_output(command))
         if not output:
