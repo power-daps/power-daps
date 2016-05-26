@@ -12,13 +12,13 @@ if src_dir not in sys.path:
 if actions_dir not in sys.path:
     sys.path.insert(0, actions_dir)
 
-import common, run_test
+import common, unit_test_action
 
 class TestRunTestAction(unittest.TestCase):
   def test_run(self):
     common.run_command = MagicMock()
     command = ['/usr/local/bin/python3', '-m', 'unittest', 'test/*.py', 'test/**/*.py']
-    run_test.run()
+    unit_test_action.run()
     assert common.run_command.called
 
 if __name__ == '__main__':
