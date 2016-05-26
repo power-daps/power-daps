@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sys, getopt, subprocess
+import os, sys, getopt, subprocess
 
 verbose = False
 
@@ -41,6 +41,8 @@ def print_verbose_no_eol(verbose_info):
     if verbose == True:
         print_info_no_eol(verbose_info)
 
+def meta_model():
+    return os.getenv("POWER_DAPS_META_MODEL", "power-daps/python3")
 
 if __name__ == '__main__':
     print_error("This module " + __file__ + " cannot be run as a stand alone command")

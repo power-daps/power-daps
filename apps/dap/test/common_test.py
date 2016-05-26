@@ -16,5 +16,12 @@ class TestCommon(unittest.TestCase):
     common.print_info(s)
     common.print_raw.assert_called_with('INFO: hello world')
 
+  def test_meta_model(self):
+    s = 'blah'
+    os.getenv = MagicMock(return_value = s)
+
+    assert common.meta_model() == s
+    os.getenv.assert_called_with("POWER_DAPS_META_MODEL", "power-daps/python3")
+
 if __name__ == '__main__':
     unittest.main()
