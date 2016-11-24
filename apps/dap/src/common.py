@@ -75,8 +75,11 @@ def meta_model():
       saved_meta_model = os.getenv("POWER_DAPS_META_MODEL", "power-daps/python3")
     return saved_meta_model
 
+def power_daps_dir():
+    return os.path.dirname(os.path.abspath(__file__)) + "/../../../"
+
 def app_dir():
-    return "/Users/ppendse/src/power-daps/apps/dap/"
+    return power_daps_dir() + "apps/dap/"
 
 def actions_dir():
     ret_val = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../meta-models/" + meta_model() + "/src")))

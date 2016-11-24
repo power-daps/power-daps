@@ -19,7 +19,7 @@ class TestPackageAction(unittest.TestCase):
     common.run_command = MagicMock()
     command = [common.app_dir() + "deps/bin/pyinstaller",
                         "--noconfirm", "--log-level=WARN",
-                        "dap.spec"]
+                        common.power_daps_dir() + "dap.spec"]
     package_action.run()
     common.run_command.assert_called_with(command)
 
