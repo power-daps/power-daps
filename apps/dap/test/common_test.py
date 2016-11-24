@@ -17,24 +17,25 @@ class TestCommon(unittest.TestCase):
     common.print_raw.assert_called_with('INFO: hello world')
 
   def test_meta_model(self):
+    common.set_meta_model(None)
     s = 'blah'
     os.getenv = MagicMock(return_value = s)
 
-    assert common.meta_model() == s
+    self.assertEqual(common.meta_model(), s)
     os.getenv.assert_called_with("POWER_DAPS_META_MODEL", "power-daps/python3")
 
-  # def test_stop_if_failed(self):
-    # orig_exit = sys.exit
-    # sys.exit = MagicMock()
-    # # continue when there are no failures
-    # common.stop_if_failed() # assume success
-    # common.stop_if_failed(common.SUCCESS)
-    # common.stop_if_failed(common.SUCCESS, "abcd")
+  def test_stop_if_failed(self):
+    orig_exit = sys.exit
+    sys.exit = MagicMock()
+    # continue when there are no failures
+    common.stop_if_failed() # assume success
+    common.stop_if_failed(common.SUCCESS)
+    common.stop_if_failed(common.SUCCESS, "abcd")
 
-    # # exit if failed
-    # common.stop_if_failed(common.FAILED, "error string")
-    # sys.exit.assert_called_with(common.FAILED)
-    # sys.exit = orig_exit
+    # exit if failed
+    common.stop_if_failed(common.FAILED, "error string")
+    sys.exit.assert_called_with(common.FAILED)
+    sys.exit = orig_exit
 
   def test_continue_if_failed(self):
     # continue when there are no failures

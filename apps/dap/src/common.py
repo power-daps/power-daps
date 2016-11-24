@@ -6,6 +6,7 @@ verbose = False
 FAILED = 1
 SUCCESS = 0
 saved_exit_code = SUCCESS
+saved_meta_model = None
 
 def run_command( command ):
     subprocess_exit_code = SUCCESS
@@ -58,15 +59,21 @@ def stop_if_failed(subprocess_exit_code=SUCCESS, error_message=""):
 
 def continue_if_failed(subprocess_exit_code=SUCCESS, error_message=""):
     global saved_exit_code
-    print_info("HELLO!!! " + str(subprocess_exit_code))
     if(subprocess_exit_code != SUCCESS):
         saved_exit_code = FAILED
 
 def exit_code():
     return saved_exit_code
 
+def set_meta_model(meta_model):
+    global saved_meta_model
+    saved_meta_model = meta_model
+
 def meta_model():
-    return os.getenv("POWER_DAPS_META_MODEL", "power-daps/python3")
+    global saved_meta_model
+    if(saved_meta_model == None):
+      saved_meta_model = os.getenv("POWER_DAPS_META_MODEL", "power-daps/python3")
+    return saved_meta_model
 
 def app_dir():
     return "/Users/ppendse/src/power-daps/apps/dap/"
