@@ -18,11 +18,7 @@ class TestPackageAction(unittest.TestCase):
   def test_run(self):
     common.run_command = MagicMock()
     command = [common.app_dir() + "deps/bin/pyinstaller",
-                        "--noconfirm", "--log-level=WARN",
-                        "--onefile", "--nowindow",
-                        "--paths=apps/meta-models/power-daps/python3/src",
-                        "--hidden-import=actions",
-                        "apps/dap/src/dap.py"]
+                        "--noconfirm", "dap.spec"]
     package_action.run()
     common.run_command.assert_called_with(command)
 
