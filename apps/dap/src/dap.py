@@ -3,12 +3,13 @@
 import common
 import os, sys, inspect, importlib
 
-actions_dir = common.actions_dir()
-if actions_dir not in sys.path:
-     sys.path.insert(0, actions_dir)
-
 def main(meta_model=None, actions=["default"]):
     common.set_meta_model(meta_model)
+
+    actions_dir = common.actions_dir()
+    if actions_dir not in sys.path:
+      sys.path.insert(0, actions_dir)
+
     for action in actions:
       action_module = importlib.import_module("actions." + action + "_action")
       common.stop_if_failed(*action_module.run())

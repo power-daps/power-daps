@@ -23,7 +23,7 @@ class TestDap(unittest.TestCase):
     unit_test_action.run = MagicMock()
     package_action.run = MagicMock()
 
-    dap.main(["blah"])
+    dap.main(None, ["default"])
 
     deps_action.run.assert_called_with()
     unit_test_action.run.assert_called_with()
