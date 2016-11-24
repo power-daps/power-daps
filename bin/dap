@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
 
-. apps/dap/config/setenv.sh
-python3 apps/dap/src/dap.py $@
+python3 `dirname $0`/../apps/dap/src/dap.py $@
 exit $?
