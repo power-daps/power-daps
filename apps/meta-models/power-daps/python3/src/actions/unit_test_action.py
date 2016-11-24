@@ -7,4 +7,4 @@ def run():
         tests.append(filename)
     command = ['/usr/local/bin/python3', '-m', 'unittest']
     command.extend(tests)
-    common.run_command(command)
+    return common.run_command(command)

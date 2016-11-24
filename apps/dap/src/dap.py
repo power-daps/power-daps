@@ -11,10 +11,10 @@ import actions
 from actions import deps_action, unit_test_action, package_action
 
 def main(argv):
-    deps_action.run()
-    unit_test_action.run()
-    package_action.run()
-
+    common.stop_if_failed(*deps_action.run())
+    common.stop_if_failed(*unit_test_action.run())
+    common.stop_if_failed(*package_action.run())
 
 if __name__ == '__main__':
     main(sys.argv[1:])
+    sys.exit(common.exit_code())
