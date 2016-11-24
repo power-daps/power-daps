@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os, sys, getopt, subprocess
+import os, sys, getopt, subprocess, inspect
 
 verbose = False
 
@@ -9,8 +9,8 @@ def run_command( command ):
     output = ""
     print_info("Running command " + str(command))
     try:
-        output = str(subprocess.check_output(command))
-        if not output:
+        output = subprocess.check_output(command).decode("utf-8")
+        if output:
             print_info(output)
     except subprocess.CalledProcessError as e:
         exit_code = e.returncode
@@ -44,6 +44,13 @@ def print_verbose_no_eol(verbose_info):
 
 def meta_model():
     return os.getenv("POWER_DAPS_META_MODEL", "power-daps/python3")
+
+def app_dir():
+    return "/Users/ppendse/src/power-daps/apps/dap/"
+
+def actions_dir():
+    ret_val = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../meta-models/" + meta_model() + "/src")))
+    return ret_val
 
 if __name__ == '__main__':
     print_error("This module " + __file__ + " cannot be run as a stand alone command")
