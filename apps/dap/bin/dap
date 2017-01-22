@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
-python3 `dirname $0`/../src/dap.py $@
+`dirname $0`/../deps/bin/python3 `dirname $0`/../src/dap.py $@
 exit $?
