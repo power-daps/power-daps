@@ -9,7 +9,9 @@ On Ubuntu or Debian: `apt-get install power-daps`
 
 ## Usage
 
-### Creating something new
+### As a suite of tools
+
+#### Creating something new
 
 `dap create suite`
 
@@ -17,7 +19,7 @@ On Ubuntu or Debian: `apt-get install power-daps`
 
 `dap create data-source <app-name>/<data-source-name>[:<data-source-type>]` where `<data-source-type>` is `postgres`, `mysql`, `oracle`, `mongodb`, `cassandra`, `csv-fetch` etc.
 
-### Working with existing application suites
+#### Working with existing application suites
 
 The basic structure for using dap is: `dap <target>`. This will run all preceding targets in the chain, unless you tell it to only run that target by running `dap only <target>`. Only targets that need to run will run unless you force it by running `dap force <target>`. If you only want to force one target, run `dap force only <target>`.
 
@@ -31,7 +33,17 @@ The following targets are provided by default for Java development:
 5. `deploy`: Spin up necessary environment, and deploy the necessary components and apps.
 6. `functional-test`: Run functional tests on the deployed app.
 
+### As stand-alone tools
 
+Each Power Daps target comes as a stand-alone command:
+
+1. `dap-create`
+2. `dap-deps`
+3. `dap-compile`
+4. `dap-unit-test`
+5. `dap-package`
+6. `dap-deploy`
+7. `dap-functional-test`
 
 ## Appendix
 
