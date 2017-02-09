@@ -21,7 +21,9 @@ if __name__ == '__main__':
     parser.add_argument("-m", "--meta-model", dest="meta_model",
                         default="power-daps/python3",
                         help="Use the specified meta-model. Defaults to 'power-daps/python3'")
-    parser.add_argument("action", help="List of actions to run. Defaults to 'default' for the given meta-model", default=["default"], nargs="*")
+    parser.add_argument("action",
+        help="List of actions to run. Defaults to 'default' for the given meta-model",
+        default=["default"], nargs="*")
 
     args = parser.parse_args()
 

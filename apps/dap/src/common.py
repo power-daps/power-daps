@@ -11,6 +11,7 @@ saved_meta_model = None
 def run_command( command ):
     subprocess_exit_code = SUCCESS
     output = ""
+
     print_info("Running command " + str(command))
     try:
         output = subprocess.check_output(command).decode("utf-8")
@@ -28,10 +29,8 @@ def run_command( command ):
           print_error(output)
     return subprocess_exit_code, output
 
-
 def print_warning(warning):
     print_raw("WARNING: " + warning)
-
 
 def print_error(error):
     print_raw("ERROR: " + error)
