@@ -13,7 +13,8 @@ class UnitTestAction():
       original_working_directory = os.getcwd()
   
       run_directory = os.path.join(original_working_directory, str(test_dir))
-      common.print_info("Changing directory to " + str(run_directory))
+      common.print_info("Running tests in " + str(run_directory))
+      common.print_verbose("Changing directory to " + str(run_directory))
       os.chdir(run_directory)
   
       tests = []
@@ -26,7 +27,7 @@ class UnitTestAction():
         exit_code = common.FAILED 
       common.continue_if_failed(subprocess_exit_code, output)
   
-      common.print_info("Changing directory to " + str(original_working_directory))
+      common.print_verbose("Changing directory to " + str(original_working_directory))
       os.chdir(original_working_directory) 
     
     return exit_code, ""

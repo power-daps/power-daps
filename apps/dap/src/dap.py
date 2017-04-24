@@ -6,6 +6,7 @@ import common
 from meta_model import MetaModel
 
 def main(log_level="info", meta_model_name="power-daps/python3", actions_to_run=["default"]):
+    common.set_log_level(log_level)
     meta_model = MetaModel(meta_model_name)
     common.set_meta_model(meta_model_name)
 

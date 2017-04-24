@@ -12,7 +12,7 @@ def run_command( command ):
     subprocess_exit_code = SUCCESS
     output = ""
 
-    print_info("Running command " + str(command))
+    print_verbose("Running command " + str(command))
     try:
         output = subprocess.check_output(command).decode("utf-8")
         if output:
@@ -50,11 +50,11 @@ def print_info_no_eol(info):
 
 def print_verbose(verbose_info):
     if(log_level == "verbose"):
-        print_info(verbose_info)
+        print_raw("VERBOSE: " + verbose_info)
 
 def print_verbose_no_eol(verbose_info):
     if(log_level == "verbose"):
-        print_info_no_eol(verbose_info)
+        sys.stdout.write(verbose_info)
 
 def stop_if_failed(subprocess_exit_code=SUCCESS, error_message=""):
     if(subprocess_exit_code != SUCCESS):
