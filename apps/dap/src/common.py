@@ -2,7 +2,7 @@
 
 import os, sys, getopt, subprocess, inspect
 
-verbose = False
+log_level = "info"
 FAILED = 1
 SUCCESS = 0
 saved_exit_code = SUCCESS
@@ -30,13 +30,17 @@ def run_command( command ):
     return subprocess_exit_code, output
 
 def print_warning(warning):
-    print_raw("WARNING: " + warning)
+    global log_level
+    if(log_level == "verbose" or log_level == "info" or log_level == "warning"):
+       print_raw("WARNING: " + warning)
 
 def print_error(error):
-    print_raw("ERROR: " + error)
+    if(log_level == "verbose" or log_level == "info" or log_level == "warning" or log_level == "error"):
+      print_raw("ERROR: " + error)
 
 def print_info(info):
-    print_raw("INFO: " + info)
+    if(log_level == "verbose" or log_level == "info"):
+      print_raw("INFO: " + info)
 
 def print_raw(s):
     print(s)
@@ -45,11 +49,11 @@ def print_info_no_eol(info):
     sys.stdout.write(info)
 
 def print_verbose(verbose_info):
-    if verbose == True:
+    if(log_level == "verbose"):
         print_info(verbose_info)
 
 def print_verbose_no_eol(verbose_info):
-    if verbose == True:
+    if(log_level == "verbose"):
         print_info_no_eol(verbose_info)
 
 def stop_if_failed(subprocess_exit_code=SUCCESS, error_message=""):
@@ -63,6 +67,10 @@ def continue_if_failed(subprocess_exit_code=SUCCESS, error_message=""):
 
 def exit_code():
     return saved_exit_code
+
+def set_log_level(log_level_to_set):
+    global log_level
+    log_level = log_level_to_set
 
 def set_meta_model(meta_model):
     global saved_meta_model

@@ -2,7 +2,13 @@ import os
 import common
 import glob
 
-def run():
+class DepsAction():
+  name = "deps"
+
+  def __init__(self):
+    return
+ 
+  def run(self):
     common.stop_if_failed(*common.run_command(['/usr/local/bin/pip3', 'install', 'pyinstaller']))
     try:
         os.mkdir(common.app_dir() + "deps/bin")
@@ -10,3 +16,6 @@ def run():
     except FileExistsError:
         common.print_verbose("File already exists")
     return 0, ""
+
+def action():
+   return DepsAction()

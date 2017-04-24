@@ -15,9 +15,9 @@ import common, dap
 from actions import unit_test_action, deps_action, package_action, default_action
 
 dap_command_path = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../../../../bin/dap")))
-dap_create = [dap_command_path, "--meta-model", "power-daps/java8", "create"]
-dap_default = [dap_command_path, "--meta-model", "power-daps/java8"]
-dap_run = [dap_command_path, "--meta-model", "power-daps/java8", "run"]
+dap_create = [dap_command_path, "--quiet", "--meta-model", "power-daps/java8", "create"]
+dap_default = [dap_command_path, "--quiet", "--meta-model", "power-daps/java8"]
+dap_run = [dap_command_path, "--quiet", "--meta-model", "power-daps/java8", "run"]
 
 class TestMetaModel(unittest.TestCase):
   def test_create(self):
@@ -41,7 +41,7 @@ class TestMetaModel(unittest.TestCase):
     unit_test_action.run = MagicMock()
     package_action.run = MagicMock()
 
-    dap.main("power-daps/java8", ["default"])
+    dap.main("error", "power-daps/java8", ["default"])
 
     deps_action.run.assert_called_with()
     unit_test_action.run.assert_called_with()

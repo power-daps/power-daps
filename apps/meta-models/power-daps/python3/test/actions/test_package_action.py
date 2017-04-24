@@ -24,7 +24,7 @@ class TestPackageAction(unittest.TestCase):
     command = [common.app_dir() + "deps/bin/pyinstaller",
                         "--noconfirm", "--log-level=WARN",
                         common.power_daps_dir() + "dap.spec"]
-    package_action.run()
+    package_action.action().run()
     common.run_command.assert_called_with(command)
 
 if __name__ == '__main__':

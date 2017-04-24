@@ -22,7 +22,7 @@ class TestDepsAction(unittest.TestCase):
   def test_run(self):
     common.run_command = MagicMock()
     command = ['/usr/local/bin/pip3', 'install', 'pyinstaller']
-    deps_action.run()
+    deps_action.action().run()
     common.run_command.assert_called_with(command)
 
 if __name__ == '__main__':

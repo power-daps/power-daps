@@ -22,7 +22,7 @@ class TestRunTestAction(unittest.TestCase):
   def test_run(self):
     glob.iglob = MagicMock(return_value = ["../test"])
     common.run_command = MagicMock(return_value = (0, ""))
-    unit_test_action.run()
+    unit_test_action.action().run()
     assert common.run_command.called
 
 if __name__ == '__main__':

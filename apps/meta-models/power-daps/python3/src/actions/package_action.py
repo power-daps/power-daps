@@ -2,7 +2,13 @@ import os
 import common
 import glob
 
-def run():
+class PackageAction():
+  name = "package"
+
+  def __init__(self):
+    return
+
+  def run(self):
     common.stop_if_failed(*common.run_command(["/bin/rm", "-rf", "dist/dap"]))
     return common.run_command([common.app_dir() + "deps/bin/pyinstaller",
                         "--noconfirm", "--log-level=WARN",
@@ -16,4 +22,6 @@ def run():
                         #"--hidden-import=actions.default_action",
                         #"apps/dap/src/dap.py"])
 
+def action():
+   return PackageAction()
 

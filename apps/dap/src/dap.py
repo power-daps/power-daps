@@ -1,23 +1,33 @@
 #!/usr/bin/env python
 
-import common
 import os, sys, inspect, importlib
 
-def main(meta_model=None, actions=["default"]):
-    common.set_meta_model(meta_model)
+import common
+from meta_model import MetaModel
 
-    actions_dir = common.actions_dir()
-    if actions_dir not in sys.path:
-      sys.path.insert(0, actions_dir)
+def main(log_level="info", meta_model_name="power-daps/python3", actions_to_run=["default"]):
+    meta_model = MetaModel(meta_model_name)
+    common.set_meta_model(meta_model_name)
 
-    for action in actions:
-      action_module = importlib.import_module("actions." + action + "_action")
-      common.stop_if_failed(*action_module.run())
+    valid_actions = meta_model.actions()
+
+    # actions_dir = common.actions_dir()
+    # if actions_dir not in sys.path:
+      # sys.path.insert(0, actions_dir)
+
+    for action_to_run in actions_to_run:
+      for valid_action in valid_actions:
+        if valid_action.name == action_to_run:
+          action_module = importlib.import_module("actions." + valid_action.name + "_action")
+          common.stop_if_failed(*action_module.run())
 
 if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser(description="dap")
+    parser.add_argument("-q", "--quiet", dest="log_level",
+                        default="info", action="store_const",
+                        const="error")
     parser.add_argument("-m", "--meta-model", dest="meta_model",
                         default="power-daps/python3",
                         help="Use the specified meta-model. Defaults to 'power-daps/python3'")
@@ -27,5 +37,5 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    main(args.meta_model, args.action)
+    main(args.log_level, args.meta_model, args.action)
     sys.exit(common.exit_code())
