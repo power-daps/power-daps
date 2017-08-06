@@ -1,23 +1,17 @@
 import os
 import common
+import dap_action
 from actions import deps_action, unit_test_action, package_action
 
 class DefaultAction():
   name = "default"
-  
-  def __init__(self):
-    return
     
   def run(self):
-    common.print_raw("blueee!!!")
+    for action_name in ["deps", "unit_test", "package"]:
+      dap_action.run(action_name)
+    return 0, ""
    
 def action():
    return DefaultAction()
 
-def run():
-    common.stop_if_failed(*deps_action.run())
-    common.stop_if_failed(*unit_test_action.run())
-    common.stop_if_failed(*package_action.run())
-
-    return 0, ""
 

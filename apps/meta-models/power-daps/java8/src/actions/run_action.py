@@ -8,11 +8,8 @@ class RunAction():
     return
     
   def run(self):
-    common.print_raw("blueee!!!")
+    common.print_raw("Hello World!")
+    return 0, ""
    
 def action():
    return RunAction()
-
-def run():
-  print('Hello World!')
-  return 0, ""

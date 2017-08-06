@@ -9,7 +9,8 @@ class RunAction():
 
   def run(self):
     common.print_raw("blueee!!!")
-
+    return 0, ""
+    
 def action():
    return RunAction()
 

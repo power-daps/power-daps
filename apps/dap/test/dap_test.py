@@ -16,23 +16,53 @@ if actions_dir not in sys.path:
 
 import dap
 from actions import default_action, deps_action
+from unittest.mock import patch
+
+
 
 class TestDap(unittest.TestCase):
-  def test_main_runs_action_in_the_right_order(self):
-    default_action.run = MagicMock()
+  def test_main_gets_action_in_the_right_order(self):
+    with patch('actions.default_action.action'):
+      default_action.action = MagicMock()
 
-    dap.main("error", "power-daps/python3", ["default"])
+      dap.main("error", "power-daps/python3", ["default"])
 
-    default_action.run.assert_called_with()
+      default_action.action.assert_called_with()
+
+  def test_main_gets_and_runs_action(self):
+    with patch('actions.default_action.action'):
+      action = self.mock_default_action()
+    
+      dap.main("error", "power-daps/python3", ["default"])
+
+      action.run.assert_called_with()
 
   def test_main_runs_only_the_specified_action(self):
-    deps_action.run = MagicMock()
-    default_action.run = MagicMock()
+    with patch('actions.default_action.action'):
+      with patch('actions.deps_action.action'):
+        deps_action = self.mock_deps_action()
+        default_action = self.mock_default_action()
+        
+        dap.main("error", "power-daps/python3", ["deps"])
+        
+        deps_action.run.assert_called_with()
+        default_action.run.assert_not_called()
 
-    dap.main("error", "power-daps/python3", ["deps"])
 
-    deps_action.run.assert_called_with()
-    default_action.run.assert_not_called()
+  def mock_default_action(self):
+    action = default_action.DefaultAction()
+    action.run = MagicMock()
+    default_action.action = MagicMock()
+    default_action.action.return_value = action
+    return action
 
+
+  def mock_deps_action(self):
+    action = deps_action.DepsAction()
+    action.run = MagicMock()
+    deps_action.action = MagicMock()
+    deps_action.action.return_value = action
+    return action
+    
 if __name__ == '__main__':
     unittest.main()

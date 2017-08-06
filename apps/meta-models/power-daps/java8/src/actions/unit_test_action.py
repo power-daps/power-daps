@@ -8,10 +8,7 @@ class UnitTestAction():
     return
     
   def run(self):
-    common.print_raw("blueee!!!")
+    return 0, ""
    
 def action():
    return UnitTestAction()
-
-def run():
-  return 0, ""

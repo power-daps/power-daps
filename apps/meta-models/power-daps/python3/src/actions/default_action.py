@@ -8,17 +8,13 @@ class DefaultAction():
     return
 
   def run(self):
-    common.print_raw("blueee!!!")
-
-def action():
-   return DefaultAction()
-
-def run():
     common.stop_if_failed(*deps_action.action().run())
     common.stop_if_failed(*unit_test_action.action().run())
     common.stop_if_failed(*package_action.action().run())
-
     return 0, ""
+
+def action():
+   return DefaultAction()
 
 def print_actions():
     actions = dict()

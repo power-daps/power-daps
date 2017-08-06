@@ -2,7 +2,7 @@
 
 import os, sys, inspect, importlib
 
-import common
+import common, dap_action
 from meta_model import MetaModel
 
 def main(log_level="info", meta_model_name="power-daps/python3", actions_to_run=["default"]):
@@ -12,15 +12,10 @@ def main(log_level="info", meta_model_name="power-daps/python3", actions_to_run=
 
     valid_actions = meta_model.actions()
 
-    # actions_dir = common.actions_dir()
-    # if actions_dir not in sys.path:
-      # sys.path.insert(0, actions_dir)
-
     for action_to_run in actions_to_run:
       for valid_action in valid_actions:
         if valid_action.name == action_to_run:
-          action_module = importlib.import_module("actions." + valid_action.name + "_action")
-          common.stop_if_failed(*action_module.run())
+          dap_action.run(valid_action.name)
 
 if __name__ == '__main__':
     import argparse

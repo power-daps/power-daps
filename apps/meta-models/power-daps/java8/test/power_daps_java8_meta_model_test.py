@@ -11,7 +11,7 @@ if common_dir not in sys.path:
 if src_dir not in sys.path:
      sys.path.insert(0, src_dir)
 
-import common, dap
+import common, dap, dap_action
 from actions import unit_test_action, deps_action, package_action, default_action
 
 dap_command_path = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../../../../bin/dap")))
@@ -35,19 +35,14 @@ class TestMetaModel(unittest.TestCase):
     exit_code, output = common.run_command(dap_run)
     self.assertEqual(exit_code, 0)
     self.assertEqual(output, "Hello World!\n")
+
+  def test_default_runs_default(self):
+    dap_action.run = MagicMock()
   
-  def test_default_runs_the_right_actions(self):
-    deps_action.run = MagicMock()
-    unit_test_action.run = MagicMock()
-    package_action.run = MagicMock()
-
     dap.main("error", "power-daps/java8", ["default"])
+  
+    dap_action.run.assert_called_with("default")
 
-    deps_action.run.assert_called_with()
-    unit_test_action.run.assert_called_with()
-    package_action.run.assert_called_with()
-
-    
 
 if __name__ == '__main__':
   unittest.main()
