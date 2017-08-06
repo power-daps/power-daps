@@ -10,7 +10,6 @@ class DefaultAction():
   def run(self):
     common.stop_if_failed(*deps_action.action().run())
     common.stop_if_failed(*unit_test_action.action().run())
-    common.stop_if_failed(*package_action.action().run())
     return 0, ""
 
 def action():
