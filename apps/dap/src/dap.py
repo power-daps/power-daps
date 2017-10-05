@@ -21,9 +21,12 @@ if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser(description="dap")
+    parser.add_argument("-v", "--verbose", dest="log_level",
+                        default="info", action="store_const",
+                        const="verbose", help="Verbose output")
     parser.add_argument("-q", "--quiet", dest="log_level",
                         default="info", action="store_const",
-                        const="error")
+                        const="error", help="Quiet output. Only errors will be written out.")
     parser.add_argument("-m", "--meta-model", dest="meta_model",
                         default="power-daps/python3",
                         help="Use the specified meta-model. Defaults to 'power-daps/python3'")

@@ -25,7 +25,7 @@ class MetaModel:
 
 
   def actions_dir(self):
-    return os.path.realpath(
+    ret_val = os.path.realpath(
       os.path.abspath(
         os.path.join(
           os.path.split(
@@ -33,6 +33,7 @@ class MetaModel:
               inspect.currentframe()
             ))[0],
           "../../meta-models/" + self.name() + "/src")))
+    return ret_val
 
   def actions(self):
     return self.load_actions_from_dir(self.actions_dir())
