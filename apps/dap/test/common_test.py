@@ -11,6 +11,7 @@ import common
 
 class TestCommon(unittest.TestCase):
   def test_print_info(self):
+    common.set_log_level("info")
     common.print_raw = MagicMock()
     s = 'hello world'
     common.print_info(s)

@@ -18,10 +18,16 @@ if actions_dir not in sys.path:
 
 import common, deps_action
 
+def Any(cls):
+    class Any(cls):
+        def __eq__(self, other):
+            return True
+    return Any()
+
 class TestDepsAction(unittest.TestCase):
   def test_run(self):
     common.run_command = MagicMock()
-    command = ['/usr/local/bin/pip3', '-q', 'install', 'pyinstaller']
+    command = ['/usr/local/bin/pip3', '-q', 'install', Any(str)]
     deps_action.action().run()
     common.run_command.assert_called_with(command)
 
