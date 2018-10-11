@@ -1,0 +1,9 @@
+package:
+  pyinstaller:
+    version: latest
+    installer: pip3
+
+run:
+  pyparsing:
+    version: latest
+    installer: pip3
