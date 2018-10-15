@@ -1,4 +1,33 @@
 #!/usr/bin/env sh
 
+which python3 > /dev/null
+if [ $? -ne 0 ]; then
+  echo "Python 3 not found."
+
+  if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    # ...
+    echo "Please install python3"
+  elif [[ "$OSTYPE" == "darwin"* ]]; then
+    # Mac OSX
+    echo "Installing with brew"      
+    `dirname $0`/brew install python3
+  elif [[ "$OSTYPE" == "cygwin" ]]; then
+    # POSIX compatibility layer and Linux environment emulation for Windows
+    echo "Please install python3"
+  elif [[ "$OSTYPE" == "msys" ]]; then
+    # Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
+    echo "Please install python3"
+  elif [[ "$OSTYPE" == "win32" ]]; then
+    # I'm not sure this can happen.
+    echo "Please install python3"
+  elif [[ "$OSTYPE" == "freebsd"* ]]; then
+    # ...
+    echo "Please install python3"
+  else
+    # Unknown.
+    echo "Please install python3"
+  fi
+fi
+
 python3 $@
 

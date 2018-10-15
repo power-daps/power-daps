@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+which brew > /dev/null
+if [ $? -eq 0 ]; then
+  brew $@
+else
+  echo "Homebrew not found."
+fi
+
