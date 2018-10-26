@@ -11,6 +11,7 @@ class DepsAction():
   def run(self):
     common.stop_if_failed(*common.run_command(['/usr/local/bin/pip3', '-q', 'install', 'pyinstaller']))
     common.stop_if_failed(*common.run_command(['/usr/local/bin/pip3', '-q', 'install', 'pyparsing']))
+    common.stop_if_failed(*common.run_command(['/usr/local/bin/pip3', '-q', 'install', 'pyyaml']))
     return 0, ""
 
 def action():

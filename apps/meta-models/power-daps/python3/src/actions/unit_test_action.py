@@ -24,7 +24,8 @@ class UnitTestAction():
       command.extend(tests)
       subprocess_exit_code, output = common.run_command(command)
       if subprocess_exit_code != common.SUCCESS:
-        exit_code = common.FAILED 
+        exit_code = common.FAILED
+      common.print_verbose(output)
       common.continue_if_failed(subprocess_exit_code, output)
   
       common.print_verbose("Changing directory to " + str(original_working_directory))

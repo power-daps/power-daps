@@ -1,12 +1,21 @@
+import yaml
+import common
 
 class Dependencies():
   def __init__(self, dapfile_contents):
+    self.dapfile_contents = dapfile_contents
+    self.dependencies = dict()
+    for stage in yaml.load(self.dapfile_contents).items():
+      if not stage[0] in self.dependencies:
+        self.dependencies[stage[0]] = list()
+
+      for dependency in stage[1].items():
+        self.dependencies[stage[0]].append(Dependency(name=dependency[0], version=dependency[1]["version"], installer=dependency[1]["installer"]))
+
     return
 
   def dependencies_for(self, stage_name):
-    dependencies = list()
-    dependencies.append(Dependency(name="a", version="latest", installer="blah"))
-    return dependencies
+    return self.dependencies[stage_name]
 
 class Dependency():
   def __init__(self, name, version, installer):
