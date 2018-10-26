@@ -42,5 +42,6 @@ a_stage:
     expected_dependency_b = dependencies.Dependency(name = 'b_dep', version = 'latest', installer = 'pip3')
     deps = dependencies.Dependencies(dapfile_contents)
 
-    # self.assertEqual(deps.dependencies_for('a_stage')[0].version, "blah")
     self.assertCountEqual(deps.dependencies_for('a_stage'), [expected_dependency_a, expected_dependency_b])
+    self.assertEqual(deps.dependencies_for('a_stage')[0].version, "1.2")
+    self.assertEqual(deps.dependencies_for('a_stage')[1].version, "latest")
