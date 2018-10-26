@@ -45,3 +45,32 @@ a_stage:
     self.assertCountEqual(deps.dependencies_for('a_stage'), [expected_dependency_a, expected_dependency_b])
     self.assertEqual(deps.dependencies_for('a_stage')[0].version, "1.2")
     self.assertEqual(deps.dependencies_for('a_stage')[1].version, "latest")
+
+
+  def test_turns_content_of_dapfile_into_multiple_dependencies_for_multiple_stages(self):
+    dapfile_contents = """
+a_stage:
+  a_dep:
+    version: '1.2'
+    installer: 'pip3'
+
+  b_dep:
+    version: 'latest'
+    installer: 'pip3'
+
+b_stage:
+  c_dep:
+    version: 'c_version'
+    installer: 'pip3'
+
+  d_dep:
+    version: 'd_version'
+    installer: 'pip3'
+    """
+
+    deps = dependencies.Dependencies(dapfile_contents)
+
+    self.assertEqual(deps.dependencies_for('a_stage')[0].version, "1.2")
+    self.assertEqual(deps.dependencies_for('a_stage')[1].version, "latest")
+    self.assertEqual(deps.dependencies_for('b_stage')[0].version, "c_version")
+    self.assertEqual(deps.dependencies_for('b_stage')[1].version, "d_version")
