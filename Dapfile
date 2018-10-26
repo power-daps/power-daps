@@ -1,9 +1,12 @@
-package:
+default:
   pyinstaller:
     version: latest
     installer: pip3
 
-run:
   pyparsing:
+    version: latest
+    installer: pip3
+
+  pyyaml:
     version: latest
     installer: pip3
