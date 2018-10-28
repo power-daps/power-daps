@@ -12,11 +12,11 @@ class DefaultAction():
 
   def run(self):
     deps = dict()
+
     with open(self.actions_file_location) as f:
       actions_file_contents = f.read()
       for stage in yaml.load(actions_file_contents).items():
         for action in stage[1]:
-          print(action)
           common.stop_if_failed(*self.action_for(action).run())
     f.closed
     return 0, ""
