@@ -111,6 +111,8 @@ def power_daps_dir():
 def app_dir():
     return power_daps_dir() + "apps/dap/"
 
+def dapfile_location():
+    return power_daps_dir() + "Dapfile"
 
 def actions_dir():
     ret_val = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../meta-models/" + meta_model() + "/src")))

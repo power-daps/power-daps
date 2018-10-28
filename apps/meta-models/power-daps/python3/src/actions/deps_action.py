@@ -5,7 +5,7 @@ import dependencies
 
 class DepsAction():
   name = "deps"
-  default_dapfile_location = "Dapfile"
+  default_dapfile_location = common.dapfile_location()
 
   def __init__(self, dapfile_location = ""):
     self.set_dapfile_location(dapfile_location)
