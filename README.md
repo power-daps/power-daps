@@ -119,6 +119,11 @@ Create a new suite by running `dap create suite [dir]`. This will create the fol
 `csv-fetch` will allow you to setup a periodic sftp download of CSV files from multiple sources and load them into a particular location accessible to the application.
 
 
+## License
+Power Daps is released under [GNU Public License v3.0](http://www.gnu.org/licenses/gpl-3.0.txt)
+
+## Copyright
+Copyright &copy; 2016, Prasanna Pendse
 
 
 
