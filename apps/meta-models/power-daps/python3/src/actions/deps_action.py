@@ -5,17 +5,17 @@ import dependencies
 
 class DepsAction():
   name = "deps"
-  default_dapfile_location = common.dapfile_location()
+  default_dependencies_file_location = common.dependencies_file_location()
 
-  def __init__(self, dapfile_location = ""):
-    self.set_dapfile_location(dapfile_location)
+  def __init__(self, dependencies_file_location = ""):
+    self.set_dependencies_file_location(dependencies_file_location)
     return
  
   def run(self):
     deps = dict()
-    with open(self.dapfile_location) as f:
-      dapfile_contents = f.read()
-      deps = dependencies.Dependencies(dapfile_contents)
+    with open(self.dependencies_file_location) as f:
+      dependencies_file_contents = f.read()
+      deps = dependencies.Dependencies(dependencies_file_contents)
     f.closed
 
     for dep in deps.dependencies_for("default"):
@@ -23,11 +23,11 @@ class DepsAction():
 
     return 0, ""
 
-  def set_dapfile_location(self, dapfile_location):
-    if dapfile_location:
-      self.dapfile_location = dapfile_location
+  def set_dependencies_file_location(self, dependencies_file_location):
+    if dependencies_file_location:
+      self.dependencies_file_location = dependencies_file_location
     else:
-      self.dapfile_location = DepsAction.default_dapfile_location
+      self.dependencies_file_location = DepsAction.default_dependencies_file_location
 
   def install_command(self, dependency):
     installers = dict()
