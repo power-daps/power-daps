@@ -12,13 +12,12 @@ class DepsAction():
     return
  
   def run(self):
-    deps = dict()
     with open(self.dependencies_file_location) as f:
       dependencies_file_contents = f.read()
-      deps = dependencies.Dependencies(dependencies_file_contents)
+      self.deps = dependencies.Dependencies(dependencies_file_contents)
     f.closed
 
-    for dep in deps.dependencies_for("default"):
+    for dep in self.deps.dependencies_for("default"):
       common.stop_if_failed(*common.run_command(self.install_command(dep)))
 
     return 0, ""

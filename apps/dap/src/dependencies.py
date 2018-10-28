@@ -2,10 +2,10 @@ import yaml
 import common
 
 class Dependencies():
-  def __init__(self, dapfile_contents):
-    self.dapfile_contents = dapfile_contents
+  def __init__(self, dependencies_file_contents):
+    self.dependencies_file_contents = dependencies_file_contents
     self.dependencies = dict()
-    for stage in yaml.load(self.dapfile_contents).items():
+    for stage in yaml.load(self.dependencies_file_contents).items():
       if not stage[0] in self.dependencies:
         self.dependencies[stage[0]] = list()
 

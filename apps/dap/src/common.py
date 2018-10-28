@@ -114,6 +114,9 @@ def app_dir():
 def dependencies_file_location():
     return power_daps_dir() + "dependencies.yml"
 
+def actions_file_location():
+    return power_daps_dir() + "actions.yml"
+
 def actions_dir():
     ret_val = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../meta-models/" + meta_model() + "/src")))
     return ret_val
