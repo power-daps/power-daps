@@ -13,6 +13,7 @@ class DepsAction():
  
   def run(self):
     common.print_verbose("Running " + self.name + " action")
+
     self.deps = self.load_dependencies(self.dependencies_file_location)
 
     for dep in self.deps.dependencies_for("default"):

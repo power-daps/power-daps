@@ -36,7 +36,13 @@ class TestDepsAction(unittest.TestCase):
   def test_run_with_empty_dependencies_file(self):
     self.ensure_empty_dependencies_file()
     common.run_command = MagicMock()
-    command = ['/usr/local/bin/pip3', '-q', 'install', Any(str)]
+    deps_action.action().run()
+    assert not common.run_command.called
+    self.ensure_empty_dependencies_file()
+
+  def test_run_with_empty_default_dependencies_file(self):
+    self.ensure_empty_default_dependencies_file()
+    common.run_command = MagicMock()
     deps_action.action().run()
     assert not common.run_command.called
     self.ensure_empty_dependencies_file()
@@ -47,6 +53,11 @@ class TestDepsAction(unittest.TestCase):
   def ensure_default_dependencies_file(self):
     dependencies_file = open("dependencies.yml", 'w')
     dependencies_file.write("default:\n  pyyaml:\n    version: latest\n    installer: pip3\n")
+    dependencies_file.close()
+
+  def ensure_empty_default_dependencies_file(self):
+    dependencies_file = open("dependencies.yml", 'w')
+    dependencies_file.write("default:\n")
     dependencies_file.close()
 
 if __name__ == '__main__':

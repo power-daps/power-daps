@@ -11,11 +11,17 @@ class Dependencies():
       return
 
     for stage in dependencies_yaml.items():
-      if not stage[0] in self.dependencies:
-        self.dependencies[stage[0]] = list()
+      stage_name_from_yaml = stage[0]
 
-      for dependency in stage[1].items():
-        self.dependencies[stage[0]].append(Dependency(name=dependency[0], version=dependency[1]["version"], installer=dependency[1]["installer"]))
+      # No stages defined
+      if not stage_name_from_yaml in self.dependencies:
+        self.dependencies[stage_name_from_yaml] = list()
+
+      # Stage is defined but not dependencies listed for the stage
+      stage_dependencies_from_yaml = stage[1] if stage[1] else dict()
+
+      for dependency in stage_dependencies_from_yaml.items():
+        self.dependencies[stage_name_from_yaml].append(Dependency(name=dependency[0], version=dependency[1]["version"], installer=dependency[1]["installer"]))
 
     return
 
