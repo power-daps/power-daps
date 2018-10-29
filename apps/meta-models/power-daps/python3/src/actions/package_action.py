@@ -9,6 +9,7 @@ class PackageAction():
     return
 
   def run(self):
+    common.print_verbose("Running " + self.name + " action")
     common.stop_if_failed(*common.run_command(["/bin/rm", "-rf", "dist/dap"]))
     return common.run_command([self.pyinstaller(),
                         "--noconfirm", "--log-level=WARN",

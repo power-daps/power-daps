@@ -1,4 +1,9 @@
 #!/usr/bin/env sh
 
-`dirname $0`/../deps/bin/python3 `dirname $0`/../src/dap.py $@
+if [[ -z "${POWER_DAPS_HOME}" ]]; then
+  echo "Environment variable POWER_DAPS_HOME is not set. Please set it and try again"
+  exit 1
+fi
+
+${POWER_DAPS_HOME}/apps/dap/deps/bin/python3 ${POWER_DAPS_HOME}/apps/dap/src/dap.py $@
 exit $?

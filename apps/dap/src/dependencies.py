@@ -5,7 +5,12 @@ class Dependencies():
   def __init__(self, dependencies_file_contents):
     self.dependencies_file_contents = dependencies_file_contents
     self.dependencies = dict()
-    for stage in yaml.load(self.dependencies_file_contents).items():
+    dependencies_yaml = yaml.load(self.dependencies_file_contents)
+    if not dependencies_yaml:
+      common.print_verbose("No dependencies found")
+      return
+
+    for stage in dependencies_yaml.items():
       if not stage[0] in self.dependencies:
         self.dependencies[stage[0]] = list()
 
@@ -15,7 +20,7 @@ class Dependencies():
     return
 
   def dependencies_for(self, stage_name):
-    return self.dependencies[stage_name]
+    return self.dependencies.get(stage_name, list())
 
 class Dependency():
   def __init__(self, name, version, installer):

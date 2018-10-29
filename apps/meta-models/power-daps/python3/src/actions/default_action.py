@@ -11,6 +11,7 @@ class DefaultAction():
     return
 
   def run(self):
+    common.print_verbose("Running " + self.name + " action")
     deps = dict()
 
     with open(self.actions_file_location) as f:

@@ -112,7 +112,7 @@ def app_dir():
     return power_daps_dir() + "apps/dap/"
 
 def dependencies_file_location():
-    return power_daps_dir() + "dependencies.yml"
+    return os.getcwd() + "/dependencies.yml"
 
 def actions_file_location():
     return power_daps_dir() + "actions.yml"
