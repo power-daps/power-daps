@@ -15,6 +15,9 @@ class MetaModel:
     if os.path.isdir(dir) is not True:
       common.exit_with_error_message("Meta-model '" + self.name() + "' not found in '" + dir + "'")
 
+    elif os.path.isdir(os.path.join(dir, "actions")) is not True:
+      common.exit_with_error_message("Meta-model '" + self.name() + "' found but no actions found")
+
     if dir not in sys.path:
       sys.path.insert(0, dir)
 

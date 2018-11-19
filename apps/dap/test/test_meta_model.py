@@ -32,11 +32,21 @@ class TestMetaModel(unittest.TestCase):
       self.assertIs(type(action.run), type(self.test_can_actually_load_actions))
 
 
+  def test_non_existent_metamodel_fails_gracefully(self):
+    common.exit_with_error_message = self.assert_called_with_string_containing("Meta-model 'non-existent' not found")
+
+    meta_model = MetaModel("non-existent")
+    actions = meta_model.actions()
+
   def test_invalid_metamodel_fails_gracefully(self):
-    common.exit_with_error_message = self.assert_called_with_string_containing("Meta-model 'invalid' not found")
+    common.exit_with_error_message = self.assert_called_with_string_containing("no actions found")
 
     meta_model = MetaModel("invalid")
+    old_actions_dir = meta_model.actions_dir
+    meta_model.actions_dir = MagicMock()
+    meta_model.actions_dir.return_value = "."
     actions = meta_model.actions()
+    meta_model.actions_dir = old_actions_dir
 
 
 
