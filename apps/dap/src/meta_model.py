@@ -12,9 +12,11 @@ class MetaModel:
 
   def load_actions_from_dir(self, dir):
     common.print_verbose("Looking for actions in " + dir)
+    if os.path.isdir(dir) is not True:
+      common.exit_with_error_message("Meta-model '" + self.name() + "' not found in '" + dir + "'")
+
     if dir not in sys.path:
       sys.path.insert(0, dir)
-
 
     actions = []
     for action in ["default", "deps", "unit_test", "package", "run"]:

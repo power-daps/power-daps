@@ -7,6 +7,7 @@ src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.ge
 if src_dir not in sys.path:
      sys.path.insert(0, src_dir)
 
+import common
 from meta_model import MetaModel
 
 class TestMetaModel(unittest.TestCase):
@@ -30,3 +31,17 @@ class TestMetaModel(unittest.TestCase):
     for action in actions:
       self.assertIs(type(action.run), type(self.test_can_actually_load_actions))
 
+
+  def test_invalid_metamodel_fails_gracefully(self):
+    common.exit_with_error_message = self.assert_called_with_string_containing("Meta-model 'invalid' not found")
+
+    meta_model = MetaModel("invalid")
+    actions = meta_model.actions()
+
+
+
+
+  def assert_called_with_string_containing(self, expected_substring):
+    def wrapper(arg):
+      assert str(expected_substring) in arg, "'%s' does not contain '%s'" % (arg, expected_substring)
+    return wrapper

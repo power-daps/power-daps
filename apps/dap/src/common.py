@@ -121,6 +121,9 @@ def actions_dir():
     ret_val = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../meta-models/" + meta_model() + "/src")))
     return ret_val
 
+def exit_with_error_message(error_message):
+    print_error(error_message)
+    sys.exit(1)
 
 if __name__ == '__main__':
     print_error("This module " + __file__ + " cannot be run as a stand alone command")
