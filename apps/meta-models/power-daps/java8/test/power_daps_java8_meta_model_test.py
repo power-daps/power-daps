@@ -37,11 +37,14 @@ class TestMetaModel(unittest.TestCase):
     self.assertEqual(output, "Hello World!\n")
 
   def test_default_runs_default(self):
-    dap_action.run = MagicMock()
+    mocked_default_action = default_action.DefaultAction()
+    mocked_default_action.run = MagicMock("run method")
+    default_action.action = MagicMock("default_action.action")
+    default_action.action.return_value = mocked_default_action
   
     dap.main("error", "power-daps/java8", ["default"])
-  
-    dap_action.run.assert_called_with("default")
+
+    mocked_default_action.run.assert_called()
 
 
 if __name__ == '__main__':

@@ -2,7 +2,8 @@ import common
 import yaml
 from actions import deps_action, unit_test_action, package_action
 
-class DefaultAction():
+
+class DefaultAction:
   name = "default"
   default_actions_file_location = common.actions_file_location()
 
@@ -12,13 +13,12 @@ class DefaultAction():
 
   def run(self):
     common.print_verbose("Running " + self.name + " action")
-    deps = dict()
 
     with open(self.actions_file_location) as f:
       actions_file_contents = f.read()
       for stage in yaml.load(actions_file_contents).items():
-        for action in stage[1]:
-          common.stop_if_failed(*self.action_for(action).run())
+        for an_action in stage[1]:
+          common.stop_if_failed(*self.action_for(an_action).run())
     f.closed
     return 0, ""
 
@@ -34,6 +34,7 @@ class DefaultAction():
       self.actions_file_location = actions_file_location
     else:
       self.actions_file_location = DefaultAction.default_actions_file_location
+
 
 def action():
    return DefaultAction()

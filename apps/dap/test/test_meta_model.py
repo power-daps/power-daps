@@ -48,6 +48,12 @@ class TestMetaModel(unittest.TestCase):
     actions = meta_model.actions()
     meta_model.actions_dir = old_actions_dir
 
+  def test_actions_found_in_returns_the_right_actions(self):
+    meta_model = MetaModel("power-daps/python3")
+    actions_found_in_meta_model = meta_model.actions_found_in(meta_model.actions_dir() + "/actions")
+    assert "default" in actions_found_in_meta_model, \
+      "'%s' does not contain '%s'" % (actions_found_in_meta_model, "default")
+    self.assertEqual(5, len(actions_found_in_meta_model))
 
 
 
@@ -55,3 +61,4 @@ class TestMetaModel(unittest.TestCase):
     def wrapper(arg):
       assert str(expected_substring) in arg, "'%s' does not contain '%s'" % (arg, expected_substring)
     return wrapper
+

@@ -23,11 +23,11 @@ from unittest.mock import patch
 class TestDap(unittest.TestCase):
   def test_main_gets_action_in_the_right_order(self):
     with patch('actions.default_action.action'):
-      default_action.action = MagicMock()
+      mocked_default_action = self.mock_default_action()
 
       dap.main("error", "power-daps/python3", ["default"])
 
-      default_action.action.assert_called_with()
+      mocked_default_action.run.assert_called()
 
   def test_main_gets_and_runs_action(self):
     with patch('actions.default_action.action'):
