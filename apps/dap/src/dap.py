@@ -13,6 +13,9 @@ def main(log_level="info", meta_model_name="power-daps/python3", actions_to_run=
 
   valid_actions = meta_model.actions()
 
+  common.print_verbose('Actions to run ' + str(actions_to_run))
+  common.print_verbose('Valid actions ' + str([va.name for va in valid_actions]))
+
   for action_to_run in actions_to_run:
     if action_to_run not in [va.name for va in valid_actions]:
       common.print_error("Action '" + action_to_run + "' not found.")

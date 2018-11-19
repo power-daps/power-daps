@@ -1,7 +1,7 @@
 import common
 
 class InitAction():
-  name = "run"
+  name = "init"
 
   def run(self):
     common.print_verbose("Running " + self.name + " action")
