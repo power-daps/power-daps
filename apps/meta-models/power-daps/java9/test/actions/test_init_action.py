@@ -18,13 +18,15 @@ if actions_dir not in sys.path:
 
 import common, init_action
 
+from meta_model import MetaModel
 
 class TestInitAction(unittest.TestCase):
-  def test_run(self):
-    common.print_raw = MagicMock()
-    action = init_action.action()
-    action.run()
-    common.print_raw.assert_called()
+  def test_copies_init_template(self):
+    common.run_command = MagicMock()
+    init_action.action().run()
+    mm = MetaModel(common.meta_model())
+    expected_command = ["/bin/cp", "-R", mm.template_for_action("init") + "/*", '.']
+    common.run_command.assert_called_once()
 
 
 if __name__ == '__main__':

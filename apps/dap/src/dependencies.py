@@ -51,3 +51,10 @@ class Dependency():
   def __hash__(self):
       """Overrides the default implementation"""
       return hash(tuple(sorted(self.__dict__.items())))
+
+  def install_command(self):
+    installers = dict()
+    installers["pip3"] = ['/usr/local/bin/pip3', '-q']
+    installers["brew_cask"] = [common.power_daps_dir() + "bin/brew", 'cask']
+
+    return installers[self.installer] + ['install', self.name]

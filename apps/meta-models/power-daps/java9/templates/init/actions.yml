@@ -1,0 +1,4 @@
+default:
+- deps
+- compile
+- unit_test

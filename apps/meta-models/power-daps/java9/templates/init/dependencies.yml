@@ -1,0 +1,8 @@
+default:
+  pyaml:
+    version: latest
+    installer: pip3
+
+  java:
+    version: latest
+    installer: brew_cask

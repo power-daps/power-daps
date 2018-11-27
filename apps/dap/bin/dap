@@ -5,5 +5,15 @@ if [[ -z "${POWER_DAPS_HOME}" ]]; then
   exit 1
 fi
 
-${POWER_DAPS_HOME}/apps/dap/deps/bin/python3 ${POWER_DAPS_HOME}/apps/dap/src/dap.py $@
+ENV_FILE="config/setenv.sh"
+if [ -f ${ENV_FILE} ]; then
+   source ${ENV_FILE}
+fi
+
+if [[ -z "${POWER_DAPS_META_MODEL}" ]]; then
+  POWER_DAPS_META_MODEL="power-daps/python3"
+fi
+
+POWER_DAPS_META_MODEL=${POWER_DAPS_META_MODEL} \
+    ${POWER_DAPS_HOME}/apps/dap/deps/bin/python3 ${POWER_DAPS_HOME}/apps/dap/src/dap.py $@
 exit $?

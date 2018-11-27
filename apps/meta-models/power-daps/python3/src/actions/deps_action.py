@@ -17,7 +17,7 @@ class DepsAction():
     self.deps = self.load_dependencies(self.dependencies_file_location)
 
     for dep in self.deps.dependencies_for("default"):
-      common.stop_if_failed(*common.run_command(self.install_command(dep)))
+      common.stop_if_failed(*common.run_command(dep.install_command()))
 
     return 0, ""
 
@@ -38,10 +38,6 @@ class DepsAction():
     else:
       self.dependencies_file_location = DepsAction.default_dependencies_file_location
 
-  def install_command(self, dependency):
-    installers = dict()
-    installers["pip3"] = '/usr/local/bin/pip3'
-    return [installers[dependency.installer], '-q', 'install', dependency.name]
 
 def action():
    return DepsAction()

@@ -50,3 +50,7 @@ class MetaModel:
 
   def actions_found_in(self, dir):
     return [os.path.split(path)[-1].replace("_action.py", "") for path in glob.glob(dir + "/*_action.py")]
+
+  def template_for_action(self, action_name):
+    return os.path.join(self.actions_dir(), "..", "templates", action_name)
+

@@ -55,6 +55,11 @@ class TestMetaModel(unittest.TestCase):
       "'%s' does not contain '%s'" % (actions_found_in_meta_model, "default")
     self.assertEqual(5, len(actions_found_in_meta_model))
 
+  def test_template_for_action(self):
+    meta_model = MetaModel("power-daps/java9")
+    template_for_init = meta_model.template_for_action("init")
+    assert "templates/init" in template_for_init, "'%s' does not contain '%s'" % (template_for_init, "templates/init")
+
 
 
   def assert_called_with_string_containing(self, expected_substring):

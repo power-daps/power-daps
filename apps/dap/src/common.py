@@ -95,6 +95,7 @@ def set_log_level(log_level_to_set):
 def set_meta_model(meta_model):
     global saved_meta_model
     saved_meta_model = meta_model
+    print_verbose("Meta Model: " + str(saved_meta_model))
 
 
 def meta_model():

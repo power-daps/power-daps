@@ -27,6 +27,8 @@ def main(log_level="info", meta_model_name="power-daps/python3", actions_to_run=
 
 if __name__ == '__main__':
   import argparse
+  import os
+  default_meta_model = os.getenv('POWER_DAPS_META_MODEL', "power-daps/python3")
 
   parser = argparse.ArgumentParser(description="dap")
   parser.add_argument("-v", "--verbose", dest="log_level",
@@ -36,7 +38,7 @@ if __name__ == '__main__':
                       default="info", action="store_const",
                       const="error", help="Quiet output. Only errors will be written out.")
   parser.add_argument("-m", "--meta-model", dest="meta_model",
-                      default="power-daps/python3",
+                      default=default_meta_model,
                       help="Use the specified meta-model. Defaults to 'power-daps/python3'")
   parser.add_argument("action",
                       help="List of actions to run. Defaults to 'default' for the given meta-model",
