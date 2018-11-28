@@ -74,3 +74,18 @@ b_stage:
     self.assertEqual(deps.dependencies_for('a_stage')[1].version, "latest")
     self.assertEqual(deps.dependencies_for('b_stage')[0].version, "c_version")
     self.assertEqual(deps.dependencies_for('b_stage')[1].version, "d_version")
+
+  def test_other_details_of_a_dependency_come_through(self):
+    dapfile_contents = """
+a_stage:
+  a_dep:
+    version: '1.2'
+    installer: 'jar'
+    group_id: 'org.a_dep'
+    """
+    expected_dependency = dependencies.Dependency(\
+      name = 'a_dep', version = '1.2', installer = 'jar', details={'group_id': 'org.a_dep'})
+
+    deps = dependencies.Dependencies(dapfile_contents)
+
+    self.assertCountEqual(deps.dependencies_for('a_stage'), [expected_dependency])
