@@ -10,14 +10,14 @@ class DepsAction():
   def __init__(self, dependencies_file_location = ""):
     self.set_dependencies_file_location(dependencies_file_location)
     return
- 
+
   def run(self):
     common.print_verbose("Running " + self.name + " action")
 
     self.deps = self.load_dependencies(self.dependencies_file_location)
 
     for dep in self.deps.dependencies_for("default"):
-      common.stop_if_failed(*common.run_command(dep.install_command()))
+      dep.install()
 
     return 0, ""
 
@@ -40,4 +40,4 @@ class DepsAction():
 
 
 def action():
-   return DepsAction()
+  return DepsAction()
