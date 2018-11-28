@@ -38,6 +38,33 @@ def run_command(command):
     return subprocess_exit_code, output
 
 
+def run_command_in_shell(command):
+  """Run the specified command in a shell"""
+
+  subprocess_exit_code = SUCCESS
+  output = ""
+  if not str(command):
+    print_error("Trying to run None")
+
+  print_verbose("Running command " + str(command))
+  try:
+    output = subprocess.check_output(command, shell=True).decode("utf-8")
+    if output:
+      print_info(output)
+  except FileNotFoundError as err:
+    subprocess_exit_code = err.errno
+    output = err.strerror
+    print_error("Exit code: " + str(subprocess_exit_code))
+    print_error(output)
+  except subprocess.CalledProcessError as err:
+    subprocess_exit_code = err.returncode
+    print_error("Exit code: " + str(subprocess_exit_code))
+    if output:
+      print_error(output)
+  return subprocess_exit_code, output
+
+
+
 def print_warning(warning):
     global LOG_LEVEL
     if(LOG_LEVEL == "verbose" or LOG_LEVEL == "info" or LOG_LEVEL == "warning"):
@@ -73,7 +100,7 @@ def print_verbose_no_eol(verbose_info):
 
 
 def stop_if_failed(subprocess_exit_code=SUCCESS, error_message=""):
-    if(subprocess_exit_code != SUCCESS):
+    if subprocess_exit_code != SUCCESS:
         sys.exit(FAILED)
 
 

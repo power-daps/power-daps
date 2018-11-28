@@ -17,7 +17,7 @@ class DepsAction():
     self.deps = self.load_dependencies(self.dependencies_file_location)
 
     for dep in self.deps.dependencies_for("default"):
-      common.stop_if_failed(*common.run_command(dep.install_command()))
+      dep.install()
 
     return 0, ""
 

@@ -19,7 +19,7 @@ class DefaultAction:
       actions_file_contents = f.read()
       for stage in yaml.load(actions_file_contents).items():
         for an_action in stage[1]:
-          common.stop_if_failed(self.action_for(an_action).run())
+          common.stop_if_failed(*self.action_for(an_action).run())
     f.closed
     return 0, ""
 
@@ -40,6 +40,6 @@ class DefaultAction:
 
 
 def action():
-   return DefaultAction()
+  return DefaultAction("./actions.yml")
 
 

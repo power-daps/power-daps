@@ -1,8 +1,8 @@
 import common
 
 
-class CompileAction:
-  name = "compile"
+class UnitTestAction:
+  name = "unit_test"
 
   def run(self):
     common.print_verbose("Running " + self.name + " action")
@@ -10,4 +10,4 @@ class CompileAction:
 
 
 def action():
-  return CompileAction()
+  return UnitTestAction()

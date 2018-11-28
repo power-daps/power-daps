@@ -1,5 +1,6 @@
 import yaml
 import common
+from dependency_installers import CommandLineInstaller
 
 class Dependencies():
   def __init__(self, dependencies_file_contents):
@@ -32,7 +33,7 @@ class Dependency():
   def __init__(self, name, version, installer):
     self.name = name
     self.version = version
-    self.installer = installer
+    self.installer_type = installer
     return
 
   def __eq__(self, other):
@@ -52,9 +53,13 @@ class Dependency():
       """Overrides the default implementation"""
       return hash(tuple(sorted(self.__dict__.items())))
 
-  def install_command(self):
+  def installer(self):
     installers = dict()
-    installers["pip3"] = ['/usr/local/bin/pip3', '-q']
-    installers["brew_cask"] = [common.power_daps_dir() + "bin/brew", 'cask']
+    installers["pip3"] = CommandLineInstaller(['/usr/local/bin/pip3', '-q', 'install'])
+    installers["brew_cask"] = CommandLineInstaller([common.app_dir() + "deps/bin/brew", 'cask', 'install'])
 
-    return installers[self.installer] + ['install', self.name]
+    return installers[self.installer_type]
+
+  def install(self):
+    common.print_raw("Installing '" + self.name + "', " + self.version + " version via " + self.installer_type)
+    self.installer().install(self.name, self.version)
