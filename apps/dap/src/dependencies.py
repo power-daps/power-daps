@@ -1,6 +1,6 @@
 import yaml
 import common
-from dependency_installers import CommandLineInstaller
+from dependency_installers import CommandLineInstaller, MavenCentralInstaller
 
 class Dependencies():
   def __init__(self, dependencies_file_contents):
@@ -22,7 +22,14 @@ class Dependencies():
       stage_dependencies_from_yaml = stage[1] if stage[1] else dict()
 
       for dependency in stage_dependencies_from_yaml.items():
-        self.dependencies[stage_name_from_yaml].append(Dependency(name=dependency[0], version=dependency[1]["version"], installer=dependency[1]["installer"]))
+        dep_name = dependency[0]
+        dep_version = dependency[1]["version"]
+        dep_installer = dependency[1]["installer"]
+        dep_details = dict(dependency[1])
+        del dep_details["version"]
+        del dep_details["installer"]
+        self.dependencies[stage_name_from_yaml].append(\
+          Dependency(name=dependency[0], version=dep_version, installer=dep_installer, details=dep_details))
 
     return
 
@@ -30,10 +37,15 @@ class Dependencies():
     return self.dependencies.get(stage_name, list())
 
 class Dependency():
-  def __init__(self, name, version, installer):
+
+  def __init__(self, name, version, installer, details=dict()):
     self.name = name
     self.version = version
     self.installer_type = installer
+    if len(details) > 0:
+      self.details = details
+    else:
+      self.details = None
     return
 
   def __eq__(self, other):
@@ -57,9 +69,10 @@ class Dependency():
     installers = dict()
     installers["pip3"] = CommandLineInstaller(['/usr/local/bin/pip3', '-q', 'install'])
     installers["brew_cask"] = CommandLineInstaller([common.app_dir() + "deps/bin/brew", 'cask', 'install'])
+    installers["jar"] = MavenCentralInstaller()
 
     return installers[self.installer_type]
 
   def install(self):
     common.print_raw("Installing '" + self.name + "', " + self.version + " version via " + self.installer_type)
-    self.installer().install(self.name, self.version)
+    self.installer().install(self.name, self.version, self.details)
