@@ -96,5 +96,7 @@ class TestMavenCentralInstaller(unittest.TestCase):
     self.tmp_dir = "../../../build/tmp"
     self.tmp_dependency_location = self.tmp_dir + "/" + self.dependency_file_name
 
+  def tearDown(self) -> None:
+    self.ensure_dir_tree_does_not_exist(self.tmp_dir)
 if __name__ == '__main__':
   unittest.main()
