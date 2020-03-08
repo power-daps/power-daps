@@ -98,5 +98,7 @@ class TestMavenCentralInstaller(unittest.TestCase):
 
   def tearDown(self) -> None:
     self.ensure_dir_tree_does_not_exist(self.tmp_dir)
+    self.ensure_dir_tree_does_not_exist("lib")
+
 if __name__ == '__main__':
   unittest.main()
