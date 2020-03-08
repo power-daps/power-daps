@@ -26,6 +26,7 @@ class DefaultAction:
     actions = dict()
     actions["deps"] = deps_action.action()
     actions["unit_test"] = unit_test_action.action()
+    actions["package"] = package_action.action()
 
     return actions[action_name]
 
