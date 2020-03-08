@@ -63,6 +63,3 @@ class TestDap(unittest.TestCase):
     deps_action.action = MagicMock()
     deps_action.action.return_value = action
     return action
-    
-if __name__ == '__main__':
-    unittest.main()

@@ -101,6 +101,7 @@ def print_verbose_no_eol(verbose_info):
 
 def stop_if_failed(subprocess_exit_code=SUCCESS, error_message=""):
     if subprocess_exit_code != SUCCESS:
+        print_error("FAILED " + error_message)
         sys.exit(FAILED)
 
 
@@ -143,7 +144,12 @@ def dependencies_file_location():
     return os.getcwd() + "/dependencies.yml"
 
 def actions_file_location():
-    return power_daps_dir() + "actions.yml"
+    default_actions_file_location = power_daps_dir() + "actions.yml"
+    local_actions_file_location = os.getcwd() + "/actions.yml"
+    if(os.path.exists(local_actions_file_location)):
+      return local_actions_file_location
+    else:
+      return default_actions_file_location
 
 def actions_dir():
     ret_val = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../meta-models/" + meta_model() + "/src")))

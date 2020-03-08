@@ -67,6 +67,7 @@ class Dependency():
 
   def installer(self):
     installers = dict()
+    installers["npm"] = CommandLineInstaller(['/usr/local/bin/npm', 'install', '--save-dev'])
     installers["pip3"] = CommandLineInstaller(['/usr/local/bin/pip3', '-q', 'install'])
     installers["brew_cask"] = CommandLineInstaller([common.app_dir() + "deps/bin/brew", 'cask', 'install'])
     installers["jar"] = MavenCentralInstaller()

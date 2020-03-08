@@ -22,9 +22,9 @@ import common, deps_action
 class TestDepsAction(unittest.TestCase):
   def test_other_details_of_a_dependency_come_through(self):
     self.ensure_dependencies_file_with_jar_dependency()
-    common.run_command = MagicMock()
-    deps_action.action().run()
-    assert not common.run_command.called
+    deps = deps_action.action().load_dependencies("dependencies.yml")
+
+    self.assertEqual(deps.dependencies_for("default")[0].details, {"group_id": "org.mockito"})
     self.ensure_empty_dependencies_file()
 
   def ensure_empty_dependencies_file(self):

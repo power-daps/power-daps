@@ -67,3 +67,6 @@ class TestMetaModel(unittest.TestCase):
       assert str(expected_substring) in arg, "'%s' does not contain '%s'" % (arg, expected_substring)
     return wrapper
 
+
+if __name__ == '__main__':
+  unittest.main()
