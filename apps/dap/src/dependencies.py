@@ -1,12 +1,12 @@
 import yaml
 import common
-from dependency_installers import CommandLineInstaller, MavenCentralInstaller
+from dependency_installers import CommandLineInstaller, MavenCentralInstaller, PipInstaller
 
 class Dependencies():
   def __init__(self, dependencies_file_contents):
     self.dependencies_file_contents = dependencies_file_contents
     self.dependencies = dict()
-    dependencies_yaml = yaml.load(self.dependencies_file_contents)
+    dependencies_yaml = yaml.load(self.dependencies_file_contents, Loader=yaml.SafeLoader)
     if not dependencies_yaml:
       common.print_verbose("No dependencies found")
       return
@@ -40,7 +40,7 @@ class Dependency():
 
   def __init__(self, name, version, installer, details=dict()):
     self.name = name
-    self.version = version
+    self.version = str(version)
     self.installer_type = installer
     if len(details) > 0:
       self.details = details
@@ -68,7 +68,8 @@ class Dependency():
   def installer(self):
     installers = dict()
     installers["npm"] = CommandLineInstaller(['/usr/local/bin/npm', 'install', '--save-dev'])
-    installers["pip3"] = CommandLineInstaller(['/usr/local/bin/pip3', '-q', 'install'])
+    # installers["pip3"] = CommandLineInstaller(['/usr/local/bin/pip3', '-q', 'install'])
+    installers["pip3"] = PipInstaller()
     installers["brew_cask"] = CommandLineInstaller([common.app_dir() + "deps/bin/brew", 'cask', 'install'])
     installers["jar"] = MavenCentralInstaller()
 

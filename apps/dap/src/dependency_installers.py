@@ -11,6 +11,16 @@ class CommandLineInstaller:
     exit_code, output = common.run_command(self.command_base + [dep_name])
     common.stop_if_failed(exit_code, output)
 
+class PipInstaller:
+  def __init__(self):
+    return
+
+  def install(self, dep_name, dep_version="latest", details={}):
+    package_name = dep_name
+    if not dep_version == "latest":
+      package_name = dep_name + "==" + str(dep_version)
+    exit_code, output = common.run_command(['/usr/local/bin/pip3', '-q', 'install', package_name])
+    common.stop_if_failed(exit_code, output)
 
 class MavenCentralInstaller:
   def __init__(self, url_base="https://search.maven.org/remotecontent?filepath=", lib_dir="lib"):
