@@ -17,7 +17,7 @@ class DefaultAction:
 
     with open(self.actions_file_location) as f:
       actions_file_contents = f.read()
-      for stage in yaml.load(actions_file_contents).items():
+      for stage in yaml.load(actions_file_contents, Loader=yaml.SafeLoader).items():
         for an_action in stage[1]:
           common.stop_if_failed(*self.action_for(an_action).run())
     f.closed
