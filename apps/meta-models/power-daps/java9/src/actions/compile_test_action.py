@@ -1,10 +1,10 @@
 import common
 
 
-class UnitTestAction:
-  name = "unit_test"
+class CompileTestAction:
+  name = "compile_test"
 
-  def __init__(self, source_dir="test", target_dir="target/test", classpath=".:target/production:target/test"):
+  def __init__(self, source_dir="test", target_dir="target/test", classpath=".:target/production"):
     self.source_dir = source_dir
     self.target_dir = target_dir
     self.classpath = classpath
@@ -19,15 +19,15 @@ class UnitTestAction:
 
     common.run_command_in_shell('rm -rf ' + self.target_dir)
     common.run_command_in_shell('mkdir -p ' + self.target_dir)
-    common.run_command_in_shell('java ' + \
+    common.run_command_in_shell('find ' + self.source_dir + \
+                                ' -type f -name "*.java" -print | xargs javac ' + \
                                 cp_string + " " + \
-                                'org.junit.runner.JUnitCore')
+                                ' -d ' + self.target_dir + ' -sourcepath ' + self.source_dir)
     return 0, ""
 
   def libs_classpath(self):
     libs = common.run_command_in_shell('find lib/java -type f -name "*.jar" -print')[1]
     return ":".join(libs.splitlines())
 
-
 def action():
-  return UnitTestAction()
+  return CompileTestAction()
