@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d1cf61ad-eeef-4c7a-90e4-50d7e63418d1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/apps/dap/src/dependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dap/src/dependencies.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dap/src/dependency_installers.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dap/src/dependency_installers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/java9/src/actions/unit_test_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/java9/src/actions/unit_test_action.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/power_daps$Unittests_for_power_daps_java8_meta_model_test_TestMetaModel_test_default_runs_default.coverage" NAME="Unittests for power_daps_java8_meta_model_test.TestMetaModel.test_default_runs_default Coverage Results" MODIFIED="1542611798010" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/meta-models/power-daps/java8/test" />
+    <SUITE FILE_PATH="coverage/power_daps$Unittests_in_test_deps_action_py.coverage" NAME="Unittests in test_deps_action.py Coverage Results" MODIFIED="1542612630287" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/meta-models/power-daps/python3/test/actions" />
+    <SUITE FILE_PATH="coverage/power_daps$Unittests_for_test_meta_model_TestMetaModel.coverage" NAME="Unittests for test_meta_model.TestMetaModel Coverage Results" MODIFIED="1542619066302" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/dap/test" />
+    <SUITE FILE_PATH="coverage/power_daps$Unittests_for_test_init_action_TestInitAction.coverage" NAME="Unittests for test_init_action.TestInitAction Coverage Results" MODIFIED="1542619515833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/meta-models/power-daps/java9/test/actions" />
+    <SUITE FILE_PATH="coverage/power_daps$Unittests_for_dap_test_TestDap_test_main_runs_only_the_specified_action.coverage" NAME="Unittests for dap_test.TestDap.test_main_runs_only_the_specified_action Coverage Results" MODIFIED="1542612826195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/dap/test" />
+    <SUITE FILE_PATH="coverage/power_daps$Unittests_in_test_meta_model_py.coverage" NAME="Unittests in test_meta_model.py Coverage Results" MODIFIED="1542612596091" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/dap/test" />
+    <SUITE FILE_PATH="coverage/power_daps$Unittests_for_power_daps_java8_meta_model_test_TestMetaModel_test_invalid_metamodel_fails_gracefully.coverage" NAME="Unittests for power_daps_java8_meta_model_test.TestMetaModel.test_invalid_metamodel_fails_gracefully Coverage Results" MODIFIED="1542605030308" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/meta-models/power-daps/java8/test" />
+    <SUITE FILE_PATH="coverage/power_daps$Unittests_for_dap_test_TestDap_test_main_gets_action_in_the_right_order.coverage" NAME="Unittests for dap_test.TestDap.test_main_gets_action_in_the_right_order Coverage Results" MODIFIED="1542613252389" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/dap/test" />
+    <SUITE FILE_PATH="coverage/power_daps$Unittests_for_test_meta_model_TestMetaModel_test_invalid_metamodel_fails_gracefully.coverage" NAME="Unittests for test_meta_model.TestMetaModel.test_invalid_metamodel_fails_gracefully Coverage Results" MODIFIED="1542608937829" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/dap/test" />
+    <SUITE FILE_PATH="coverage/power_daps$Unittests_for_dap_test_TestDap.coverage" NAME="Unittests for dap_test.TestDap Coverage Results" MODIFIED="1542612795966" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/dap/test" />
+    <SUITE FILE_PATH="coverage/power_daps$Unittests_for_dap_test_TestDap_test_main_gets_and_runs_action.coverage" NAME="Unittests for dap_test.TestDap.test_main_gets_and_runs_action Coverage Results" MODIFIED="1542612830989" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/dap/test" />
+    <SUITE FILE_PATH="coverage/power_daps$Unittests_in_power_daps_java8_meta_model_test_py.coverage" NAME="Unittests in power_daps_java8_meta_model_test.py Coverage Results" MODIFIED="1542612611269" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/meta-models/power-daps/java8/test" />
+    <SUITE FILE_PATH="coverage/power_daps$Unittests_for_test_meta_model_TestMetaModel_test_actions_found_in_returns_the_right_actions.coverage" NAME="Unittests for test_meta_model.TestMetaModel.test_actions_found_in_returns_the_right_actions Coverage Results" MODIFIED="1542612577340" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/dap/test" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1YnTw3Rv5pKGQwR20agPKRtM4ir" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.externalTools" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/meta-models/power-daps/java9/src/actions" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python tests.dap tests">
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <module name="power-daps" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="/usr/local/bin/python3.7" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/apps/dap/test" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_pattern" value="&quot;*_test.py&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/apps/dap/test&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="dap tests" type="tests" factoryName="Unittests">
+      <module name="power-daps" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="/usr/local/bin/python3.7" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/apps/dap/test" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_pattern" value="&quot;*_test.py&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/apps/dap/test&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="java9 meta model tests" type="tests" factoryName="Unittests">
+      <module name="power-daps" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="/usr/local/bin/python3.7" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_pattern" value="&quot;test_*.py&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/apps/meta-models/power-daps/java9/test/actions&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python tests.java9 meta model tests" />
+      <item itemvalue="Python tests.dap tests" />
+    </list>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d1cf61ad-eeef-4c7a-90e4-50d7e63418d1" name="Default Changelist" comment="" />
+      <created>1540284169817</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1540284169817</updated>
+      <workItem from="1540284172216" duration="137000" />
+      <workItem from="1540284322137" duration="2196000" />
+      <workItem from="1540532736550" duration="5225000" />
+      <workItem from="1540716251442" duration="4921000" />
+      <workItem from="1540751227326" duration="2355000" />
+      <workItem from="1540798623587" duration="9450000" />
+      <workItem from="1541066332696" duration="2836000" />
+      <workItem from="1542604255451" duration="36892000" />
+      <workItem from="1544814715387" duration="64000" />
+      <workItem from="1546588355888" duration="49000" />
+      <workItem from="1546588419897" duration="288000" />
+      <workItem from="1546588809784" duration="147000" />
+      <workItem from="1546592623935" duration="307000" />
+      <workItem from="1547535348989" duration="12000" />
+      <workItem from="1547535592664" duration="3000" />
+      <workItem from="1547535849924" duration="2000" />
+      <workItem from="1583577597030" duration="12917000" />
+      <workItem from="1584174339868" duration="9464000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.spec" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="240" y="49" key="#Inspections" timestamp="1583662244960">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="240" y="49" key="#Inspections/0.23.1680.1027@0.23.1680.1027" timestamp="1583662244960" />
+    <state x="304" y="23" width="1296" height="1027" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1583666771390">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="304" y="23" width="1296" height="1027" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1583666771390" />
+    <state x="564" y="240" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1583664860595">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="564" y="240" key="#com.intellij.ide.util.TreeClassChooserDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1583664860595" />
+    <state x="456" y="188" key="FileChooserDialogImpl" timestamp="1583664759804">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="456" y="188" key="FileChooserDialogImpl/0.23.1680.1027@0.23.1680.1027" timestamp="1583664759804" />
+    <state width="809" height="263" key="GridCell.Tab.0.bottom" timestamp="1583732393958">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state width="809" height="263" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1583732393958" />
+    <state width="809" height="263" key="GridCell.Tab.0.center" timestamp="1583732393957">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state width="809" height="263" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1583732393957" />
+    <state width="809" height="263" key="GridCell.Tab.0.left" timestamp="1583732393957">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state width="809" height="263" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1583732393957" />
+    <state width="809" height="263" key="GridCell.Tab.0.right" timestamp="1583732393958">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state width="809" height="263" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1583732393958" />
+    <state x="0" y="23" key="SettingsEditor" timestamp="1583665006089">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="0" y="23" key="SettingsEditor/0.23.1680.1027@0.23.1680.1027" timestamp="1583665006089" />
+    <state width="750" height="600" key="SwitcherDM" timestamp="1584280022776">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state width="750" height="600" key="SwitcherDM/0.23.1680.1027@0.23.1680.1027" timestamp="1584280022776" />
+    <state x="0" y="23" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1583732118715">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="0" y="23" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.23.1680.1027@0.23.1680.1027" timestamp="1583732118715" />
+    <state x="0" y="23" width="952" height="1027" key="find.popup" timestamp="1583732115337">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="0" y="23" width="952" height="1027" key="find.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1583732115337" />
+    <state x="489" y="49" key="refactoring.ChangeSignatureDialog" timestamp="1583668837257">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="489" y="49" key="refactoring.ChangeSignatureDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1583668837257" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/power_daps$dap_tests.coverage" NAME="dap tests Coverage Results" MODIFIED="1583679764297" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/dap/test" />
+    <SUITE FILE_PATH="coverage/power_daps$Unittests_in_dependency_installers_test_py.coverage" NAME="Unittests in dependency_installers_test.py Coverage Results" MODIFIED="1583662643823" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/dap/test" />
+    <SUITE FILE_PATH="coverage/power_daps$java9_meta_model_tests.coverage" NAME="java9 meta model tests Coverage Results" MODIFIED="1583666772834" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+  </component>
+</project>
