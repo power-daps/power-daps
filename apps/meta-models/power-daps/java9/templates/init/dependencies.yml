@@ -1,8 +1,6 @@
 default:
-  pyaml:
-    version: latest
-    installer: pip3
+  junit:
+    version: "4.12"
+    installer: jar
+    group_id: junit
 
-  java:
-    version: latest
-    installer: brew_cask

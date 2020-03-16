@@ -1,0 +1,5 @@
+fileignoreconfig:
+- filename: apps/meta-models/power-daps/java9/templates/init/config/setenv.sh
+  checksum: 1e7b9d439da285b19292b290fe2b581b051e937c07c6aac2502fb8c99878d40e
+  ignore_detectors: []
+scopeconfig: []

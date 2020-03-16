@@ -1,4 +1,5 @@
 default:
-- deps
-- compile
-- unit_test
+  - deps
+  - compile
+  - compile_test
+  - unit_test
