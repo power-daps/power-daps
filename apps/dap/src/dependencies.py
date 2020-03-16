@@ -76,5 +76,5 @@ class Dependency():
     return installers[self.installer_type]
 
   def install(self):
-    common.print_raw("Installing '" + self.name + "', " + self.version + " version via " + self.installer_type)
+    common.print_verbose("Installing '" + self.name + "', " + self.version + " version via " + self.installer_type)
     self.installer().install(self.name, self.version, self.details)

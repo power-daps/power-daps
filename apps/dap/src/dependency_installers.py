@@ -53,11 +53,11 @@ class MavenCentralInstaller:
     local_lib_dir = self.local_lib_directory(details["group_id"], name, version)
     local_loc = self.local_location(details["group_id"], name, version, extension)
     if not self.has_already_been_downloaded(details["group_id"], name, version, extension):
-      common.print_raw("Downloading " + remote_loc + " to " + local_loc)
+      common.print_info("Downloading " + remote_loc + " to " + local_loc)
       common.run_command(["mkdir", "-p", local_lib_dir])
       self.fetch(remote_loc, local_loc)
     else:
-      common.print_raw("Dependency found at " + local_loc)
+      common.print_verbose("Dependency found at " + local_loc)
     return 0, ""
 
 
