@@ -8,6 +8,5 @@ dist
 build
 .*.swp
 .vscode
-.idea
 venv
 **/test/**/dependencies.yml
