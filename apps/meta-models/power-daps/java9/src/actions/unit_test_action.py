@@ -17,17 +17,22 @@ class UnitTestAction:
     else:
       cp_string = " -cp " + self.libs_classpath()
 
-    common.run_command_in_shell('rm -rf ' + self.target_dir)
     common.run_command_in_shell('mkdir -p ' + self.target_dir)
-    common.run_command_in_shell('java ' + \
+    exit_code, output = common.run_command_in_shell('java ' + \
                                 cp_string + " " + \
-                                'org.junit.runner.JUnitCore')
+                                'org.junit.runner.JUnitCore ' + \
+                                " ".join(self.list_of_test_classes()))
+
+    common.print_raw(output)
     return 0, ""
 
   def libs_classpath(self):
     libs = common.run_command_in_shell('find lib/java -type f -name "*.jar" -print')[1]
     return ":".join(libs.splitlines())
 
+  def list_of_test_classes(self):
+    test_classes = common.run_command_in_shell('find test -type f -name "*Test.java" -print')[1].splitlines()
+    return [ test_class.replace("test/", "").replace(".java", "").replace("/", ".") for test_class in test_classes ]
 
 def action():
   return UnitTestAction()
