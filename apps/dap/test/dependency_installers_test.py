@@ -104,12 +104,12 @@ class TestMavenCentralInstaller(unittest.TestCase):
   def test_fetches_when_dependency_has_not_already_been_downloaded(self):
     installer = MavenCentralInstaller(self.base_url)
     self.ensure_dir_tree_does_not_exist(self.tmp_dir)
-    installer.local_location = MagicMock(return_value=self.tmp_dependency_location)
+    installer.local_location = MagicMock(side_effect=self.change_local_location_by_extension_in_mock)
     installer.fetch = MagicMock()
 
     installer.install(self.artifact_id, self.version, {"group_id": self.group_id})
 
-    installer.fetch.assert_called_once()
+    installer.fetch.assert_called()
 
   def test_does_not_fetch_when_dependency_has_already_been_downloaded(self):
     installer = MavenCentralInstaller(self.base_url)
@@ -131,6 +131,13 @@ class TestMavenCentralInstaller(unittest.TestCase):
   def ensure_dir_tree_does_not_exist(self, dir_name):
     shutil.rmtree(dir_name, ignore_errors=True)
 
+  def change_local_location_by_extension_in_mock(self, group_id, artifact_id, version, file_extension):
+    if file_extension == "jar":
+      return self.tmp_dependency_location
+    elif file_extension == "pom":
+      return self.tmp_pom_location
+    else:
+      return ""
 
   def setUp(self):
     self.base_url = "base_url/stuff="
@@ -142,6 +149,7 @@ class TestMavenCentralInstaller(unittest.TestCase):
     self.dependency_file_name = self.artifact_id + "." + self.file_extension
     self.tmp_dir = "../../../build/tmp"
     self.tmp_dependency_location = self.tmp_dir + "/" + self.dependency_file_name
+    self.tmp_pom_location = self.tmp_dir + "/" + self.artifact_id + "." + "pom"
 
   def tearDown(self) -> None:
     self.ensure_dir_tree_does_not_exist(self.tmp_dir)

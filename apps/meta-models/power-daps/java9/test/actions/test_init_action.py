@@ -40,10 +40,11 @@ from meta_model import MetaModel
 class TestInitAction(unittest.TestCase):
   def test_copies_init_template(self):
     common.run_command = MagicMock()
-    init_action.action().run()
+    action = init_action.action()
+    action.copy_template_files_to = MagicMock()
+    action.run()
     mm = MetaModel(common.meta_model())
-    expected_command = ["/bin/cp", "-R", mm.template_for_action("init") + "/*", '.']
-    common.run_command.assert_called_once()
+    action.copy_template_files_to.assert_called_once()
 
 
 if __name__ == '__main__':

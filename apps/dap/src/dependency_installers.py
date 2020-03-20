@@ -47,23 +47,26 @@ class MavenCentralInstaller:
     return
 
   def install(self, name, version, details):
-    self.install_file(name, version, details, "jar")
-    self.install_file(name, version, details, "pom")
-    self.install_transitive_dependencies(name, version, details, "pom")
+    if not self.has_already_been_downloaded(details["group_id"], name, version, "jar"):
+      self.install_file(name, version, details, "jar")
+      self.install_file(name, version, details, "pom")
+      self.install_transitive_dependencies(name, version, details, "pom")
+
 
   def install_transitive_dependencies(self, name, version, details, extension):
-    namespaces = {'xmlns' : 'http://maven.apache.org/POM/4.0.0'}
-    tree = ElementTree.parse(self.local_location(details["group_id"], name, version, extension))
-    root = tree.getroot()
-    deps = root.findall("./xmlns:dependencies/xmlns:dependency", namespaces=namespaces)
-    for d in deps:
-      version = "latest"
-      groupId = d.find("xmlns:groupId", namespaces=namespaces).text
-      artifactId = d.find("xmlns:artifactId", namespaces=namespaces).text
-      version_elem = d.find("xmlns:version", namespaces=namespaces)
-      if version_elem is not None:
-        version = version_elem.text
-      self.install(artifactId, version, {"group_id": groupId})
+    if self.local_pom_exists(details["group_id"], name, version):
+      namespaces = {'xmlns' : 'http://maven.apache.org/POM/4.0.0'}
+      tree = ElementTree.parse(self.local_location(details["group_id"], name, version, "pom"))
+      root = tree.getroot()
+      deps = root.findall("./xmlns:dependencies/xmlns:dependency", namespaces=namespaces)
+      for d in deps:
+        version = "latest"
+        groupId = d.find("xmlns:groupId", namespaces=namespaces).text
+        artifactId = d.find("xmlns:artifactId", namespaces=namespaces).text
+        version_elem = d.find("xmlns:version", namespaces=namespaces)
+        if version_elem is not None:
+          version = version_elem.text
+        self.install(artifactId, version, {"group_id": groupId})
 
   def install_file(self, name, version, details, extension):
     remote_loc = self.remote_location(details["group_id"], name, version, extension)
@@ -76,7 +79,6 @@ class MavenCentralInstaller:
     else:
       common.print_verbose("Dependency found at " + local_loc)
     return 0, ""
-
 
   def remote_location(self, group_id, artifact_id, version, file_extension):
     group_id_with_slashes = group_id.replace(".", "/")
@@ -113,3 +115,6 @@ class MavenCentralInstaller:
 
   def has_already_been_downloaded(self, group_id, artifact_id, version, file_extension):
     return os.path.exists(self.local_location(group_id, artifact_id, version, file_extension))
+
+  def local_pom_exists(self, group_id, artifact_id, version):
+    return os.path.exists(self.local_location(group_id, artifact_id, version, "pom"))

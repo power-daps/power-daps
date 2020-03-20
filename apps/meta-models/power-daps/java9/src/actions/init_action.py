@@ -29,20 +29,29 @@ class InitAction():
     project_dir = '.'
     project_name = os.getcwd().split('/')[-1]
 
+    self.copy_template_files_to(project_dir)
+    self.rename_files(project_dir, "PROJECT_NAME", project_name)
+    self.setup_git(project_dir)
+
+  def copy_template_files_to(self, destination):
     files_to_copy = [str(p) for p in pathlib.Path(MetaModel(common.meta_model()).template_for_action(self.name)).glob("*")]
-    # files_to_copy = glob.glob(MetaModel(common.meta_model()).template_for_action(self.name) + "/*", recursive=False)
-    command_to_run = ['/bin/cp', "-R", *files_to_copy, project_dir]
+    command_to_run = ['/bin/cp', "-R", *files_to_copy, destination]
     common.run_command(command_to_run)
 
-    files_to_rename = [str(p) for p in pathlib.Path(project_dir).glob("*PROJECT_NAME*")]
+  def rename_files(self, dir, str_to_find, str_to_replace_with):
+    files_to_rename = [str(p) for p in pathlib.Path(dir).glob("*" + str_to_find + "*")]
     for file_to_rename in files_to_rename:
-      rename_command = ['/bin/mv', file_to_rename, file_to_rename.replace("PROJECT_NAME", project_name)]
+      rename_command = ['/bin/mv', file_to_rename, file_to_rename.replace(str_to_find, str_to_replace_with)]
       common.run_command(rename_command)
 
-    files_to_search_and_replace_within = [str(p) for p in pathlib.Path(project_dir).glob(".idea/*.xml")]
+    files_to_search_and_replace_within = [str(p) for p in pathlib.Path(dir).glob(".idea/*.xml")]
     for f in files_to_search_and_replace_within:
-        sed_command = ['/usr/bin/sed', '-ie', "s/PROJECT_NAME/" + project_name + "/g", f]
+        sed_command = ['/usr/bin/sed', '-ie', "s/" + str_to_find + "/" + str_to_replace_with + "/g", f]
         common.run_command(sed_command)
+
+
+  def setup_git(self, dir):
+    os.chdir(dir)
 
     git_init_command = ['/usr/bin/git', 'init']
     common.run_command(git_init_command)
