@@ -1,10 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="8" />
+    <option name="CUSTOM_SCOPE_NAME" value="Project Test Files" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="d1cf61ad-eeef-4c7a-90e4-50d7e63418d1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/copyright/Copyright_for_power_daps.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dap/src/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dap/src/common.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dap/src/dap.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dap/src/dap.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dap/src/dap_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dap/src/dap_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dap/src/dependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dap/src/dependencies.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dap/src/dependency_installers.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dap/src/dependency_installers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dap/src/meta_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dap/src/meta_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dap/src/no_action_error.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dap/src/no_action_error.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dap/test/action_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dap/test/action_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dap/test/common_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dap/test/common_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dap/test/dap_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dap/test/dap_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dap/test/dependencies_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dap/test/dependencies_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dap/test/dependency_installers_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dap/test/dependency_installers_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dap/test/meta_model_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dap/test/meta_model_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/java8/src/actions/actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/java8/src/actions/actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/java8/src/actions/create_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/java8/src/actions/create_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/java8/src/actions/default_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/java8/src/actions/default_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/java8/src/actions/deps_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/java8/src/actions/deps_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/java8/src/actions/package_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/java8/src/actions/package_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/java8/src/actions/run_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/java8/src/actions/run_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/java8/src/actions/unit_test_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/java8/src/actions/unit_test_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/java8/test/power_daps_java8_meta_model_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/java8/test/power_daps_java8_meta_model_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/java9/src/actions/compile_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/java9/src/actions/compile_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/java9/src/actions/compile_test_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/java9/src/actions/compile_test_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/java9/src/actions/default_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/java9/src/actions/default_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/java9/src/actions/deps_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/java9/src/actions/deps_action.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/java9/src/actions/init_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/java9/src/actions/init_action.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/java9/templates/init/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/java9/templates/init/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/java9/src/actions/unit_test_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/java9/src/actions/unit_test_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/java9/test/actions/test_deps_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/java9/test/actions/test_deps_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/java9/test/actions/test_init_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/java9/test/actions/test_init_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/python3/src/actions/default_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/python3/src/actions/default_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/python3/src/actions/deps_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/python3/src/actions/deps_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/python3/src/actions/package_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/python3/src/actions/package_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/python3/src/actions/run_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/python3/src/actions/run_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/python3/src/actions/unit_test_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/python3/src/actions/unit_test_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/python3/test/actions/test_deps_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/python3/test/actions/test_deps_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/python3/test/actions/test_package_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/python3/test/actions/test_package_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meta-models/power-daps/python3/test/actions/test_unit_test_action.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meta-models/power-daps/python3/test/actions/test_unit_test_action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/dap" beforeDir="false" afterPath="$PROJECT_DIR$/bin/dap" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,15 +91,16 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.externalTools" />
+    <property name="settings.editor.selected.configurable" value="copyright.profiles" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
@@ -146,7 +189,11 @@
       <workItem from="1547535592664" duration="3000" />
       <workItem from="1547535849924" duration="2000" />
       <workItem from="1583577597030" duration="12917000" />
-      <workItem from="1584174339868" duration="12910000" />
+      <workItem from="1584174339868" duration="13611000" />
+      <workItem from="1584421801641" duration="843000" />
+      <workItem from="1584607839621" duration="91000" />
+      <workItem from="1584607979672" duration="51000" />
+      <workItem from="1584680894888" duration="1698000" />
     </task>
     <servers />
   </component>
@@ -169,6 +216,14 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="564" y="240" key="#com.intellij.ide.util.TreeClassChooserDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1583664860595" />
+    <state x="528" y="261" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1584607881936">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="528" y="261" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1584607881936" />
+    <state x="519" y="344" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1584683417285">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="519" y="344" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.23.1680.1027@0.23.1680.1027" timestamp="1584683417285" />
     <state x="456" y="188" key="FileChooserDialogImpl" timestamp="1583664759804">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -189,18 +244,22 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state width="809" height="263" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1583732393958" />
-    <state x="0" y="23" key="SettingsEditor" timestamp="1583665006089">
+    <state x="0" y="23" key="SettingsEditor" timestamp="1584683367794">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="0" y="23" key="SettingsEditor/0.23.1680.1027@0.23.1680.1027" timestamp="1583665006089" />
+    <state x="0" y="23" key="SettingsEditor/0.23.1680.1027@0.23.1680.1027" timestamp="1584683367794" />
     <state width="750" height="600" key="SwitcherDM" timestamp="1584280022776">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state width="750" height="600" key="SwitcherDM/0.23.1680.1027@0.23.1680.1027" timestamp="1584280022776" />
-    <state x="0" y="23" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1583732118715">
+    <state x="376" y="300" key="com.intellij.ide.util.TipDialog" timestamp="1584607853779">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="0" y="23" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.23.1680.1027@0.23.1680.1027" timestamp="1583732118715" />
+    <state x="376" y="300" key="com.intellij.ide.util.TipDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1584607853779" />
+    <state x="0" y="23" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1584681669995">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="0" y="23" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.23.1680.1027@0.23.1680.1027" timestamp="1584681669995" />
     <state x="0" y="23" width="952" height="1027" key="find.popup" timestamp="1583732115337">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
