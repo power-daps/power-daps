@@ -1,11 +1,24 @@
-# Power Daps
+# Welcome to power-daps
+
+## About
+
+power-daps allows you to create and build applications and suites of applications in multiple languages. It is intended to provide a common interface across various languages and stacks.
 
 ## Installation
-On a Mac: `brew install power-daps`
 
-On CentOS or Redhat: `yum install power-daps`
 
-On Ubuntu or Debian: `apt-get install power-daps`
+### Across platforms with Python 3
+`pip3 install power-daps`
+
+### Mac OS
+`brew install power-daps`
+
+### CentOS or RedHat
+`yum install power-daps`
+
+### Ubuntu or Debian
+`apt-get install power-daps`
+
 
 ## Usage
 
