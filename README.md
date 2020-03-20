@@ -2,7 +2,7 @@
 
 ## About
 
-power-daps allows you to create and build applications and suites of applications in multiple languages. It is intended to provide a common interface across various languages and stacks.
+power-daps is a build tool that can build apps in multiple languages. It also has templates to speed up creation of "hello world" apps in different languages. It has a plugin architecture which allows people to add support for more languages and styles easily.
 
 ## Installation
 
@@ -10,17 +10,68 @@ power-daps allows you to create and build applications and suites of application
 ### Across platforms with Python 3
 `pip3 install power-daps`
 
-### Mac OS
+### Mac OS (not yet supported)
 `brew install power-daps`
 
-### CentOS or RedHat
+### CentOS or RedHat (not yet supported)
 `yum install power-daps`
 
-### Ubuntu or Debian
+### Ubuntu or Debian (not yet supported)
 `apt-get install power-daps`
 
+## Usage (currently)
 
-## Usage
+### Create a new app
+#### Java
+`dap init --meta-model power-daps/java9`
+
+#### Python
+`dap init --meta-model power-daps/python3`
+
+#### EcmaScript
+`dap init --meta-model power-daps/es6`
+
+### Build the app
+Usually, just `dap` will do what is needed. However, you can use the following commands depending on the language:
+* `dap deps` to install dependencies
+* `dap compile` if your language requires compiling
+* `dap compile_test`
+* `dap unit_test`
+* `dap package`
+
+### Adding dependencies
+Edit dependencies.yml at the root level of your project and add dependencies. 
+'default' here will eventually be 'run' or 'test' etc depending the scope of the dependency. A given app can have dependencies using different package managers. For example, sometimes you may want something that is installed using 'brew_cask' in a python app.
+
+Examples:
+#### Java
+```
+default:
+  junit:
+    version: "4.12"
+    installer: jar
+    group_id: junit
+```
+
+#### Python
+```
+default:
+  pyyaml:
+    version: 5.3
+    installer: pip3
+```
+
+#### ES6
+```
+default:
+  bulma:
+    version: latest
+    installer: npm
+```
+
+
+
+## Usage (eventually)
 
 ### As a suite of tools
 
