@@ -19,7 +19,7 @@ import os, sys, inspect
 import unittest
 from unittest.mock import MagicMock
 
-common_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../../../dap/src")))
+common_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../../../dap-core/src")))
 src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../src")))
 
 if common_dir not in sys.path:
@@ -28,8 +28,7 @@ if common_dir not in sys.path:
 if src_dir not in sys.path:
      sys.path.insert(0, src_dir)
 
-import dap
-from dap import common
+from dap_core import common, dap
 from actions import default_action
 
 dap_command_path = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../../../../bin/dap")))

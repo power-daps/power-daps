@@ -19,7 +19,7 @@ import os, sys, inspect, glob
 import unittest
 from unittest.mock import MagicMock
 
-dap_src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../../../../dap/src")))
+dap_src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../../../../dap-core/src")))
 src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../src")))
 actions_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../src/actions")))
 
@@ -34,7 +34,7 @@ if actions_dir not in sys.path:
     sys.path.insert(0, actions_dir)
 
 import unit_test_action
-from dap import common
+from dap_core import common
 
 
 class TestRunTestAction(unittest.TestCase):

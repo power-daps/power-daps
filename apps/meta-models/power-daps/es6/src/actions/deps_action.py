@@ -1,7 +1,5 @@
-import os
-import common
-import glob
-import dependencies
+
+from dap_core import common, dependencies
 
 class DepsAction():
   name = "deps"

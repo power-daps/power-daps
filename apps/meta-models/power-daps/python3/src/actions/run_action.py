@@ -15,7 +15,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import common
+from dap_core import common
 from actions import deps_action, unit_test_action, package_action
 
 class RunAction():

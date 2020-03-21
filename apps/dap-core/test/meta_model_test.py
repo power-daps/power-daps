@@ -24,8 +24,8 @@ src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.ge
 if src_dir not in sys.path:
      sys.path.insert(0, src_dir)
 
-from dap import common
-from dap.meta_model import MetaModel
+from dap_core import common
+from dap_core.meta_model import MetaModel
 
 class TestMetaModel(unittest.TestCase):
   def test_self_awareness(self):
@@ -70,7 +70,7 @@ class TestMetaModel(unittest.TestCase):
     actions_found_in_meta_model = meta_model.actions_found_in(meta_model.actions_dir() + "/actions")
     assert "default" in actions_found_in_meta_model, \
       "'%s' does not contain '%s'" % (actions_found_in_meta_model, "default")
-    self.assertEqual(5, len(actions_found_in_meta_model))
+    self.assertEqual(6, len(actions_found_in_meta_model))
 
   def test_template_for_action(self):
     meta_model = MetaModel("power-daps/java9")

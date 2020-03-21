@@ -16,9 +16,8 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
 import os
-import common
+from dap_core import common, dependencies
 import glob
-import dependencies
 
 class DepsAction():
   name = "deps"

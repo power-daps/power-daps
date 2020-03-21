@@ -1,5 +1,5 @@
 import glob, os, sys
-import common
+from dap_core import common
 
 class UnitTestAction():
   name = "unit_test"

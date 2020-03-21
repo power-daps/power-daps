@@ -1,5 +1,5 @@
 import os
-import common
+from dap_core import common
 import glob
 
 class PackageAction():

@@ -15,11 +15,11 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import common
+from dap_core import common
 import glob
 import os, pathlib
 
-from meta_model import MetaModel
+from dap_core.meta_model import MetaModel
 
 class InitAction():
   name = "init"

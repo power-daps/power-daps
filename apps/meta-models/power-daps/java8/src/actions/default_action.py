@@ -16,8 +16,7 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
 import os
-import common
-import dap_action
+from dap_core import common, dap_action
 from actions import deps_action, unit_test_action, package_action
 
 class DefaultAction():

@@ -16,7 +16,7 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
 import glob, os, sys
-import common
+from dap_core import common
 
 class UnitTestAction():
   name = "unit_test"

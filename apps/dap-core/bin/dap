@@ -15,5 +15,5 @@ if [[ -z "${POWER_DAPS_META_MODEL}" ]]; then
 fi
 
 POWER_DAPS_META_MODEL=${POWER_DAPS_META_MODEL} \
-    ${POWER_DAPS_HOME}/apps/dap/deps/bin/python3 ${POWER_DAPS_HOME}/apps/dap/src/dap.py $@
+    ${POWER_DAPS_HOME}/apps/dap/deps/bin/python3 ${POWER_DAPS_HOME}/apps/dap_core/src/dap.py $@
 exit $?

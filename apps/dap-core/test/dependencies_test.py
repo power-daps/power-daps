@@ -23,7 +23,7 @@ src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.ge
 if src_dir not in sys.path:
     sys.path.insert(0, src_dir)
 
-from dap import dependencies
+from dap_core import dependencies
 
 
 class TestDependencies(unittest.TestCase):

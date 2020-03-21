@@ -1,4 +1,4 @@
-import common
+from dap_core import common
 import yaml
 from actions import deps_action, unit_test_action, package_action
 

@@ -15,8 +15,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import os
-import common
+import os, sys
+from dap_core import common
 import glob
 
 class PackageAction():

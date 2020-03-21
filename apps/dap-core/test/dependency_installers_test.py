@@ -25,9 +25,9 @@ src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.ge
 if src_dir not in sys.path:
   sys.path.insert(0, src_dir)
 
-from dap import common
+from dap_core import common
 
-from dap.dependency_installers import MavenCentralInstaller, PipInstaller
+from dap_core.dependency_installers import MavenCentralInstaller, PipInstaller
 from pathlib import Path
 
 class TestPipInstaller(unittest.TestCase):
