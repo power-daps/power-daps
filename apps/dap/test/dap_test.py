@@ -24,8 +24,8 @@ src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.ge
 if src_dir not in sys.path:
      sys.path.insert(0, src_dir)
 
-import common
-     
+from dap import common
+
 actions_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../meta-models/" + common.meta_model() + "/src")))
 
 if actions_dir not in sys.path:

@@ -25,37 +25,36 @@ src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.ge
 if src_dir not in sys.path:
   sys.path.insert(0, src_dir)
 
-import common
+from dap import common
 
-from dependencies import Dependencies, Dependency
-from dependency_installers import MavenCentralInstaller, PipInstaller
+from dap.dependency_installers import MavenCentralInstaller, PipInstaller
 from pathlib import Path
 
 class TestPipInstaller(unittest.TestCase):
   def test_runs_the_right_command_to_install_latest_dependency(self):
     installer = PipInstaller()
-    common.run_command = MagicMock(return_value=(0,""))
+    common.run_command = MagicMock(return_value=(0, ""))
     command = ['/usr/local/bin/pip3', '-q', 'install', 'some_name']
     installer.install("some_name")
     common.run_command.assert_called_with(command)
 
   def test_runs_without_version_when_version_is_specified_as_latest(self):
     installer = PipInstaller()
-    common.run_command = MagicMock(return_value=(0,""))
+    common.run_command = MagicMock(return_value=(0, ""))
     command = ['/usr/local/bin/pip3', '-q', 'install', 'some_name']
     installer.install("some_name", "latest")
     common.run_command.assert_called_with(command)
 
   def test_runs_command_with_version_number_if_specified(self):
     installer = PipInstaller()
-    common.run_command = MagicMock(return_value=(0,""))
+    common.run_command = MagicMock(return_value=(0, ""))
     command = ['/usr/local/bin/pip3', '-q', 'install', 'some_name==1.0']
     installer.install("some_name", "1.0")
     common.run_command.assert_called_with(command)
 
   def test_runs_command_with_version_number_even_if_it_is_a_float(self):
     installer = PipInstaller()
-    common.run_command = MagicMock(return_value=(0,""))
+    common.run_command = MagicMock(return_value=(0, ""))
     command = ['/usr/local/bin/pip3', '-q', 'install', 'some_name==1.0']
     installer.install("some_name", 1.0)
     common.run_command.assert_called_with(command)

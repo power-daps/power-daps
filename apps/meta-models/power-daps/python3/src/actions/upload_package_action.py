@@ -15,15 +15,21 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
+import os
 import common
+import glob
 
-class NoActionError:
-  action_name = "un-specified"
-  def __init__(self, action_name = "un-specified"):
-    self.action_name = action_name
+class UploadPackageAction():
+  name = "upload_package"
+
+  def __init__(self):
     return
 
   def run(self):
-    error_message = "Action '" + self.action_name + "' not found"
-    common.print_error(error_message)
-    return 1, error_message
+    common.print_verbose("Running " + self.name + " action")
+    common.stop_if_failed(*common.run_command(["/bin/rm", "-rf", "dist/dap"]))
+    return common.run_command(['/usr/local/bin/python3', '-m', 'twine', 'upload', '--repository-url', 'https://test.pypi.org/legacy/', 'dist/*'])
+
+def action():
+  return UploadPackageAction()
+

@@ -15,7 +15,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import os, sys, inspect, subprocess
+import os, sys, inspect
 import unittest
 from unittest.mock import MagicMock
 
@@ -33,7 +33,9 @@ if src_dir not in sys.path:
 if actions_dir not in sys.path:
     sys.path.insert(0, actions_dir)
 
-import common, deps_action
+import deps_action
+from dap import common
+
 
 def Any(cls):
     class Any(cls):
@@ -44,7 +46,7 @@ def Any(cls):
 class TestDepsAction(unittest.TestCase):
   def test_run_with_default_dependencies(self):
     self.ensure_default_dependencies_file()
-    common.run_command = MagicMock(return_value=(0,""))
+    common.run_command = MagicMock(return_value=(0, ""))
     command = ['/usr/local/bin/pip3', '-q', 'install', Any(str)]
     deps_action.action().run()
     common.run_command.assert_called_with(command)

@@ -11,3 +11,4 @@ build
 venv
 **/test/**/dependencies.yml
 .idea/workspace.xml
+*.egg-info

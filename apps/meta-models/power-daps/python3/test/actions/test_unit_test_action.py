@@ -33,7 +33,9 @@ if src_dir not in sys.path:
 if actions_dir not in sys.path:
     sys.path.insert(0, actions_dir)
 
-import common, unit_test_action
+import unit_test_action
+from dap import common
+
 
 class TestRunTestAction(unittest.TestCase):
   def test_run(self):

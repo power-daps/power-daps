@@ -33,9 +33,10 @@ if src_dir not in sys.path:
 if actions_dir not in sys.path:
   sys.path.insert(0, actions_dir)
 
-import common, init_action
+import init_action
+from dap import common
 
-from meta_model import MetaModel
+from dap.meta_model import MetaModel
 
 class TestInitAction(unittest.TestCase):
   def test_copies_init_template(self):

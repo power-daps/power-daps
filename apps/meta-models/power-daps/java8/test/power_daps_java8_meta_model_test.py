@@ -28,8 +28,9 @@ if common_dir not in sys.path:
 if src_dir not in sys.path:
      sys.path.insert(0, src_dir)
 
-import common, dap, dap_action
-from actions import unit_test_action, deps_action, package_action, default_action
+import dap
+from dap import common
+from actions import default_action
 
 dap_command_path = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../../../../bin/dap")))
 dap_create = [dap_command_path, "--quiet", "--meta-model", "power-daps/java8", "create"]

@@ -15,9 +15,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import os, sys, inspect, subprocess
+import os, sys, inspect
 import unittest
-from unittest.mock import MagicMock
 
 dap_src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../../../../dap/src")))
 src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../src")))
@@ -33,7 +32,7 @@ if src_dir not in sys.path:
 if actions_dir not in sys.path:
   sys.path.insert(0, actions_dir)
 
-import common, deps_action
+import deps_action
 
 
 class TestDepsAction(unittest.TestCase):

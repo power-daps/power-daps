@@ -33,14 +33,16 @@ if src_dir not in sys.path:
 if actions_dir not in sys.path:
     sys.path.insert(0, actions_dir)
 
-import common, package_action
+import package_action
+from dap import common
+
 
 class TestPackageAction(unittest.TestCase):
   def test_run(self):
     common.run_command = MagicMock()
-    command = [ common.app_dir() + "deps/bin/pyinstaller",
+    command = [common.app_dir() + "deps/bin/pyinstaller",
                         "--noconfirm", "--log-level=WARN",
-                        common.power_daps_dir() + "dap.spec"]
+               common.power_daps_dir() + "dap.spec"]
     action = package_action.action()
     action.pyinstaller = MagicMock(return_value=common.app_dir() + "deps/bin/pyinstaller")
     action.run()

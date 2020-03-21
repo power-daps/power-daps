@@ -24,8 +24,8 @@ src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.ge
 if src_dir not in sys.path:
      sys.path.insert(0, src_dir)
 
-import common
-from meta_model import MetaModel
+from dap import common
+from dap.meta_model import MetaModel
 
 class TestMetaModel(unittest.TestCase):
   def test_self_awareness(self):
