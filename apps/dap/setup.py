@@ -16,27 +16,23 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
 import setuptools
-with open("README.md", "r") as fh:
+with open("../../README.md", "r") as fh:
   long_description = fh.read()
 
 print(setuptools.find_packages(where="src"))
 
 setuptools.setup(
-  name="power-daps-core", # Replace with your own username
+  name="power-daps", # Replace with your own username
   version="0.0.1",
   author="Prasanna Pendse",
   author_email="prasanna.pendse@gmail.com",
-  description="Core part of a build tool that builds apps in multiple languages",
+  description="A build tool that builds apps in multiple languages",
   long_description=long_description,
   long_description_content_type="text/markdown",
   url="https://github.com/power-daps/power-daps",
-  package_dir={"": "src"},
-  packages=setuptools.find_packages(where="src"),
-  entry_points={
-    'console_scripts': [
-      'dap=dap_core.dap:main',
-    ],
-  },
+  install_requires=[
+    "power-daps-core==0.0.1"
+  ],
   classifiers=[
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
