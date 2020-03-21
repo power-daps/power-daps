@@ -31,7 +31,7 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
 import os, inspect, sys, importlib, glob
-from dap import common
+from dap_core import common
 
 class MetaModel:
   n = ""
@@ -74,7 +74,7 @@ class MetaModel:
             inspect.getfile(
               inspect.currentframe()
             ))[0],
-          "../../meta-models/" + self.name() + "/src")))
+          "../../../meta-models/" + self.name() + "/src")))
     return ret_val
 
   def actions(self):

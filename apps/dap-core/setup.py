@@ -34,7 +34,7 @@ setuptools.setup(
   packages=setuptools.find_packages(where="src"),
   entry_points={
     'console_scripts': [
-      'dap=dap.dap:main',
+      'dap=dap_core.dap:main',
     ],
   },
   classifiers=[

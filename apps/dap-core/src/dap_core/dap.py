@@ -16,26 +16,13 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
-#
-#  This file is part of power-daps.
-#
-#  power-daps is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 3 of the License, or
-#  (at your option) any later version.
-#
-#  power-daps is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import os, sys, inspect, importlib
+import sys, pathlib
 
-from dap import common, dap_action
-from dap.meta_model import MetaModel
+sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute()))
+
+from dap_core import common, dap_action
+from dap_core.meta_model import MetaModel
 
 
 def main(log_level="info", meta_model_name="power-daps/python3", actions_to_run=["default"]):
