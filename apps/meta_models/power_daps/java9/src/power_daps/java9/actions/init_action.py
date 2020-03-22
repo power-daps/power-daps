@@ -33,6 +33,8 @@ class InitAction():
     self.rename_files(project_dir, "PROJECT_NAME", project_name)
     self.setup_git(project_dir)
 
+    return 0, ""
+
   def copy_template_files_to(self, destination):
     common.print_verbose("Looking for files to copy in: " + str(pathlib.Path(MetaModel(common.meta_model()).template_for_action(self.name))))
     files_to_copy = [str(p) for p in pathlib.Path(MetaModel(common.meta_model()).template_for_action(self.name)).glob("*")]
