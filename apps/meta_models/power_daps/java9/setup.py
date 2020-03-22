@@ -35,7 +35,7 @@ setuptools.setup(
   entry_points = {'power_daps.meta_model.actions': [
     'power_daps.java9.actions=power_daps.java9.actions']},
   package_data = {
-    "power_daps.java9.templates": ["**/*", "**/.*", "*/.*/*", "*/**/.*"],
+    "power_daps.java9.templates": ["**/*", "**/**/**", "**/.*", "*/.*/*", "*/**/.*"],
   },
   classifiers=[
     "Programming Language :: Python :: 3",
