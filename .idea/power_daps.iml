@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="Python" name="Python">
+      <configuration sdkName="Python 3.7" />
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/apps/dap/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/apps/dap/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/apps/dap/deps" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/apps/dap/config" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/apps/dap/bin" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/apps/meta_models/power-daps/java8/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/apps/meta_models/power-daps/java8/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/apps/meta_models/power-daps/python3/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/apps/meta_models/power-daps/python3/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/bin" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/env" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/config" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/apps/meta_models/power-daps/java9/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/apps/meta_models/power-daps/java9/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/apps/dap_core/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/build" />
+      <excludeFolder url="file://$MODULE_DIR$/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/venv" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Python 3.7 interpreter library" level="application" />
+  </component>
+</module>

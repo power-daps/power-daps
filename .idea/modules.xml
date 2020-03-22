@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/power-daps.iml" filepath="$PROJECT_DIR$/.idea/power-daps.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/power_daps.iml" filepath="$PROJECT_DIR$/.idea/power_daps.iml" />
     </modules>
   </component>
 </project>

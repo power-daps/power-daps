@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['apps/dap/src/dap.py'],
-             pathex=['apps/meta-models/power-daps/python3/src', '/Users/ppendse/src/power-daps'],
+             pathex=['apps/meta_models/power_daps/python3/src', '/Users/ppendse/src/power-daps'],
              binaries=None,
              datas=None,
              hiddenimports=['actions', 'actions.default_action'],

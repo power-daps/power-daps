@@ -1,5 +1,8 @@
 fileignoreconfig:
-- filename: apps/meta-models/power-daps/java9/templates/init/config/setenv.sh
-  checksum: 1e7b9d439da285b19292b290fe2b581b051e937c07c6aac2502fb8c99878d40e
+- filename: apps/dap_core/config/setenv.sh
+  checksum: 9be96c9978d66c1646e1787ada1dedc7873a856ebfff3c8bab646fae41274dc5
+  ignore_detectors: []
+- filename: apps/meta_models/power_daps/java9/templates/init/config/setenv.sh
+  checksum: 32852106a33da2de16601d9788264db0bf5297f0ef6ef0f46ace3a9f5abeaf38
   ignore_detectors: []
 scopeconfig: []
