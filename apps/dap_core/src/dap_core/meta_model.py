@@ -30,7 +30,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import os, inspect, sys, importlib, glob, pkg_resources, pathlib
+import os, inspect, sys, importlib, glob, pkg_resources, pathlib, sysconfig, site
 from dap_core import common
 
 
@@ -78,16 +78,25 @@ class MetaModel:
       in pkg_resources.iter_entry_points('power_daps.meta_model.actions')
     }
     # common.print_error(discovered_plugins)
-
-    ret_val = os.path.realpath(
-      os.path.abspath(
-        os.path.join(
-          os.path.split(
-            inspect.getfile(
-              inspect.currentframe()
-            ))[0],
-          "../../../meta_models/" + self.name() + "/src/" + self.name())))
-
+    ret_val = ""
+    if not discovered_plugins:
+      ret_val = os.path.realpath(
+        os.path.abspath(
+          os.path.join(
+            os.path.split(
+              inspect.getfile(
+                inspect.currentframe()
+              ))[0],
+            "../../../meta_models/" + self.name() + "/src/" + self.name())))
+    else:
+      in_system_sitepackages = sysconfig.get_paths()["purelib"] + "/" + self.name()
+      in_user_sitepackages = site.getusersitepackages() + "/" + self.name()
+      if os.path.isdir(in_user_sitepackages):
+        ret_val = in_user_sitepackages
+      elif os.path.isdir(in_system_sitepackages):
+        ret_val = in_system_sitepackages
+      else:
+        ret_val = "."
     return ret_val
 
   def actions(self):
