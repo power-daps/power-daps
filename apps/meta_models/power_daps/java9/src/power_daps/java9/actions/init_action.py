@@ -17,7 +17,7 @@
 
 from dap_core import common
 import glob
-import os, pathlib
+import os, pathlib, shutil
 
 from dap_core.meta_model import MetaModel
 
@@ -48,7 +48,7 @@ class InitAction():
 
     files_to_search_and_replace_within = [str(p) for p in pathlib.Path(dir).glob(".idea/*.xml")]
     for f in files_to_search_and_replace_within:
-        sed_command = ['/usr/bin/sed', '-ie', "s/" + str_to_find + "/" + str_to_replace_with + "/g", f]
+        sed_command = [shutil.which('sed'), '-ie', "s/" + str_to_find + "/" + str_to_replace_with + "/g", f]
         common.run_command(sed_command)
 
 
