@@ -34,7 +34,9 @@ class InitAction():
     self.setup_git(project_dir)
 
   def copy_template_files_to(self, destination):
+    common.print_verbose("Looking for files to copy in: " + str(pathlib.Path(MetaModel(common.meta_model()).template_for_action(self.name))))
     files_to_copy = [str(p) for p in pathlib.Path(MetaModel(common.meta_model()).template_for_action(self.name)).glob("*")]
+    common.print_verbose("Found " + str(len(files_to_copy)) + " files to copy.")
     command_to_run = ['/bin/cp', "-R", *files_to_copy, destination]
     common.run_command(command_to_run)
 

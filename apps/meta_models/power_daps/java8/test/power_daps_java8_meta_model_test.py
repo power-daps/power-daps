@@ -59,7 +59,7 @@ class TestMetaModel(unittest.TestCase):
     default_action.action = MagicMock("default_action.action")
     default_action.action.return_value = mocked_default_action
   
-    dap.main("error", "power_daps/java8", ["default"])
+    dap.run("error", "power_daps/java8", ["default"])
 
     mocked_default_action.run.assert_called()
 

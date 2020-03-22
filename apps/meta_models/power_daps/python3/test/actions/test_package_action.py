@@ -40,6 +40,7 @@ from dap_core import common
 class TestPackageAction(unittest.TestCase):
   def test_run(self):
     action = package_action.action()
+    action.list_of_package_dirs = MagicMock(return_value=["."])
     common.run_command = MagicMock()
     # command = [common.app_dir() + "deps/bin/pyinstaller",
     #                    "--noconfirm", "--log-level=WARN",

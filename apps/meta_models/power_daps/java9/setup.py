@@ -34,6 +34,9 @@ setuptools.setup(
   packages=setuptools.find_packages(where="src"),
   entry_points = {'power_daps.meta_model.actions': [
     'power_daps.java9.actions=power_daps.java9.actions']},
+  package_data = {
+    "power_daps.java9.templates": ["**/*", "**/.*", "*/.*/*", "*/**/.*"],
+  },
   classifiers=[
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",

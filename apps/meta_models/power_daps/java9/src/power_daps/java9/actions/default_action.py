@@ -17,8 +17,8 @@
 
 from dap_core import common
 import yaml
-from meta_model import MetaModel
-from no_action_error import NoActionError
+from dap_core.meta_model import MetaModel
+from dap_core.no_action_error import NoActionError
 
 
 class DefaultAction:

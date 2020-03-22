@@ -37,29 +37,29 @@ from unittest.mock import patch
 
 
 class TestDap(unittest.TestCase):
-  def test_main_gets_action_in_the_right_order(self):
+  def test_run_gets_action_in_the_right_order(self):
     with patch('power_daps.python3.actions.default_action.action'):
       mocked_default_action = self.mock_default_action()
 
-      dap.main("error", "power_daps/python3", ["default"])
+      dap.run("error", "power_daps/python3", ["default"])
 
       mocked_default_action.run.assert_called()
 
-  def test_main_gets_and_runs_action(self):
+  def test_run_gets_and_runs_action(self):
     with patch('power_daps.python3.actions.default_action.action'):
       action = self.mock_default_action()
     
-      dap.main("error", "power_daps/python3", ["default"])
+      dap.run("error", "power_daps/python3", ["default"])
 
       action.run.assert_called_with()
 
-  def test_main_runs_only_the_specified_action(self):
+  def test_run_runs_only_the_specified_action(self):
     with patch('power_daps.python3.actions.default_action.action'):
       with patch('power_daps.python3.actions.deps_action.action'):
         deps_action = self.mock_deps_action()
         default_action = self.mock_default_action()
         
-        dap.main("error", "power_daps/python3", ["deps"])
+        dap.run("error", "power_daps/python3", ["deps"])
         
         deps_action.run.assert_called_with()
         default_action.run.assert_not_called()

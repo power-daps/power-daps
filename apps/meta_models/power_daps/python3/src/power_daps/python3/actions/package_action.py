@@ -27,8 +27,7 @@ class PackageAction():
 
   def run(self):
     common.print_verbose("Running " + self.name + " action")
-    list_of_package_dirs = [str(p.parent.absolute()) for p in pathlib.Path(".").glob("**/setup.py")]
-    for dir in list_of_package_dirs:
+    for dir in self.list_of_package_dirs():
       common.print_verbose("Packaging " + dir)
       os.chdir(dir)
       common.stop_if_failed(*common.run_command(["/bin/rm", "-rf", "dist/dap"]))
@@ -38,6 +37,9 @@ class PackageAction():
     # return common.run_command([self.pyinstaller(),
     #                    "--noconfirm", "--log-level=WARN",
     #                    common.power_daps_dir() + "dap.spec"])
+
+  def list_of_package_dirs(self):
+    return [str(p.parent.absolute()) for p in pathlib.Path(".").glob("**/setup.py")]
 
   def pyinstaller(self):
     rc, pyinstaller_path = common.run_command(["which", "pyinstaller"])

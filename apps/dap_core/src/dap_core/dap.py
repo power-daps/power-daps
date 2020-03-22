@@ -25,7 +25,7 @@ from dap_core import common, dap_action
 from dap_core.meta_model import MetaModel
 
 
-def main(log_level="info", meta_model_name="power_daps/python3", actions_to_run=["default"]):
+def run(log_level="info", meta_model_name="power_daps/python3", actions_to_run=["default"]):
   common.set_log_level(log_level)
   meta_model = MetaModel(meta_model_name)
   common.set_meta_model(meta_model_name)
@@ -43,8 +43,7 @@ def main(log_level="info", meta_model_name="power_daps/python3", actions_to_run=
       if valid_action.name == action_to_run:
         common.stop_if_failed(*valid_action.run())
 
-
-if __name__ == '__main__':
+def main():
   import argparse
   import os
   default_meta_model = os.getenv('POWER_DAPS_META_MODEL', "power_daps/python3")
@@ -65,5 +64,9 @@ if __name__ == '__main__':
 
   args = parser.parse_args()
 
-  main(args.log_level, args.meta_model, args.action)
+  run(args.log_level, args.meta_model, args.action)
   sys.exit(common.exit_code())
+
+
+if __name__ == '__main__':
+  main()
