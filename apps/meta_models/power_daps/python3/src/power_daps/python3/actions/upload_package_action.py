@@ -28,6 +28,7 @@ class UploadPackageAction():
     common.print_verbose("Running " + self.name + " action")
     for dir in self.list_of_package_dirs():
       common.print_verbose("Uploading package form " + dir)
+      common.print_verbose(" ".join(['/usr/local/bin/python3', '-m', 'twine', 'upload', '--repository-url', 'https://test.pypi.org/legacy/', dir + '/dist/*']))
       common.run_command(['/usr/local/bin/python3', '-m', 'twine', 'upload', '--repository-url', 'https://test.pypi.org/legacy/', dir + '/dist/*'])
     return 0,""
 
