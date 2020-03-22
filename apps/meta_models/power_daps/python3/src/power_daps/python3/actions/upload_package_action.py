@@ -15,9 +15,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import os
+import pathlib
 from dap_core import common
-import glob
 
 class UploadPackageAction():
   name = "upload_package"
@@ -27,8 +26,13 @@ class UploadPackageAction():
 
   def run(self):
     common.print_verbose("Running " + self.name + " action")
-    common.stop_if_failed(*common.run_command(["/bin/rm", "-rf", "dist/dap"]))
-    return common.run_command(['/usr/local/bin/python3', '-m', 'twine', 'upload', '--repository-url', 'https://test.pypi.org/legacy/', 'dist/*'])
+    for dir in self.list_of_package_dirs():
+      common.print_verbose("Uploading package form " + dir)
+      common.run_command(['/usr/local/bin/python3', '-m', 'twine', 'upload', '--repository-url', 'https://test.pypi.org/legacy/', dir + '/dist/*'])
+    return 0,""
+
+  def list_of_package_dirs(self):
+    return [str(p.parent.absolute()) for p in pathlib.Path(".").glob("**/setup.py")]
 
 def action():
   return UploadPackageAction()
