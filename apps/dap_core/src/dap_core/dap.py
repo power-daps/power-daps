@@ -46,7 +46,7 @@ def run(log_level="info", meta_model_name="power_daps/python3", actions_to_run=[
 def main():
   import argparse
   import os
-  default_meta_model = os.getenv('POWER_DAPS_META_MODEL', "power_daps/python3")
+  default_meta_model = common.configured_meta_model()
 
   parser = argparse.ArgumentParser(description="dap")
   parser.add_argument("-v", "--verbose", dest="log_level",

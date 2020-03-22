@@ -17,10 +17,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import os
-import sys
-import subprocess
-import inspect
+import os, sys, subprocess, inspect, yaml
 
 LOG_LEVEL = "info"
 FAILED = 1
@@ -146,9 +143,28 @@ def set_meta_model(meta_model):
 def meta_model():
     global saved_meta_model
     if(saved_meta_model == None):
-      saved_meta_model = os.getenv("POWER_DAPS_META_MODEL", "power_daps/python3")
+      saved_meta_model = configured_meta_model()
     return saved_meta_model
 
+def configured_meta_model():
+    configuration = config()
+    if 'power_daps_meta_model' in configuration:
+      return str(configuration['power_daps_meta_model'])
+    return os.getenv("POWER_DAPS_META_MODEL", "power_daps/python3")
+
+def config():
+    config_file_location = "config/dap_config.yml"
+    configuration = {}
+    if os.path.exists(config_file_location):
+      config_file_contents = ""
+      try:
+        with open(config_file_location) as f:
+          config_file_contents = f.read()
+        f.closed
+      except (OSError, IOError) as e:
+        print_warning("Config file could not be read from " + config_file_location)
+      configuration = yaml.load(config_file_contents, Loader=yaml.SafeLoader)
+    return configuration
 
 def power_daps_dir():
     return os.path.dirname(os.path.abspath(__file__)) + "/../../../../"
