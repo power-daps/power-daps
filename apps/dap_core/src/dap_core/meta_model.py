@@ -30,8 +30,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import os, inspect, sys, importlib, glob, pkg_resources
+import os, inspect, sys, importlib, glob, pkg_resources, pathlib
 from dap_core import common
+
 
 class MetaModel:
   n = ""
@@ -41,6 +42,9 @@ class MetaModel:
 
   def name(self):
     return self.n
+
+  def package_name(self):
+    return self.name().replace("/", ".")
 
   def load_actions_from_dir(self, dir):
 
@@ -60,7 +64,8 @@ class MetaModel:
     #for action in ["default", "deps", "unit_test", "package", "run"]:
 
     for action in self.actions_found_in(dir + "/actions"):
-      action_module = importlib.import_module("actions." + action + "_action")
+      sys.path.append(str(pathlib.Path(dir).parent.parent.absolute()))
+      action_module = importlib.import_module(self.package_name() + ".actions." + action + "_action")
       actions.append(action_module.action())
     
     return actions
