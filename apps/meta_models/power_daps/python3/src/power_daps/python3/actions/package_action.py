@@ -15,7 +15,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import os, sys
+import os, sys, pathlib
 from dap_core import common
 import glob
 
@@ -27,8 +27,14 @@ class PackageAction():
 
   def run(self):
     common.print_verbose("Running " + self.name + " action")
-    common.stop_if_failed(*common.run_command(["/bin/rm", "-rf", "dist/dap"]))
-    return common.run_command(['/usr/local/bin/python3', 'setup.py', 'sdist', 'bdist_wheel'])
+    list_of_package_dirs = [str(p.parent.absolute()) for p in pathlib.Path(".").glob("**/setup.py")]
+    for dir in list_of_package_dirs:
+      common.print_verbose("Packaging " + dir)
+      os.chdir(dir)
+      common.stop_if_failed(*common.run_command(["/bin/rm", "-rf", "dist/dap"]))
+      common.stop_if_failed(*common.run_command(['/usr/local/bin/python3', 'setup.py', 'sdist', 'bdist_wheel']))
+
+    return 0, ""
     # return common.run_command([self.pyinstaller(),
     #                    "--noconfirm", "--log-level=WARN",
     #                    common.power_daps_dir() + "dap.spec"])
