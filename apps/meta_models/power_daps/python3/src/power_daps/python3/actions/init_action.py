@@ -16,12 +16,12 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
 from dap_core import common
-import glob
 import os, pathlib, shutil
 
 from dap_core.meta_model import MetaModel
 
-class InitAction():
+
+class InitAction:
   name = "init"
 
   def run(self):
@@ -29,8 +29,10 @@ class InitAction():
     project_dir = '.'
     project_name = os.getcwd().split('/')[-1]
 
+    self.check_that_name_does_not_have_dashes(project_name)
     self.copy_template_files_to(project_dir)
     self.rename_files(project_dir, "PROJECT_NAME", project_name)
+    self.rename_files(project_dir, "PROJECT_CAMELIZED_NAME", self.camelize(project_name))
     self.setup_git(project_dir)
 
     return 0, ""
@@ -56,6 +58,7 @@ class InitAction():
       sed_command = [shutil.which('sed'), '-i', "", '-e', "s/" + str_to_find + "/" + str_to_replace_with + "/g", f]
       common.run_command(sed_command)
 
+
   def setup_git(self, dir):
     os.chdir(dir)
 
@@ -68,9 +71,16 @@ class InitAction():
     git_commit_command = ['/usr/bin/git', 'commit', '-m', 'Initial commit']
     common.run_command(git_commit_command)
 
-    common.print_raw("Initialized new Java 9 application.")
+    common.print_raw("Initialized new Python 3 application.")
 
     return 0, ""
+
+  def camelize(self, s):
+    return s.replace("_", " ").title().replace(" ", '')
+
+  def check_that_name_does_not_have_dashes(self, name):
+    if "-" in name:
+      common.exit_with_error_message("Name " + name + " has dashes. Please use underscores as dashes cause problems in the python ecosystem")
 
 def action():
   return InitAction()

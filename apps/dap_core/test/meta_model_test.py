@@ -70,7 +70,7 @@ class TestMetaModel(unittest.TestCase):
     actions_found_in_meta_model = meta_model.actions_found_in(meta_model.actions_dir() + "/actions")
     assert "default" in actions_found_in_meta_model, \
       "'%s' does not contain '%s'" % (actions_found_in_meta_model, "default")
-    self.assertEqual(7, len(actions_found_in_meta_model))
+    self.assertEqual(8, len(actions_found_in_meta_model))
 
   def test_template_for_action(self):
     meta_model = MetaModel("power_daps/java9")
