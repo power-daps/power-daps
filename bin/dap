@@ -22,11 +22,6 @@ if [[ -z "${POWER_DAPS_HOME}" ]]; then
   exit 1
 fi
 
-ENV_FILE="config/setenv.sh"
-if [ -f ${ENV_FILE} ]; then
-  source ${ENV_FILE}
-fi
-
 if [[ -z "${POWER_DAPS_META_MODEL}" ]]; then
   POWER_DAPS_META_MODEL="power_daps/python3"
 fi
