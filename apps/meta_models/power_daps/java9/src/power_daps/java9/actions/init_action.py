@@ -17,7 +17,7 @@
 
 from dap_core import common
 import glob
-import os, pathlib, shutil
+import os, sys, pathlib, shutil
 
 from dap_core.meta_model import MetaModel
 
@@ -53,8 +53,15 @@ class InitAction():
     files_to_search_and_replace_within = common.run_command(grep_files_command)[1].splitlines()
 
     for f in files_to_search_and_replace_within:
-      sed_command = [shutil.which('sed'), '-i', "", '-e', "s/" + str_to_find + "/" + str_to_replace_with + "/g", f]
+      sed_command = self.sed_find_and_replace_command(str_to_find, str_to_replace_with, f)
       common.run_command(sed_command)
+
+  def sed_find_and_replace_command(self, str_to_find, str_to_replace_with, filename):
+    sed_command = [shutil.which('sed'), '-i']
+    if sys.platform.startswith('darwin'):
+      sed_command += [""]
+    sed_command += ['-e', "s/" + str_to_find + "/" + str_to_replace_with + "/g", filename]
+    return sed_command
 
   def setup_git(self, dir):
     os.chdir(dir)
