@@ -38,7 +38,7 @@ def run_command(command):
     try:
         output = subprocess.check_output(command).decode("utf-8")
         if output:
-            print_info(output)
+            print_verbose("Output:\n" + output)
     except FileNotFoundError as err:
         subprocess_exit_code = err.errno
         output = err.strerror

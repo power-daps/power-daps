@@ -51,7 +51,7 @@ class InitAction:
       rename_command = ['/bin/mv', file_to_rename, file_to_rename.replace(str_to_find, str_to_replace_with)]
       common.run_command(rename_command)
 
-    grep_files_command = [shutil.which('find'), ".", "-type", "f", "-exec", shutil.which("grep"), "-l", "PROJECT_NAME", '{}', ";", "-print"]
+    grep_files_command = [shutil.which('find'), ".", "!", "-name", '*.pyc', "!", "-path", '*.git*', "-type", "f", "-exec", shutil.which("grep"), "-l", "PROJECT_NAME", '{}', ";", "-print"]
     files_to_search_and_replace_within = common.run_command(grep_files_command)[1].splitlines()
 
     for f in files_to_search_and_replace_within:
