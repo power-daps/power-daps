@@ -16,6 +16,7 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
 import pathlib
+from shutil import which
 from dap_core import common
 
 class UploadPackageAction():
@@ -27,9 +28,8 @@ class UploadPackageAction():
   def run(self):
     common.print_verbose("Running " + self.name + " action")
     for dir in self.list_of_package_dirs():
-      common.print_verbose("Uploading package form " + dir)
-      common.print_verbose(" ".join(['/usr/local/bin/python3', '-m', 'twine', 'upload', '--repository-url', 'https://test.pypi.org/legacy/', dir + '/dist/*']))
-      common.run_command(['/usr/local/bin/python3', '-m', 'twine', 'upload', '--repository-url', 'https://test.pypi.org/legacy/', dir + '/dist/*'])
+      common.print_verbose("Uploading package from " + dir)
+      common.run_command([which('python3'), '-m', 'twine', 'upload', '--repository', 'testpypi', dir + '/dist/*'])
     return 0,""
 
   def list_of_package_dirs(self):
