@@ -18,6 +18,7 @@
 import os
 import urllib.request
 from xml.etree import ElementTree
+from shutil import which
 from dap_core import common
 
 class CommandLineInstaller:
@@ -37,7 +38,7 @@ class PipInstaller:
     package_name = dep_name
     if not dep_version == "latest":
       package_name = dep_name + "==" + str(dep_version)
-    exit_code, output = common.run_command(['/usr/local/bin/pip3', '-q', 'install', package_name])
+    exit_code, output = common.run_command([which('pip3'), '-q', 'install', package_name])
     common.stop_if_failed(exit_code, output)
 
 class MavenCentralInstaller:
