@@ -14,7 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
-
+from shutil import which
 from dap_core import common
 
 
@@ -27,7 +27,7 @@ class UnitTestAction:
     self.classpath = classpath
 
   def run(self):
-    common.print_verbose("Running " + self.name + " action")
+    common.print_info("Running " + self.name + " action")
     cp_string = ""
     if self.classpath != "":
       cp_string = " -cp " + self.classpath + ":" + self.libs_classpath()
@@ -35,13 +35,14 @@ class UnitTestAction:
       cp_string = " -cp " + self.libs_classpath()
 
     common.run_command_in_shell('mkdir -p ' + self.target_dir)
-    exit_code, output = common.run_command_in_shell('java ' + \
-                                cp_string + " " + \
-                                'org.junit.runner.JUnitCore ' + \
-                                " ".join(self.list_of_test_classes()))
+    
+    run_unit_test_command = " ".join([which('java'),
+                             cp_string,
+                             'org.junit.runner.JUnitCore'] + self.list_of_test_classes())
 
-    common.print_raw(output)
-    return 0, ""
+    common.print_verbose(run_unit_test_command)
+    exit_code, output = common.run_command_in_shell(run_unit_test_command)
+    return exit_code, output.decode()
 
   def libs_classpath(self):
     libs = common.run_command_in_shell('find lib/java -type f -name "*.jar" -print')[1]

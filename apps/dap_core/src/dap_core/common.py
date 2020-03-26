@@ -72,9 +72,10 @@ def run_command_in_shell(command):
     print_error(output)
   except subprocess.CalledProcessError as err:
     subprocess_exit_code = err.returncode
+    output = err.stdout
     print_error("Exit code: " + str(subprocess_exit_code))
     if output:
-      print_error(output)
+      print_error(output.decode())
   return subprocess_exit_code, output
 
 

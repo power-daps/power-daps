@@ -30,7 +30,7 @@ class DefaultAction:
     return
 
   def run(self):
-    common.print_verbose("Running " + self.name + " action")
+    common.print_info("Running " + self.name + " action")
 
     with open(self.actions_file_location) as f:
       actions_file_contents = f.read()

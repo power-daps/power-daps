@@ -29,7 +29,7 @@ class DepsAction():
     return
 
   def run(self):
-    common.print_verbose("Running " + self.name + " action")
+    common.print_info("Running " + self.name + " action")
 
     self.deps = self.load_dependencies(self.dependencies_file_location)
 

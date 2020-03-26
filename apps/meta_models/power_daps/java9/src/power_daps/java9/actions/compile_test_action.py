@@ -27,7 +27,7 @@ class CompileTestAction:
     self.classpath = classpath
 
   def run(self):
-    common.print_verbose("Running " + self.name + " action")
+    common.print_info("Running " + self.name + " action")
     cp_string = ""
     if self.classpath != "":
       cp_string = " -cp " + self.classpath + ":" + self.libs_classpath()
