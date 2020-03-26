@@ -37,6 +37,9 @@ setuptools.setup(
       'dap=dap_core.dap:main',
     ],
   },
+  install_requires=[
+    "pyyaml",
+  ],
   classifiers=[
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
