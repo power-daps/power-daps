@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-`dirname $0`/sys_install python3
+`dirname $0`/sys_install pip3
 if [ $? -ne 0 ] ; then
   exit 1
 fi
 
-python3 $@
+pip3 $@
 

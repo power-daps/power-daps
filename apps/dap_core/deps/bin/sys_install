@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+FOUND=1
+NOT_FOUND=0
+
+function sys_install() {
+  pkg_to_install=$1
+  if [ -z "$pkg_to_install" ] ; then
+    echo "Don't know what to install. Please pass it in"
+    exit 1
+  fi
+  installer=$(installer $(os_identifier))
+  echo "Installing $pkg_to_install with $installer"
+  $installer install $pkg_to_install
+}
+
+function installer() {
+  os=$1
+  if [[ "$os" == "darw" ]] ; then
+    printf "brew"
+  elif [[ "$os" == "debi" ]] ; then
+    printf "apt-get"
+  elif [[ "$os" == "rhel" ]] ; then
+    printf "yum"
+  else
+    printf ""
+  fi
+}
+
+function os_identifier() {
+  identifier=${OSTYPE:0:4}
+  if [[ "$identifier" == "linu" ]] ; then
+    id_like=`grep ID_LIKE /etc/os-release | cut -d= -f2`
+    identifier=${id_like:0:4}
+  fi
+  printf $identifier
+}
+
+function is_found() {
+  cmd=$1
+  which $cmd > /dev/null
+  if [ $? -ne 0 ]; then
+    return $NOT_FOUND
+  fi
+  return $FOUND
+}
+
+pkg_to_install=$1
+cmd_to_check_for=$2
+
+if [ -z "$pkg_to_install" ] ; then
+  echo "Usage: sys_install pkg_to_install [cmd_to_check_for]"
+  exit 1
+fi
+
+if [ -z "$cmd_to_check_for" ] ; then
+  cmd_to_check_for=$pkg_to_install
+fi
+
+is_found $cmd_to_check_for
+did_we_find_it=$?
+if [[ "$did_we_find_it" -eq "$NOT_FOUND" ]] ; then
+  echo "$cmd_to_check_for not found."
+  sys_install $pkg_to_install
+fi
