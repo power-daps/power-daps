@@ -25,7 +25,7 @@ class UnitTestAction():
     return
 
   def run(self):
-    common.print_verbose("Running " + self.name + " action")
+    common.print_info("Running " + self.name + " action")
     exit_code = 0
     for test_dir in glob.iglob('**/test', recursive=True):
       original_working_directory = os.getcwd()

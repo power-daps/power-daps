@@ -16,7 +16,7 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
 from dap_core import common
-from actions import deps_action, unit_test_action, package_action
+from power_daps.python3.actions import deps_action, unit_test_action, package_action
 
 class RunAction():
   name = "run"
@@ -25,7 +25,7 @@ class RunAction():
     return
 
   def run(self):
-    common.print_verbose("Running " + self.name + " action")
+    common.print_info("Running " + self.name + " action")
     common.print_raw("blueee!!!")
     return 0, ""
     

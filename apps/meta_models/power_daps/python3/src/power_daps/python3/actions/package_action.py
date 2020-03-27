@@ -26,7 +26,7 @@ class PackageAction():
     return
 
   def run(self):
-    common.print_verbose("Running " + self.name + " action")
+    common.print_info("Running " + self.name + " action")
     for dir in self.list_of_package_dirs():
       common.print_verbose("Packaging " + dir)
       os.chdir(dir)

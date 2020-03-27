@@ -26,7 +26,7 @@ class UploadPackageAction():
     return
 
   def run(self):
-    common.print_verbose("Running " + self.name + " action")
+    common.print_info("Running " + self.name + " action")
     for dir in self.list_of_package_dirs():
       common.print_verbose("Uploading package from " + dir)
       common.run_command([which('python3'), '-m', 'twine', 'upload', '--repository', 'testpypi', dir + '/dist/*'])

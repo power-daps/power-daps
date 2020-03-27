@@ -26,7 +26,7 @@ class CleanAction():
     return
 
   def run(self):
-    common.print_verbose("Running " + self.name + " action")
+    common.print_info("Running " + self.name + " action")
     self.delete_dirs_named("**/dist")
     self.delete_dirs_named("**/build")
     self.delete_dirs_named("**/*.egg-info")

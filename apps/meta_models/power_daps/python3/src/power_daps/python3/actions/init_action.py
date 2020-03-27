@@ -25,7 +25,7 @@ class InitAction:
   name = "init"
 
   def run(self):
-    common.print_verbose("Running " + self.name + " action")
+    common.print_info("Running " + self.name + " action")
     project_dir = '.'
     project_name = os.getcwd().split('/')[-1]
 
