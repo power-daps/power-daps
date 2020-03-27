@@ -16,9 +16,10 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-import yaml
+import sys, platform, yaml
+from shutil import which
 from dap_core import common
-from dap_core.dependency_installers import CommandLineInstaller, MavenCentralInstaller, PipInstaller
+from dap_core.dependency_installers import CommandLineInstaller, MavenCentralInstaller, PipInstaller, SysInstaller
 
 class Dependencies():
   def __init__(self, dependencies_file_contents):
@@ -86,9 +87,9 @@ class Dependency():
   def installer(self):
     installers = dict()
     installers["npm"] = CommandLineInstaller(['/usr/local/bin/npm', 'install', '--save-dev'])
-    # installers["pip3"] = CommandLineInstaller(['/usr/local/bin/pip3', '-q', 'install'])
     installers["pip3"] = PipInstaller()
-    installers["brew_cask"] = CommandLineInstaller([common.app_dir() + "deps/bin/brew", 'cask', 'install'])
+    installers["system"] = SysInstaller()
+    installers["brew_cask"] = CommandLineInstaller([which('brew'), 'cask', 'install'])
     installers["jar"] = MavenCentralInstaller()
 
     return installers[self.installer_type]

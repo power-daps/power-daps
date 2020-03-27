@@ -15,7 +15,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import os
+import os, sys
 import urllib.request
 from xml.etree import ElementTree
 from shutil import which
@@ -40,6 +40,43 @@ class PipInstaller:
       package_name = dep_name + "==" + str(dep_version)
     exit_code, output = common.run_command([which('pip3'), '-q', 'install', package_name])
     common.stop_if_failed(exit_code, output)
+
+class SysInstaller:
+  def __init__(self):
+    return
+
+  def install(self, dep_name, dep_version="latest", details={}):
+    install_command = [self.installer(), "install", self.dependency_with_version(dep_name, dep_version, self.installer())]
+    common.print_raw(install_command)
+
+  def dependency_with_version(self, dep_name, dep_version, sys_installer):
+    if dep_version == "latest":
+      return dep_name
+    elif sys_installer == "brew":
+      return dep_name + "@" + dep_version
+    elif sys_installer == "apt-get":
+      return dep_name + "=" + dep_version
+    elif sys_installer == "yum":
+      return dep_name + "-" + dep_version
+    else:
+      return ""
+
+  def installer(self):
+    if sys.platform.startswith('darwin'):
+      return 'brew'
+    elif sys.platform.startswith('linux'):
+      if self.linux_distribution().startswith('debian'):
+        return 'apt-get'
+      elif self.linux_distribution().startswith('rhel'):
+        return 'yum'
+      else:
+        common.print_error("Cannot install system dependencies because /etc/os-release does not exist. It is required to determine linux distribution.")
+    else:
+      common.exit_with_error_message("Sorry, only Linux (Ubuntu, CentOS) and Mac OS X are currently supported")
+
+  def linux_distribution(self):
+    exit_code, output = common.run_command([which('grep'), 'ID_LIKE', '/etc/os-release'])
+    return output.split("=")[1].rstrip()
 
 class MavenCentralInstaller:
   # https://search.maven.org/remotecontent?filepath=
