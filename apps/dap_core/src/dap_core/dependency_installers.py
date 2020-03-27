@@ -15,8 +15,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import os, sys
+import os, sys, re
 import urllib.request
+from distutils.version import LooseVersion
 from xml.etree import ElementTree
 from shutil import which
 from dap_core import common
@@ -31,6 +32,11 @@ class CommandLineInstaller:
     common.stop_if_failed(exit_code, output)
 
 class PipInstaller:
+  NOT_INSTALLED = 0
+  SAME_VERSION_INSTALLED = 1
+  OLDER_VERSION_INSTALLED = 2
+  NEWER_VERSION_INSTALLED = 3
+
   def __init__(self):
     return
 
@@ -38,8 +44,52 @@ class PipInstaller:
     package_name = dep_name
     if not dep_version == "latest":
       package_name = dep_name + "==" + str(dep_version)
-    exit_code, output = common.run_command([which('pip3'), '-q', 'install', package_name])
-    common.stop_if_failed(exit_code, output)
+
+    status = self.is_already_installed(dep_name, dep_version)
+    if status == PipInstaller.NOT_INSTALLED:
+      common.print_verbose(dep_name + " not installed. Installing.")
+      command_to_run = [which('pip3'), '-q', 'install', package_name]
+      exit_code, output = common.run_command(command_to_run)
+      common.stop_if_failed(exit_code, output)
+
+    elif status == PipInstaller.OLDER_VERSION_INSTALLED:
+      common.print_verbose(dep_name + " is already installed. Upgrading to " + dep_version + " version.")
+
+      command_to_run = [which('pip3'), '-q', 'install', '--upgrade', package_name]
+      exit_code, output = common.run_command(command_to_run)
+      common.stop_if_failed(exit_code, output)
+
+    elif status == PipInstaller.NEWER_VERSION_INSTALLED:
+      common.print_verbose("Newer version of " + dep_name + " installed. Uninstalling and installing " + dep_version + " version.")
+
+      command_to_run = [which('pip3'), '-q', 'uninstall', package_name]
+      exit_code, output = common.run_command(command_to_run)
+      common.stop_if_failed(exit_code, output)
+
+      command_to_run = [which('pip3'), '-q', 'install', package_name]
+      exit_code, output = common.run_command(command_to_run)
+      common.stop_if_failed(exit_code, output)
+    else:
+      common.print_verbose(dep_name + ", " + dep_version + " is already installed. Doing nothing.")
+
+  def is_already_installed(self, dep_name, dep_version):
+    exit_code, output = common.run_command_in_shell("pip3 list --format=columns | grep -i " + dep_name)
+    if not output:
+      return PipInstaller.NOT_INSTALLED
+    else:
+      installed_version = re.sub(' +', ' ', output).split(" ")[1]
+
+      if dep_version == "latest":
+        # Assume older version so dap will try to upgrade automatically
+        return PipInstaller.OLDER_VERSION_INSTALLED
+      elif LooseVersion(installed_version) == LooseVersion(dep_version):
+        return PipInstaller.SAME_VERSION_INSTALLED
+      elif LooseVersion(installed_version) < LooseVersion(dep_version):
+        return PipInstaller.OLDER_VERSION_INSTALLED
+      elif LooseVersion(installed_version) > LooseVersion(dep_version):
+        return PipInstaller.NEWER_VERSION_INSTALLED
+
+
 
 class SysInstaller:
   def __init__(self):
