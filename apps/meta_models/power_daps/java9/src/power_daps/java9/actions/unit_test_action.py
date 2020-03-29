@@ -49,6 +49,8 @@ class UnitTestAction:
       output = output.decode()
     except (UnicodeDecodeError, AttributeError):
       pass
+
+    common.print_raw(output)
     return exit_code, output
 
   def libs_classpath(self):
