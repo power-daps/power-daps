@@ -43,11 +43,18 @@ class InitAction():
     common.run_command(command_to_run)
 
   def rename_files(self, dir, str_to_find, str_to_replace_with):
-    files_to_rename = [str(p) for p in pathlib.Path(dir).glob("*" + str_to_find + "*")]
-    common.print_verbose("Renaming " + " ".join(files_to_rename))
-    for file_to_rename in files_to_rename:
-      rename_command = ['/bin/mv', file_to_rename, file_to_rename.replace(str_to_find, str_to_replace_with)]
-      common.run_command(rename_command)
+    dirs = sorted(common.dirs_in(dir, ["__pycache__", "dist", "build", "egg-info", ".git"]) + ["."], key=len, reverse=True)
+    for d in dirs:
+      files_to_rename = [str(p) for p in pathlib.Path(d).glob("*" + str_to_find + "*")]
+      for f in files_to_rename:
+        common.print_verbose("Renaming " + f + " to " + f.replace(str_to_find, str_to_replace_with))
+        rename_command = ['/bin/mv', f, f.replace(str_to_find, str_to_replace_with)]
+        common.run_command(rename_command)
+
+      if str_to_find in str(d):
+        common.print_verbose("Renaming " + d + " to " + d.replace(str_to_find, str_to_replace_with))
+        rename_command = ['/bin/mv', d, d.replace(str_to_find, str_to_replace_with)]
+        common.run_command(rename_command)
 
     grep_files_command = [shutil.which('find'), ".", "!", "-name", '*.pyc', "!", "-path", '*.git*', "-type", "f", "-exec", shutil.which("grep"), "-l", "PROJECT_NAME", '{}', ";", "-print"]
     files_to_search_and_replace_within = common.run_command(grep_files_command)[1].splitlines()

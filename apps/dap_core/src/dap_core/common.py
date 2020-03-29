@@ -17,7 +17,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import os, sys, subprocess, inspect, yaml
+import os, sys, subprocess, inspect, yaml, pathlib
 
 LOG_LEVEL = "info"
 FAILED = 1
@@ -192,6 +192,22 @@ def actions_dir():
 def exit_with_error_message(error_message):
     print_error(error_message)
     sys.exit(1)
+
+def dirs_in(dirname, ignore_dirs = []):
+  subfolders = [f.path for f in os.scandir(dirname) if f.is_dir()]
+  subfolders_without_ignore_dirs = []
+  for dirname in list(subfolders):
+    is_ignore_dir = False
+    for ignore_dir in ignore_dirs:
+      if ignore_dir in dirname:
+        is_ignore_dir = True
+
+    if not is_ignore_dir:
+      subfolders_without_ignore_dirs.append(dirname)
+
+    subfolders_without_ignore_dirs.extend(dirs_in(dirname, ignore_dirs))
+
+  return subfolders_without_ignore_dirs
 
 if __name__ == '__main__':
     print_error("This module " + __file__ + " cannot be run as a stand alone command")

@@ -34,6 +34,7 @@ if actions_dir not in sys.path:
     sys.path.insert(0, actions_dir)
 
 import package_action
+from shutil import which
 from dap_core import common
 
 
@@ -46,7 +47,7 @@ class TestPackageAction(unittest.TestCase):
     #                    "--noconfirm", "--log-level=WARN",
     #           common.power_daps_dir() + "dap.spec"]
     # action.pyinstaller = MagicMock(return_value=common.app_dir() + "deps/bin/pyinstaller")
-    command = ['/usr/local/bin/python3', 'setup.py', 'sdist', 'bdist_wheel']
+    command = [which('python3'), 'setup.py', 'sdist', 'bdist_wheel']
     action.run()
     common.run_command.assert_called_with(command)
 

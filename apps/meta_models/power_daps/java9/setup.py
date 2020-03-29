@@ -16,10 +16,25 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
 import setuptools
+
+
+def generate_glob_patterns(depth):
+  glob_patterns = ["*", ".*"]
+  for i in range(depth - 1):
+    glob_patterns_to_add = []
+    for p in glob_patterns:
+      glob_patterns_to_add.append(p + "/*")
+      glob_patterns_to_add.append(p + "/.*")
+    glob_patterns += glob_patterns_to_add
+
+  return glob_patterns
+
+
 with open("README.md", "r") as fh:
   long_description = fh.read()
 
-print(setuptools.find_packages(where="src"))
+
+package_data_patterns = generate_glob_patterns(6)
 
 setuptools.setup(
   name="power-daps-meta-model-java-9",
@@ -35,7 +50,7 @@ setuptools.setup(
   entry_points = {'power_daps.meta_model.actions': [
     'power_daps.java9.actions=power_daps.java9.actions']},
   package_data = {
-    "power_daps.java9.templates": ["**/*", "**/**/**", "**/.*", "*/.*/*", "*/**/.*"],
+    "power_daps.java9.templates": package_data_patterns, # ["**/*", "**/**/**", "**/.*", "*/.*/*", "*/**/.*"],
   },
   classifiers=[
     "Programming Language :: Python :: 3",

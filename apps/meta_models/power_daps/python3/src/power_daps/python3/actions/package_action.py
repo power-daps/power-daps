@@ -16,6 +16,7 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
 import os, sys, pathlib
+from shutil import which
 from dap_core import common
 import glob
 
@@ -30,8 +31,8 @@ class PackageAction():
     for dir in self.list_of_package_dirs():
       common.print_verbose("Packaging " + dir)
       os.chdir(dir)
-      common.stop_if_failed(*common.run_command(["/bin/rm", "-rf", "dist/dap"]))
-      common.stop_if_failed(*common.run_command(['/usr/local/bin/python3', 'setup.py', 'sdist', 'bdist_wheel']))
+
+      common.stop_if_failed(*common.run_command([which('python3'), 'setup.py', 'sdist', 'bdist_wheel']))
 
     return 0, ""
     # return common.run_command([self.pyinstaller(),
@@ -39,11 +40,13 @@ class PackageAction():
     #                    common.power_daps_dir() + "dap.spec"])
 
   def list_of_package_dirs(self):
-    return [str(p.parent.absolute()) for p in pathlib.Path(".").glob("**/setup.py")]
+    all_dirs_with_setup_py = [str(p.parent.absolute()) for p in pathlib.Path(".").glob("**/setup.py")]
+    dirs_without_templates = [d for d in all_dirs_with_setup_py if "templates" not in d]
+    return dirs_without_templates
 
-  def pyinstaller(self):
-    rc, pyinstaller_path = common.run_command(["which", "pyinstaller"])
-    return pyinstaller_path.rstrip()
+  # def pyinstaller(self):
+  #  rc, pyinstaller_path = common.run_command(["which", "pyinstaller"])
+  #  return pyinstaller_path.rstrip()
 
 def action():
    return PackageAction()

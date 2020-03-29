@@ -35,14 +35,21 @@ class UnitTestAction:
       cp_string = " -cp " + self.libs_classpath()
 
     common.run_command_in_shell('mkdir -p ' + self.target_dir)
-    
+
+    if not self.list_of_test_classes():
+      common.print_verbose("No test classes found. Not running unit tests.")
+      return 0, ""
+
     run_unit_test_command = " ".join([which('java'),
                              cp_string,
                              'org.junit.runner.JUnitCore'] + self.list_of_test_classes())
 
-    common.print_verbose(run_unit_test_command)
     exit_code, output = common.run_command_in_shell(run_unit_test_command)
-    return exit_code, output.decode()
+    try:
+      output = output.decode()
+    except (UnicodeDecodeError, AttributeError):
+      pass
+    return exit_code, output
 
   def libs_classpath(self):
     libs = common.run_command_in_shell('find lib/java -type f -name "*.jar" -print')[1]

@@ -16,6 +16,7 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
 import glob, os, sys
+from shutil import which
 from dap_core import common
 
 class UnitTestAction():
@@ -38,7 +39,7 @@ class UnitTestAction():
       tests = []
       for filename in glob.iglob('**/*.py', recursive=True):
           tests.append(filename)
-      command = ['/usr/local/bin/python3', '-m', 'unittest']
+      command = [which('python3'), '-m', 'unittest']
       command.extend(tests)
       subprocess_exit_code, output = common.run_command(command)
       if subprocess_exit_code != common.SUCCESS:
