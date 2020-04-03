@@ -47,7 +47,7 @@ class TestDepsAction(unittest.TestCase):
   def test_run_with_default_dependencies(self):
     self.ensure_default_dependencies_file()
     common.run_command = MagicMock(return_value=(0, ""))
-    command = ['/usr/local/bin/pip3', '-q', 'install', Any(str)]
+    command = ['/usr/local/bin/pip3', '-q', 'install', Any(str), Any(str)]
     deps_action.action().run()
     common.run_command.assert_called_with(command)
     self.ensure_empty_dependencies_file()
