@@ -17,16 +17,13 @@
 
 import pathlib
 from dap_core import common
+from  dap_core.dap_action import DapAction
 
 
-class CleanAction():
-  name = "clean"
-
-  def __init__(self):
-    return
+class CleanAction(DapAction):
 
   def run(self):
-    common.print_info("Running " + self.name + " action")
+    super().run()
     self.delete_dirs_named("**/target")
     self.delete_dirs_named("**/dist")
     self.delete_dirs_named("**/build")
@@ -41,10 +38,6 @@ class CleanAction():
 
   def dirs_named(self, dir_name):
     return [str(p.absolute()) for p in pathlib.Path(".").glob(dir_name)]
-
-  def pyinstaller(self):
-    rc, pyinstaller_path = common.run_command(["which", "pyinstaller"])
-    return pyinstaller_path.rstrip()
 
 
 def action():

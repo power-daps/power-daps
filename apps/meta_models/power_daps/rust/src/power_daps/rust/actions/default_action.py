@@ -41,9 +41,8 @@ class DefaultAction:
     return 0, ""
 
   def action_for(self, action_name):
-    meta_model = MetaModel("power_daps/rust")
-    the_actions = list(filter(lambda a: a.name==action_name, meta_model.actions()))
-    the_actions
+    meta_model = MetaModel(common.meta_model())
+    the_actions = list(filter(lambda a: common.action_name(a)==action_name, meta_model.actions()))
     if the_actions:
       return the_actions[0]
     else:

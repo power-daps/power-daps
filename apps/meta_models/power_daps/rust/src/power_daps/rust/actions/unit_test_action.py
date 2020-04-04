@@ -16,20 +16,18 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
 from dap_core import common
+from dap_core.dap_action import DapAction
 from power_daps.rust.cargo_command import CargoCommand
 
 
-class UnitTestAction:
-  name = "unit_test"
-
+class UnitTestAction(DapAction):
   def __init__(self, source_dir="test", target_dir="target/test"):
+    super().__init__()
     self.source_dir = source_dir
     self.target_dir = target_dir
 
   def run(self):
-    common.print_info("Running " + self.name + " action")
     common.run_command_in_shell('mkdir -p ' + self.target_dir)
-
     return CargoCommand('test').run()
 
 

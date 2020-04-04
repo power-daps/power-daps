@@ -18,14 +18,17 @@
 from dap_core import common
 import os, sys, pathlib, shutil
 from dap_core.meta_model import MetaModel
+from dap_core.dap_action import DapAction
 from power_daps.rust.cargo_command import CargoCommand
 
 
-class InitAction:
-  name = "init"
+class InitAction(DapAction):
+
+  def __init__(self):
+    super().__init__()
 
   def run(self):
-    common.print_info("Running " + self.name + " action")
+    super().run()
     project_dir = '.'
     project_name = os.getcwd().split('/')[-1]
 
@@ -40,8 +43,8 @@ class InitAction:
     return 0, ""
 
   def copy_template_files_to(self, destination):
-    common.print_verbose("Looking for files to copy in: " + str(pathlib.Path(MetaModel(common.meta_model()).template_for_action(self.name))))
-    files_to_copy = [str(p) for p in pathlib.Path(MetaModel(common.meta_model()).template_for_action(self.name)).glob("*")]
+    common.print_verbose("Looking for files to copy in: " + str(pathlib.Path(MetaModel(common.meta_model()).template_for_action(common.action_name(self)))))
+    files_to_copy = [str(p) for p in pathlib.Path(MetaModel(common.meta_model()).template_for_action(common.action_name(self))).glob("*")]
     common.print_verbose("Found " + str(len(files_to_copy)) + " files to copy.")
     command_to_run = ['/bin/cp', "-R", *files_to_copy, destination]
     common.run_command(command_to_run)

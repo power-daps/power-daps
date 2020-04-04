@@ -52,6 +52,8 @@ def run_command(command):
             print_error(output)
     return subprocess_exit_code, output
 
+def action_name(a):
+  return a.name() if callable(a.name) else a.name
 
 def run_command_in_shell(command):
   """Run the specified command in a shell"""

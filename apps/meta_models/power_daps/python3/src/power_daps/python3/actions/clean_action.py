@@ -29,6 +29,7 @@ class CleanAction():
     common.print_info("Running " + self.name + " action")
     self.delete_dirs_named("**/dist")
     self.delete_dirs_named("**/build")
+    self.delete_dirs_named("**/__pycache__")
     self.delete_dirs_named("**/*.egg-info")
     return 0, ""
 

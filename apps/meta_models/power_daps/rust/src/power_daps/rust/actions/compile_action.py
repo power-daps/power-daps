@@ -16,18 +16,19 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
 from dap_core import common
+from dap_core.dap_action import DapAction
 from power_daps.rust.cargo_command import CargoCommand
 
 
-class CompileAction:
-  name = "compile"
+class CompileAction(DapAction):
 
   def __init__(self, source_dir="src", target_dir="target/production"):
+    super().__init__()
     self.source_dir = source_dir
     self.target_dir = target_dir
 
   def run(self):
-    common.print_info("Running " + self.name + " action")
+    super().run()
     common.run_command_in_shell('mkdir -p ' + self.target_dir)
 
     return CargoCommand('build --target-dir ' + self.target_dir).run()

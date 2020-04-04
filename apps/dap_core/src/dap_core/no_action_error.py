@@ -24,6 +24,6 @@ class NoActionError:
     return
 
   def run(self):
-    error_message = "Action '" + self.action_name + "' not found"
+    error_message = "No action named '" + self.action_name + "' found."
     common.print_error(error_message)
     return 1, error_message

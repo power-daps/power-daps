@@ -31,16 +31,18 @@ def run(log_level="info", meta_model_name="power_daps/python3", actions_to_run=[
   common.set_meta_model(meta_model_name)
 
   valid_actions = meta_model.actions()
+  valid_action_names = [common.action_name(va) for va in valid_actions]
 
   common.print_verbose('Actions to run ' + str(actions_to_run))
-  common.print_verbose('Valid actions ' + str([va.name for va in valid_actions]))
+  common.print_verbose('Valid actions ' + str(valid_action_names))
 
   for action_to_run in actions_to_run:
-    if action_to_run not in [va.name for va in valid_actions]:
+    if action_to_run not in valid_action_names:
       common.print_error("Action '" + action_to_run + "' not found.")
       continue
     for valid_action in valid_actions:
-      if valid_action.name == action_to_run:
+      valid_action_name = common.action_name(valid_action)
+      if valid_action_name == action_to_run:
         common.stop_if_failed(*valid_action.run())
 
 def main():
