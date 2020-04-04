@@ -18,6 +18,7 @@
 from dap_core import common
 from power_daps.rust.cargo_command import CargoCommand
 
+
 class RunAction():
   name = "run"
 
@@ -30,7 +31,8 @@ class RunAction():
     exit_code, output = CargoCommand('run --target-dir ' + self.target_dir).run()
     common.print_raw(output)
     return exit_code, output
-    
+
+
 def action():
    return RunAction()
 

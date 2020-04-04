@@ -15,10 +15,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import os
 from dap_core import common
-import glob
 from dap_core import dependencies
+
 
 class DepsAction():
   name = "deps"
@@ -49,7 +48,7 @@ class DepsAction():
 
     return dependencies.Dependencies(dependencies_file_contents)
 
-  def set_dependencies_file_location(self, dependencies_file_location):
+  def set_dependencies_file_location(self, dependencies_file_location=""):
     if dependencies_file_location:
       self.dependencies_file_location = dependencies_file_location
     else:

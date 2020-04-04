@@ -15,22 +15,23 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import os, sys, pathlib
-from shutil import which
 from dap_core import common
-import glob
+from power_daps.rust.cargo_command import CargoCommand
+
 
 class PackageAction():
   name = "package"
 
-  def __init__(self):
+  def __init__(self, target_dir='target/production'):
+    self.target_dir = target_dir
     return
 
   def run(self):
     common.print_info("Running " + self.name + " action")
-    exit_code, output = CargoCommand('package --target-dir ' + self.target_dir).run()
+    exit_code, output = CargoCommand('package --allow-dirty --target-dir ' + self.target_dir).run()
     common.print_raw(output)
     return exit_code, output
+
 
 def action():
    return PackageAction()

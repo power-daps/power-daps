@@ -15,9 +15,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import os, sys, pathlib
+import pathlib
 from dap_core import common
-import glob
+
 
 class CleanAction():
   name = "clean"
@@ -45,6 +45,7 @@ class CleanAction():
   def pyinstaller(self):
     rc, pyinstaller_path = common.run_command(["which", "pyinstaller"])
     return pyinstaller_path.rstrip()
+
 
 def action():
   return CleanAction()

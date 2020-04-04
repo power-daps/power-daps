@@ -15,9 +15,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-from shutil import which
 from dap_core import common
 from power_daps.rust.cargo_command import CargoCommand
+
 
 class CompileTestAction:
   name = "compile_test"

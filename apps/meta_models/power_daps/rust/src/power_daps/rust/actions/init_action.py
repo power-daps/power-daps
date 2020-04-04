@@ -17,9 +17,9 @@
 
 from dap_core import common
 import os, sys, pathlib, shutil
-
 from dap_core.meta_model import MetaModel
 from power_daps.rust.cargo_command import CargoCommand
+
 
 class InitAction:
   name = "init"
@@ -83,7 +83,6 @@ class InitAction:
     git_commit_command = ['/usr/bin/git', 'commit', '-m', 'Initialized with power_daps template power_daps/rust']
     common.run_command(git_commit_command)
 
-
     return 0, ""
 
   def camelize(self, s):
@@ -92,6 +91,7 @@ class InitAction:
   def check_that_name_does_not_have_dashes(self, name):
     if "-" in name:
       common.exit_with_error_message("Name " + name + " has dashes. Please use underscores as dashes cause problems in the python ecosystem")
+
 
 def action():
   return InitAction()

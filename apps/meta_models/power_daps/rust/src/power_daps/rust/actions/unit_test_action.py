@@ -15,9 +15,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-from shutil import which
 from dap_core import common
 from power_daps.rust.cargo_command import CargoCommand
+
 
 class UnitTestAction:
   name = "unit_test"
@@ -31,13 +31,6 @@ class UnitTestAction:
     common.run_command_in_shell('mkdir -p ' + self.target_dir)
 
     return CargoCommand('test').run()
-
-
-  def verbose_flag(self):
-    if(common.LOG_LEVEL == "verbose"):
-      return "-v"
-    else:
-      return ""
 
 
 def action():

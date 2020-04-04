@@ -15,9 +15,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-from shutil import which
 from dap_core import common
 from power_daps.rust.cargo_command import CargoCommand
+
 
 class CompileAction:
   name = "compile"
@@ -31,6 +31,7 @@ class CompileAction:
     common.run_command_in_shell('mkdir -p ' + self.target_dir)
 
     return CargoCommand('build --target-dir ' + self.target_dir).run()
+
 
 def action():
   return CompileAction()
