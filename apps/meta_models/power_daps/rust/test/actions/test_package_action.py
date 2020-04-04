@@ -21,7 +21,7 @@ from unittest.mock import MagicMock
 
 dap_src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../../../../dap_core/src")))
 src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../src")))
-actions_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../src/power_daps/python3/actions")))
+actions_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../src/power_daps/rust/actions")))
 
 
 if dap_src_dir not in sys.path:
@@ -40,16 +40,14 @@ from dap_core import common
 
 class TestPackageAction(unittest.TestCase):
   def test_run(self):
+    common.which = MagicMock(return_value="cargo")
+    common.stop_if_not_installed = MagicMock()
+    common.run_command_in_shell = MagicMock(return_value=(0, ""))
+
     action = package_action.action()
-    action.list_of_package_dirs = MagicMock(return_value=["."])
-    common.run_command = MagicMock()
-    # command = [common.app_dir() + "deps/bin/pyinstaller",
-    #                    "--noconfirm", "--log-level=WARN",
-    #           common.power_daps_dir() + "dap.spec"]
-    # action.pyinstaller = MagicMock(return_value=common.app_dir() + "deps/bin/pyinstaller")
-    command = [which('python3'), 'setup.py', 'sdist', 'bdist_wheel']
     action.run()
-    common.run_command.assert_called_with(command)
+
+    common.run_command_in_shell.assert_called
 
 if __name__ == '__main__':
     unittest.main()

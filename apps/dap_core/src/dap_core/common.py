@@ -17,8 +17,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import os, sys, subprocess, inspect, yaml, pathlib
-from shutil import which
+import os, sys, subprocess, inspect, yaml, shutil
+
 
 LOG_LEVEL = "info"
 FAILED = 1
@@ -217,7 +217,7 @@ def dirs_in(dirname, ignore_dirs = []):
   return subfolders_without_ignore_dirs
 
 def is_installed(command_name):
-  if which(command_name):
+  if shutil.which(command_name):
     return True
   return False
 
@@ -230,6 +230,9 @@ def stop_if_not_installed(command_name, additional_error_message = ""):
     print_error("FAILED " + error_message)
     sys.exit(FAILED)
 
+def which(command_name):
+  stop_if_not_installed(command_name)
+  return shutil.which(command_name)
 
 if __name__ == '__main__':
     print_error("This module " + __file__ + " cannot be run as a stand alone command")

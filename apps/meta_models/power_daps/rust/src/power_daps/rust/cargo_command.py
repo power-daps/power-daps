@@ -30,7 +30,6 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-from shutil import which
 from dap_core import common
 
 
@@ -40,8 +39,7 @@ class CargoCommand:
 
   def run(self):
     common.stop_if_not_installed('cargo', "Is rust installed?")
-    cmd = which('cargo') + ' ' + self.verbose_flag() + ' ' + self.command
-
+    cmd = common.which('cargo') + ' ' + self.verbose_flag() + ' ' + self.command
     exit_code, output = common.run_command_in_shell(cmd)
     common.print_verbose("Returning " + str(exit_code))
     return exit_code, output

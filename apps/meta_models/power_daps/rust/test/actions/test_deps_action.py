@@ -21,7 +21,7 @@ from unittest.mock import MagicMock
 
 dap_src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../../../../dap_core/src")))
 src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../src")))
-actions_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../src/power_daps/python3/actions")))
+actions_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../src/power_daps/rust/actions")))
 
 
 if dap_src_dir not in sys.path:
@@ -44,14 +44,7 @@ def Any(cls):
     return Any()
 
 class TestDepsAction(unittest.TestCase):
-  def test_run_with_default_dependencies(self):
-    self.ensure_default_dependencies_file()
-    common.run_command = MagicMock(return_value=(0, ""))
-    command = ['/usr/local/bin/pip3', '-q', 'install', Any(str), Any(str)]
-    deps_action.action().run()
-    common.run_command.assert_called_with(command)
-    self.ensure_empty_dependencies_file()
-
+  
   def test_run_with_empty_dependencies_file(self):
     self.ensure_empty_dependencies_file()
     common.run_command = MagicMock()

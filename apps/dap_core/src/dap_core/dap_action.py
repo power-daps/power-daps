@@ -15,8 +15,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import os, inspect, sys, importlib
+import importlib
 from dap_core import common
+
 
 def run(name):
   action_module = importlib.import_module("actions." + name + "_action")

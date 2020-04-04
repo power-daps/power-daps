@@ -15,13 +15,13 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import os, sys, inspect, glob
+import os, sys, inspect, shutil
 import unittest
 from unittest.mock import MagicMock
 
 dap_src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../../../../dap_core/src")))
 src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../src")))
-actions_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../src/power_daps/python3/actions")))
+actions_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../src/power_daps/rust/actions")))
 
 
 if dap_src_dir not in sys.path:
@@ -33,16 +33,18 @@ if src_dir not in sys.path:
 if actions_dir not in sys.path:
     sys.path.insert(0, actions_dir)
 
+
 import unit_test_action
 from dap_core import common
 
 
 class TestRunTestAction(unittest.TestCase):
   def test_run(self):
-    glob.iglob = MagicMock(return_value = ["../test"])
-    common.run_command = MagicMock(return_value = (0, ""))
+    common.which = MagicMock(return_value="cargo")
+    common.stop_if_not_installed = MagicMock()
+    common.run_command_in_shell = MagicMock(return_value=(0, ""))
     unit_test_action.action().run()
-    assert common.run_command.called
+    assert common.run_command_in_shell.called
 
 if __name__ == '__main__':
     unittest.main()
