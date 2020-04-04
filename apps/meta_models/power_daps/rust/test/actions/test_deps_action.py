@@ -44,7 +44,7 @@ def Any(cls):
     return Any()
 
 class TestDepsAction(unittest.TestCase):
-  
+
   def test_run_with_empty_dependencies_file(self):
     self.ensure_empty_dependencies_file()
     common.run_command = MagicMock()

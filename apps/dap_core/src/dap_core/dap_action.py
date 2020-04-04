@@ -19,6 +19,6 @@ import importlib
 from dap_core import common
 
 
-def run(name):
+def ruxn(name):
   action_module = importlib.import_module("actions." + name + "_action")
   common.stop_if_failed(*action_module.action().run())

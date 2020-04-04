@@ -21,7 +21,7 @@ import sys, pathlib
 
 sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute()))
 
-from dap_core import common, dap_action
+from dap_core import common
 from dap_core.meta_model import MetaModel
 
 
