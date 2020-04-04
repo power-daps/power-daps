@@ -18,6 +18,7 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
 import os, sys, subprocess, inspect, yaml, pathlib
+from shutil import which
 
 LOG_LEVEL = "info"
 FAILED = 1
@@ -76,6 +77,12 @@ def run_command_in_shell(command):
     print_error("Exit code: " + str(subprocess_exit_code))
     if output:
       print_error(output.decode())
+
+  try:
+    output = output.decode()
+  except (UnicodeDecodeError, AttributeError):
+    pass
+
   return subprocess_exit_code, output
 
 
@@ -208,6 +215,21 @@ def dirs_in(dirname, ignore_dirs = []):
     subfolders_without_ignore_dirs.extend(dirs_in(dirname, ignore_dirs))
 
   return subfolders_without_ignore_dirs
+
+def is_installed(command_name):
+  if which(command_name):
+    return True
+  return False
+
+def stop_if_not_installed(command_name, additional_error_message = ""):
+  if is_installed(command_name):
+    return
+  else:
+    exit_code = 1
+    error_message = "'" + command_name + "' not found in PATH. " + additional_error_message
+    print_error("FAILED " + error_message)
+    sys.exit(FAILED)
+
 
 if __name__ == '__main__':
     print_error("This module " + __file__ + " cannot be run as a stand alone command")

@@ -44,7 +44,8 @@ class MetaModel:
     return self.n
 
   def package_name(self):
-    return self.name().replace("/", ".")
+    pack_name = self.name().replace("/", ".")
+    return pack_name
 
   def load_actions_from_dir(self, dir):
 

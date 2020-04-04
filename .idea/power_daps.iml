@@ -25,6 +25,8 @@
       <sourceFolder url="file://$MODULE_DIR$/apps/meta_models/power_daps/java9/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/apps/dap_core/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/apps/dap_core/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/apps/meta_models/power_daps/rust/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/apps/meta_models/power_daps/rust/test" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
       <excludeFolder url="file://$MODULE_DIR$/dist" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
