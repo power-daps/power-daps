@@ -15,47 +15,17 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-from dap_core import common
-from dap_core.meta_model import MetaModel
-from dap_core.no_action_error import NoActionError
-import yaml
+from dap_core.base_actions.default_action_base import DefaultActionBase
 
 
-class DefaultAction:
-  name = "default"
-  default_actions_file_location = common.actions_file_location()
-
-  def __init__(self, actions_file_location = ""):
-    self.set_actions_file_location(actions_file_location)
-    return
+class DefaultAction(DefaultActionBase):
+  def __init__(self, actions_file_location=""):
+    super().__init__(actions_file_location)
 
   def run(self):
-    common.print_info("Running " + self.name + " action")
-
-    with open(self.actions_file_location) as f:
-      actions_file_contents = f.read()
-      for stage in yaml.load(actions_file_contents, Loader=yaml.SafeLoader).items():
-        for an_action in stage[1]:
-          common.stop_if_failed(*self.action_for(an_action).run())
-    f.closed
+    super().run()
     return 0, ""
-
-  def action_for(self, action_name):
-    meta_model = MetaModel(common.meta_model())
-    the_actions = list(filter(lambda a: common.action_name(a)==action_name, meta_model.actions()))
-    if the_actions:
-      return the_actions[0]
-    else:
-      return NoActionError(action_name)
-
-  def set_actions_file_location(self, actions_file_location):
-    if actions_file_location:
-      self.actions_file_location = actions_file_location
-    else:
-      self.actions_file_location = DefaultAction.default_actions_file_location
 
 
 def action():
-   return DefaultAction()
-
-
+  return DefaultAction()
