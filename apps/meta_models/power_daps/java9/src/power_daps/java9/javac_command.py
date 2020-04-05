@@ -26,7 +26,7 @@ class JavacCommand:
     self.classpath = classpath
 
   def run(self):
-    cp_string = java_helper.classpath_string()
+    cp_string = java_helper.classpath_string(self.classpath)
 
     common.run_command_in_shell('mkdir -p ' + self.target_dir)
 

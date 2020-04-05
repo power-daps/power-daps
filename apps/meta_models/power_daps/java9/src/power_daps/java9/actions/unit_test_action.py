@@ -29,7 +29,7 @@ class UnitTestAction:
 
   def run(self):
     common.print_info("Running " + self.name + " action")
-    cp_string = java_helper.classpath_string()
+    cp_string = java_helper.classpath_string(self.classpath)
 
     common.run_command_in_shell('mkdir -p ' + self.target_dir)
 

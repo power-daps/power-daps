@@ -15,23 +15,18 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-
-from dap_core import common
-
-
-def classpath_string(classpath=""):
-  if classpath != "":
-    cp_string = " -cp " + classpath + ":" + libs_classpath()
-  else:
-    cp_string = " -cp " + libs_classpath()
-  return cp_string
+from dap_core.base_actions.dap_action_base import DapActionBase
 
 
-def libs_classpath():
-  libs = common.run_command_in_shell('find lib/java -type f -name "*.jar" -print')[1]
-  return ":".join(libs.splitlines())
+class RunAction(DapActionBase):
+
+  def __init__(self):
+    super().__init__()
+
+  def run(self):
+    super().run()
+    return 0, ""
 
 
-def list_of_test_classes():
-  test_classes = common.run_command_in_shell('find test -type f -name "*Test.java" -print')[1].splitlines()
-  return [test_class.replace("test/", "").replace(".java", "").replace("/", ".") for test_class in test_classes]
+def action():
+  return RunAction()
