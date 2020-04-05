@@ -52,8 +52,10 @@ def run_command(command):
             print_error(output)
     return subprocess_exit_code, output
 
+
 def action_name(a):
   return a.name() if callable(a.name) else a.name
+
 
 def run_command_in_shell(command):
   """Run the specified command in a shell"""
@@ -88,20 +90,19 @@ def run_command_in_shell(command):
   return subprocess_exit_code, output
 
 
-
 def print_warning(warning):
     global LOG_LEVEL
-    if(LOG_LEVEL == "verbose" or LOG_LEVEL == "info" or LOG_LEVEL == "warning"):
+    if LOG_LEVEL == "verbose" or LOG_LEVEL == "info" or LOG_LEVEL == "warning":
         print_raw("WARNING: " + str(warning))
 
 
 def print_error(error):
-    if(LOG_LEVEL == "verbose" or LOG_LEVEL == "info" or LOG_LEVEL == "warning" or LOG_LEVEL == "error"):
+    if LOG_LEVEL == "verbose" or LOG_LEVEL == "info" or LOG_LEVEL == "warning" or LOG_LEVEL == "error":
         print_raw("ERROR: " + str(error))
 
 
 def print_info(info):
-    if(LOG_LEVEL == "verbose" or LOG_LEVEL == "info"):
+    if LOG_LEVEL == "verbose" or LOG_LEVEL == "info":
         print_raw("INFO: " + str(info))
 
 
@@ -114,12 +115,12 @@ def print_info_no_eol(info):
 
 
 def print_verbose(verbose_info):
-    if(LOG_LEVEL == "verbose"):
+    if LOG_LEVEL == "verbose":
         print_raw("VERBOSE: " + verbose_info)
 
 
 def print_verbose_no_eol(verbose_info):
-    if(LOG_LEVEL == "verbose"):
+    if LOG_LEVEL == "verbose":
         sys.stdout.write(verbose_info)
 
 
@@ -131,7 +132,7 @@ def stop_if_failed(subprocess_exit_code=SUCCESS, error_message=""):
 
 def continue_if_failed(subprocess_exit_code=SUCCESS, error_message=""):
     global saved_exit_code
-    if(subprocess_exit_code != SUCCESS):
+    if subprocess_exit_code != SUCCESS:
         saved_exit_code = FAILED
 
 
@@ -144,23 +145,25 @@ def set_log_level(log_level_to_set):
     LOG_LEVEL = log_level_to_set
 
 
-def set_meta_model(meta_model):
+def set_meta_model(mm):
     global saved_meta_model
-    saved_meta_model = meta_model
+    saved_meta_model = mm
     print_verbose("Meta Model: " + str(saved_meta_model))
 
 
 def meta_model():
     global saved_meta_model
-    if(saved_meta_model == None):
+    if saved_meta_model is None:
       saved_meta_model = configured_meta_model()
     return saved_meta_model
+
 
 def configured_meta_model():
     configuration = config()
     if 'power_daps_meta_model' in configuration:
       return str(configuration['power_daps_meta_model'])
     return os.getenv("POWER_DAPS_META_MODEL", "power_daps/python3")
+
 
 def config():
     config_file_location = "config/dap_config.yml"
@@ -176,6 +179,7 @@ def config():
       configuration = yaml.load(config_file_contents, Loader=yaml.SafeLoader)
     return configuration
 
+
 def power_daps_dir():
     return os.path.dirname(os.path.abspath(__file__)) + "/../../../../"
 
@@ -183,26 +187,31 @@ def power_daps_dir():
 def app_dir():
     return power_daps_dir() + "apps/dap/"
 
+
 def dependencies_file_location():
     return os.getcwd() + "/dependencies.yml"
+
 
 def actions_file_location():
     default_actions_file_location = power_daps_dir() + "actions.yml"
     local_actions_file_location = os.getcwd() + "/actions.yml"
-    if(os.path.exists(local_actions_file_location)):
+    if os.path.exists(local_actions_file_location):
       return local_actions_file_location
     else:
       return default_actions_file_location
+
 
 def actions_dir():
     ret_val = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../meta_models/" + meta_model() + "/src")))
     return ret_val
 
+
 def exit_with_error_message(error_message):
     print_error(error_message)
     sys.exit(1)
 
-def dirs_in(dirname, ignore_dirs = []):
+
+def dirs_in(dirname, ignore_dirs=[]):
   subfolders = [f.path for f in os.scandir(dirname) if f.is_dir()]
   subfolders_without_ignore_dirs = []
   for dirname in list(subfolders):
@@ -218,23 +227,26 @@ def dirs_in(dirname, ignore_dirs = []):
 
   return subfolders_without_ignore_dirs
 
+
 def is_installed(command_name):
   if shutil.which(command_name):
     return True
   return False
 
-def stop_if_not_installed(command_name, additional_error_message = ""):
+
+def stop_if_not_installed(command_name, additional_error_message=""):
   if is_installed(command_name):
     return
   else:
-    exit_code = 1
     error_message = "'" + command_name + "' not found in PATH. " + additional_error_message
     print_error("FAILED " + error_message)
     sys.exit(FAILED)
 
+
 def which(command_name):
   stop_if_not_installed(command_name)
   return shutil.which(command_name)
+
 
 if __name__ == '__main__':
     print_error("This module " + __file__ + " cannot be run as a stand alone command")
