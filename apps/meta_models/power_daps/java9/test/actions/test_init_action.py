@@ -35,17 +35,16 @@ if actions_dir not in sys.path:
 
 import init_action
 from dap_core import common
-
+from dap_core.util import template_util
 from dap_core.meta_model import MetaModel
 
 class TestInitAction(unittest.TestCase):
   def test_copies_init_template(self):
     common.run_command = MagicMock()
     action = init_action.action()
-    action.copy_template_files_to = MagicMock()
+    template_util.copy_template_files_to = MagicMock()
     action.run()
-    mm = MetaModel(common.meta_model())
-    action.copy_template_files_to.assert_called_once()
+    template_util.copy_template_files_to.assert_called_once()
 
 
 if __name__ == '__main__':

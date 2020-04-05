@@ -16,7 +16,8 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
 import os, sys, pathlib, shutil
-from dap_core import common, template_util, git_util, str_util
+from dap_core import common
+from dap_core.util import template_util, git_util, str_util
 from dap_core.meta_model import MetaModel
 
 
@@ -29,7 +30,7 @@ class InitAction():
     project_name = os.getcwd().split('/')[-1]
 
     template_util.check_that_name_does_not_have_dashes(project_name)
-    template_util.copy_template_files_to(project_dir)
+    template_util.copy_template_files_to(project_dir, common.action_name(self))
     template_util.find_and_replace_in_file_names_and_content(project_dir, {
       "PROJECT_NAME": project_name,
       "PROJECT_CAMELIZED_NAME": str_util.camelize(project_name)})

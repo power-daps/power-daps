@@ -15,7 +15,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-from dap_core import str_util, common
+from dap_core import common
+from dap_core.util import str_util
 
 
 class DapAction:

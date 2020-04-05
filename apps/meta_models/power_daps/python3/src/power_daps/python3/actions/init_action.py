@@ -15,7 +15,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-from dap_core import common, git_util, template_util, str_util
+from dap_core import common
+from dap_core.util import git_util, template_util, str_util
 import os, sys, pathlib, shutil
 
 from dap_core.meta_model import MetaModel
