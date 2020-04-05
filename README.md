@@ -84,7 +84,7 @@ default:
 ```
 
 #### Cargo / Rust
-```asp
+```
 default:
   ripgrep:
     version: latest
