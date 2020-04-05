@@ -15,15 +15,3 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-from dap_core import common
-from dap_core.util import str_util
-
-
-class DapAction:
-
-  def run(self):
-    common.print_info("Running " + self.name() + " action")
-
-  def name(self):
-    class_name = self.__class__.__name__
-    return str_util.camel_to_snake(class_name.replace("Action", ""))

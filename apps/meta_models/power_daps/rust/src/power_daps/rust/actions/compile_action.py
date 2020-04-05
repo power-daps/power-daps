@@ -16,11 +16,11 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
 from dap_core import common
-from dap_core.dap_action import DapAction
+from dap_core.base_actions.dap_action_base import DapActionBase
 from power_daps.rust.cargo_command import CargoCommand
 
 
-class CompileAction(DapAction):
+class CompileAction(DapActionBase):
 
   def __init__(self, source_dir="src", target_dir="target/production"):
     super().__init__()

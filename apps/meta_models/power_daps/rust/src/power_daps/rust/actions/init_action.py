@@ -18,11 +18,11 @@
 import os
 from dap_core import common
 from dap_core.util import str_util, template_util, git_util
-from dap_core.dap_action import DapAction
+from dap_core.base_actions.dap_action_base import DapActionBase
 from power_daps.rust.cargo_command import CargoCommand
 
 
-class InitAction(DapAction):
+class InitAction(DapActionBase):
 
   def __init__(self):
     super().__init__()

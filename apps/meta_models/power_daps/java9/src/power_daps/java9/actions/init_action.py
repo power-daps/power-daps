@@ -36,6 +36,7 @@ class InitAction():
       "PROJECT_CAMELIZED_NAME": str_util.camelize(project_name)})
     git_util.setup_git(project_dir)
 
+    common.print_raw("Initialized new Java application.")
     return 0, ""
 
   def copy_template_files_to(self, destination):

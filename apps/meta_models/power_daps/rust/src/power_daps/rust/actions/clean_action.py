@@ -17,10 +17,10 @@
 
 import pathlib
 from dap_core import common
-from  dap_core.dap_action import DapAction
+from  dap_core.base_actions.dap_action_base  import DapActionBase
 
 
-class CleanAction(DapAction):
+class CleanAction(DapActionBase):
 
   def run(self):
     super().run()
