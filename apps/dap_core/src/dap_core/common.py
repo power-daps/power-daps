@@ -53,6 +53,32 @@ def run_command(command):
     return subprocess_exit_code, output
 
 
+def run_command_in_shell_without_output(command):
+  """Run the specified command but do not show any output or errors unless you are in verbose mode"""
+
+  subprocess_exit_code = SUCCESS
+  output = ""
+  if not str(command):
+    print_error("Trying to run None")
+
+  print_verbose("Running command " + str(command))
+  try:
+    output = subprocess.check_output(command, shell=True).decode("utf-8")
+    if output:
+      print_verbose("Output:\n" + output)
+  except FileNotFoundError as err:
+    subprocess_exit_code = err.errno
+    output = err.strerror
+    print_verbose("Exit code: " + str(subprocess_exit_code))
+    print_verbose(output)
+  except subprocess.CalledProcessError as err:
+    subprocess_exit_code = err.returncode
+    print_verbose("Exit code: " + str(subprocess_exit_code))
+    if output:
+      print_verbose(output)
+  return subprocess_exit_code, output
+
+
 def action_name(a):
   return a.name() if callable(a.name) else a.name
 

@@ -30,44 +30,37 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import os, shutil
+import os
 from dap_core import common
+from dap_core.util import str_util, template_util, git_util
+from dap_core.base_actions.dap_action_base import DapActionBase
 
 
-def setup_git(d):
-  git_init(d)
-  add_to_git(d)
+class InitActionBase(DapActionBase):
 
+  def __init__(self, pre_copy_commands=[], additional_find_and_replace_dict={}):
+    super().__init__()
+    self.project_dir = '.'
+    self.project_name = os.getcwd().split('/')[-1]
 
-def git_init(d):
-  os.chdir(d)
-  git_path = shutil.which('git')
-  git_init_command = [git_path, 'init']
-  common.run_command(git_init_command)
+    self.find_and_replace_dict = {
+      "PROJECT_NAME": self.project_name,
+      "PROJECT_CAMELIZED_NAME": str_util.camelize(self.project_name)}
 
+    additional_find_and_replace_dict.update(self.find_and_replace_dict)
+    self.pre_copy_commands = pre_copy_commands
 
-def git_init_or_add(d):
-  if not is_in_git_repo(d):
-    git_init(d)
-  add_to_git(d)
+  def run(self):
+    super().run()
 
+    template_util.check_that_name_does_not_have_dashes(self.project_name)
 
-def is_in_git_repo(d):
-  os.chdir(d)
-  exit_code, output = common.run_command_in_shell_without_output([common.which('git'), 'rev-parse', '--git-dir'])
-  if exit_code == 0:
-    return True
-  else:
-    return False
+    for pre_copy_command in self.pre_copy_commands:
+      pre_copy_command.run()
 
+    template_util.copy_template_files_to(self.project_dir, common.action_name(self))
+    template_util.find_and_replace_in_file_names_and_content(self.project_dir, self.find_and_replace_dict)
+    git_util.git_init_or_add(self.project_dir)
+    common.print_raw("Initialized new " + common.meta_model() + " application.")
 
-def add_to_git(d):
-  os.chdir(d)
-  git_path = shutil.which('git')
-  git_add_command = [git_path, 'add', '.']
-  common.run_command(git_add_command)
-
-  git_commit_command = [git_path, 'commit', '-m', 'Initialized with power_daps template ' + common.meta_model()]
-  common.run_command(git_commit_command)
-
-  return 0, ""
+    return 0, ""
