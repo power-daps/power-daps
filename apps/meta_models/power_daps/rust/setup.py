@@ -38,7 +38,7 @@ package_data_patterns = generate_glob_patterns(4)
 
 setuptools.setup(
   name="power-daps-meta-model-rust",
-  version="0.0.1",
+  version="0.0.3",
   author="Prasanna Pendse",
   author_email="prasanna.pendse@gmail.com",
   description="Rust lang meta-model for power-daps - a build tool that builds apps in multiple languages",

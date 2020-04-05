@@ -23,7 +23,7 @@ print(setuptools.find_packages(where="src"))
 
 setuptools.setup(
   name="power-daps",
-  version="0.0.2",
+  version="0.0.3",
   author="Prasanna Pendse",
   author_email="prasanna.pendse@gmail.com",
   description="A build tool that builds apps in multiple languages",
@@ -31,9 +31,10 @@ setuptools.setup(
   long_description_content_type="text/markdown",
   url="https://github.com/power-daps/power-daps",
   install_requires=[
-    "power-daps-core==0.0.2",
-    "power-daps-meta-model-python-3==0.0.2",
-    "power-daps-meta-model-java-9==0.0.2",
+    "power-daps-core==0.0.3",
+    "power-daps-meta-model-python-3==0.0.3",
+    "power-daps-meta-model-java-9==0.0.3",
+    "power-daps-meta-model-rust==0.0.3",
   ],
   classifiers=[
     "Programming Language :: Python :: 3",
