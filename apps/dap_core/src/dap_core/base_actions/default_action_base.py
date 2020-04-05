@@ -25,7 +25,7 @@ import yaml
 class DefaultActionBase(DapActionBase):
   default_actions_file_location = common.actions_file_location()
 
-  def __init__(self, actions_file_location=""):
+  def __init__(self, actions_file_location="./actions.yml"):
     super().__init__()
     self.set_actions_file_location(actions_file_location)
 

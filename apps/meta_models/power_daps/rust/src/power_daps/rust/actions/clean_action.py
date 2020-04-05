@@ -15,29 +15,17 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-import pathlib
-from dap_core import common
-from  dap_core.base_actions.dap_action_base  import DapActionBase
+
+from dap_core.base_actions.clean_action_base import CleanActionBase
 
 
-class CleanAction(DapActionBase):
+class CleanAction(CleanActionBase):
+  def __init__(self):
+    super().__init__()
 
   def run(self):
     super().run()
-    self.delete_dirs_named("**/target")
-    self.delete_dirs_named("**/dist")
-    self.delete_dirs_named("**/build")
-    self.delete_dirs_named("**/*.egg-info")
     return 0, ""
-
-  def delete_dirs_named(self, dir_name):
-    common.print_verbose("Found " + str(len(self.dirs_named(dir_name))) + " dirs named " + dir_name)
-    for dir in self.dirs_named(dir_name):
-      common.print_verbose("Deleting dir " + dir)
-      common.stop_if_failed(*common.run_command(["/bin/rm", "-rf", dir]))
-
-  def dirs_named(self, dir_name):
-    return [str(p.absolute()) for p in pathlib.Path(".").glob(dir_name)]
 
 
 def action():
