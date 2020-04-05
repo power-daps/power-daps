@@ -32,6 +32,6 @@ def libs_classpath():
   return ":".join(libs.splitlines())
 
 
-def list_of_test_classes():
-  test_classes = common.run_command_in_shell('find test -type f -name "*Test.java" -print')[1].splitlines()
-  return [test_class.replace("test/", "").replace(".java", "").replace("/", ".") for test_class in test_classes]
+def list_of_test_classes(test_source_dir):
+  test_classes = common.run_command_in_shell('find ' + test_source_dir +  ' -type f -name "*Test.java" -print')[1].splitlines()
+  return [test_class.replace(test_source_dir + "/", "").replace(".java", "").replace("/", ".") for test_class in test_classes]
