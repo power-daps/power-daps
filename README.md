@@ -83,6 +83,13 @@ default:
     installer: npm
 ```
 
+#### Cargo / Rust
+```asp
+default:
+  ripgrep:
+    version: latest
+    installer: cargo
+```
 
 
 ## Usage (eventually)

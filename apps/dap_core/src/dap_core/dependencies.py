@@ -93,6 +93,7 @@ class Dependency:
     installers["system"] = SysInstaller()
     installers["brew_cask"] = CommandLineInstaller([which('brew'), 'cask', 'install'])
     installers["jar"] = MavenCentralInstaller()
+    installers["cargo"] = CommandLineInstaller([which('cargo'), 'install'])
 
     return installers[self.installer_type]
 
