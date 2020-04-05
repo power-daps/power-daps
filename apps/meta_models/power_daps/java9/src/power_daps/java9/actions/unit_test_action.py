@@ -14,7 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
-from shutil import which
+
 from dap_core import common
 from dap_core.base_actions.dap_action_base import DapActionBase
 from power_daps.java9 import java_helper
