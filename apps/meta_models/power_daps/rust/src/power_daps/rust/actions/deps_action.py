@@ -15,44 +15,16 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-from dap_core import common
-from dap_core import dependencies
+from dap_core.base_actions.deps_action_base import DepsActionBase
 
 
-class DepsAction():
-  name = "deps"
-  default_dependencies_file_location = common.dependencies_file_location()
-
-  def __init__(self, dependencies_file_location = ""):
-    self.set_dependencies_file_location(dependencies_file_location)
-    return
+class DepsAction(DepsActionBase):
+  def __init__(self, dependencies_file_location=""):
+    super().__init__(dependencies_file_location)
 
   def run(self):
-    common.print_info("Running " + self.name + " action")
-
-    self.deps = self.load_dependencies(self.dependencies_file_location)
-
-    for dep in self.deps.dependencies_for("default"):
-      dep.install()
-
+    super().run()
     return 0, ""
-
-  def load_dependencies(self, dependencies_file_location):
-    dependencies_file_contents = ""
-    try:
-      with open(dependencies_file_location) as f:
-        dependencies_file_contents = f.read()
-      f.closed
-    except (OSError, IOError) as e:
-      common.print_warning("No dependencies file found at " + dependencies_file_location)
-
-    return dependencies.Dependencies(dependencies_file_contents)
-
-  def set_dependencies_file_location(self, dependencies_file_location=""):
-    if dependencies_file_location:
-      self.dependencies_file_location = dependencies_file_location
-    else:
-      self.dependencies_file_location = DepsAction.default_dependencies_file_location
 
 
 def action():
