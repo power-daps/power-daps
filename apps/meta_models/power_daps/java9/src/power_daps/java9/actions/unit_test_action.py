@@ -16,6 +16,7 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 from shutil import which
 from dap_core import common
+from power_daps.java9 import java_helper
 
 
 class UnitTestAction:
@@ -28,21 +29,19 @@ class UnitTestAction:
 
   def run(self):
     common.print_info("Running " + self.name + " action")
-    cp_string = ""
-    if self.classpath != "":
-      cp_string = " -cp " + self.classpath + ":" + self.libs_classpath()
-    else:
-      cp_string = " -cp " + self.libs_classpath()
+    cp_string = java_helper.classpath_string()
 
     common.run_command_in_shell('mkdir -p ' + self.target_dir)
 
-    if not self.list_of_test_classes():
+    test_classes = java_helper.list_of_test_classes()
+    if not test_classes:
       common.print_verbose("No test classes found. Not running unit tests.")
       return 0, ""
 
-    run_unit_test_command = " ".join([which('java'),
-                             cp_string,
-                             'org.junit.runner.JUnitCore'] + self.list_of_test_classes())
+    run_unit_test_command = " ".join([
+      which('java'),
+      cp_string,
+      'org.junit.runner.JUnitCore'] + test_classes)
 
     exit_code, output = common.run_command_in_shell(run_unit_test_command)
     try:
@@ -53,13 +52,6 @@ class UnitTestAction:
     common.print_raw(output)
     return exit_code, output
 
-  def libs_classpath(self):
-    libs = common.run_command_in_shell('find lib/java -type f -name "*.jar" -print')[1]
-    return ":".join(libs.splitlines())
-
-  def list_of_test_classes(self):
-    test_classes = common.run_command_in_shell('find test -type f -name "*Test.java" -print')[1].splitlines()
-    return [ test_class.replace("test/", "").replace(".java", "").replace("/", ".") for test_class in test_classes ]
 
 def action():
   return UnitTestAction()

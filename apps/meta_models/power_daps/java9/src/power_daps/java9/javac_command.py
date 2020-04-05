@@ -17,7 +17,7 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
 from dap_core import common
-
+from power_daps.java9 import java_helper
 
 class JavacCommand:
   def __init__(self, source_dir, target_dir, classpath):
@@ -26,11 +26,7 @@ class JavacCommand:
     self.classpath = classpath
 
   def run(self):
-    cp_string = ""
-    if self.classpath != "":
-      cp_string = " -cp " + self.classpath + ":" + self.libs_classpath()
-    else:
-      cp_string = " -cp " + self.libs_classpath()
+    cp_string = java_helper.classpath_string()
 
     common.run_command_in_shell('mkdir -p ' + self.target_dir)
 
@@ -46,7 +42,4 @@ class JavacCommand:
 
     return exit_code, output
 
-  def libs_classpath(self):
-    libs = common.run_command_in_shell('find lib/java -type f -name "*.jar" -print')[1]
-    return ":".join(libs.splitlines())
 
