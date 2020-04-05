@@ -15,7 +15,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-from dap_core import common, str_util, template_util
+from dap_core import common, str_util, template_util, git_util
 import os, sys, pathlib, shutil
 from dap_core.meta_model import MetaModel
 from dap_core.dap_action import DapAction
@@ -38,7 +38,7 @@ class InitAction(DapAction):
     template_util.find_and_replace_in_file_names_and_content(project_dir, {
       "PROJECT_NAME": project_name,
       "PROJECT_CAMELIZED_NAME": str_util.camelize(project_name)})
-    template_util.add_to_git(project_dir)
+    git_util.add_to_git(project_dir)
     common.print_raw("Initialized new Rust application.")
 
     return 0, ""

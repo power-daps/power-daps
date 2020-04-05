@@ -15,11 +15,10 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-from dap_core import common
-import glob
 import os, sys, pathlib, shutil
-
+from dap_core import common, template_util, git_util, str_util
 from dap_core.meta_model import MetaModel
+
 
 class InitAction():
   name = "init"
@@ -29,9 +28,12 @@ class InitAction():
     project_dir = '.'
     project_name = os.getcwd().split('/')[-1]
 
-    self.copy_template_files_to(project_dir)
-    self.rename_files(project_dir, "PROJECT_NAME", project_name)
-    self.setup_git(project_dir)
+    template_util.check_that_name_does_not_have_dashes(project_name)
+    template_util.copy_template_files_to(project_dir)
+    template_util.find_and_replace_in_file_names_and_content(project_dir, {
+      "PROJECT_NAME": project_name,
+      "PROJECT_CAMELIZED_NAME": str_util.camelize(project_name)})
+    git_util.setup_git(project_dir)
 
     return 0, ""
 

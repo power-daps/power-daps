@@ -29,18 +29,19 @@ def copy_template_files_to(destination, source_action_name):
 
 
 def find_and_replace_in_file_names_and_content(dir, find_and_replace_dict):
+  current_dir = os.getcwd()
+
   for str_to_find, str_to_replace_with in find_and_replace_dict.items():
     dirs = sorted(common.dirs_in(dir, ["__pycache__", "dist", "build", "egg-info", ".git"]) + ["."], key=len, reverse=True)
+
     for d in dirs:
-      files_to_rename = [str(p) for p in pathlib.Path(d).glob("*" + str_to_find + "*")]
+      os.chdir(current_dir + "/" + d)
+
+      files_to_rename = [str(p) for p in pathlib.Path(".").glob("*" + str_to_find + "*")]
+
       for f in files_to_rename:
         common.print_verbose("Renaming " + f + " to " + f.replace(str_to_find, str_to_replace_with))
         rename_command = ['/bin/mv', f, f.replace(str_to_find, str_to_replace_with)]
-        common.run_command(rename_command)
-
-      if str_to_find in str(d):
-        common.print_verbose("Renaming " + d + " to " + d.replace(str_to_find, str_to_replace_with))
-        rename_command = ['/bin/mv', d, d.replace(str_to_find, str_to_replace_with)]
         common.run_command(rename_command)
 
     grep_files_command = [shutil.which('find'), ".", "!", "-name", '*.pyc', "!", "-path", '*.git*', "-type", "f", "-exec", shutil.which("grep"), "-l", "PROJECT_NAME", '{}', ";", "-print"]
@@ -50,6 +51,8 @@ def find_and_replace_in_file_names_and_content(dir, find_and_replace_dict):
       sed_command = sed_find_and_replace_command(str_to_find, str_to_replace_with, f)
       common.run_command(sed_command)
 
+  os.chdir(current_dir)
+
 
 def sed_find_and_replace_command(str_to_find, str_to_replace_with, filename):
   sed_command = [shutil.which('sed'), '-i']
@@ -57,18 +60,6 @@ def sed_find_and_replace_command(str_to_find, str_to_replace_with, filename):
     sed_command += [""]
   sed_command += ['-e', "s/" + str_to_find + "/" + str_to_replace_with + "/g", filename]
   return sed_command
-
-
-def add_to_git(dir):
-  os.chdir(dir)
-
-  git_add_command = ['/usr/bin/git', 'add', '.']
-  common.run_command(git_add_command)
-
-  git_commit_command = ['/usr/bin/git', 'commit', '-m', 'Initialized with power_daps template power_daps/rust']
-  common.run_command(git_commit_command)
-
-  return 0, ""
 
 
 def check_that_name_does_not_have_dashes(name):
