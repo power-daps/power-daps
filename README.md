@@ -22,17 +22,31 @@ power-daps is a build tool that can build apps in multiple languages. It also ha
 ## Usage (currently)
 
 ### Create a new app
+Specify the type of app by specifying which meta model you want to use.
+
+Meta models can be specified by the `--meta-model` or `-m` flag
+
+Few built-in meta models are provided with power-daps:
+Java, Python 3, ES 6 and Rust. Here is how you initialize apps with dap
+in these languages.
+
 #### Java
-`dap init --meta-model power-daps/java9`
+`dap init --meta-model power_daps/java9`
 
 #### Python
-`dap init --meta-model power-daps/python3`
+`dap init --meta-model power_daps/python3`
 
-#### EcmaScript
-`dap init --meta-model power-daps/es6`
+#### ECMA Script
+`dap init --meta-model power_daps/es6`
+
+#### Rust
+`dap init --meta-model power_daps/rust`
 
 ### Build the app
-Usually, just `dap` will do what is needed. However, you can use the following commands depending on the language:
+If you have initialized the application with `dap init`, then just `dap` will do what is needed
+by looking at `actions.yml` at the root of your project. However, you can use the following commands
+depending on the language:
+
 * `dap deps` to install dependencies
 * `dap compile` if your language requires compiling
 * `dap compile_test`
