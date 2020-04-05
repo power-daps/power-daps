@@ -45,6 +45,7 @@ def run(log_level="info", meta_model_name="power_daps/python3", actions_to_run=[
       if valid_action_name == action_to_run:
         common.stop_if_failed(*valid_action.run())
 
+
 def main():
   import argparse
   import os

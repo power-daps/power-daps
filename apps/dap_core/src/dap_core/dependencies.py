@@ -21,6 +21,7 @@ from shutil import which
 from dap_core import common
 from dap_core.dependency_installers import CommandLineInstaller, MavenCentralInstaller, PipInstaller, SysInstaller
 
+
 class Dependencies():
   def __init__(self, dependencies_file_contents):
     self.dependencies_file_contents = dependencies_file_contents
@@ -34,7 +35,7 @@ class Dependencies():
       stage_name_from_yaml = stage[0]
 
       # No stages defined
-      if not stage_name_from_yaml in self.dependencies:
+      if stage_name_from_yaml not in self.dependencies:
         self.dependencies[stage_name_from_yaml] = list()
 
       # Stage is defined but not dependencies listed for the stage
@@ -55,7 +56,8 @@ class Dependencies():
   def dependencies_for(self, stage_name):
     return self.dependencies.get(stage_name, list())
 
-class Dependency():
+
+class Dependency:
 
   def __init__(self, name, version, installer, details=dict()):
     self.name = name

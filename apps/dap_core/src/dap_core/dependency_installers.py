@@ -22,6 +22,7 @@ from xml.etree import ElementTree
 from shutil import which
 from dap_core import common
 
+
 class CommandLineInstaller:
   def __init__(self, command_base):
     self.command_base = command_base
@@ -30,6 +31,7 @@ class CommandLineInstaller:
   def install(self, dep_name, dep_version, details):
     exit_code, output = common.run_command(self.command_base + [dep_name])
     common.stop_if_failed(exit_code, output)
+
 
 class PipInstaller:
   NOT_INSTALLED = 0
@@ -90,7 +92,6 @@ class PipInstaller:
         return PipInstaller.NEWER_VERSION_INSTALLED
 
 
-
 class SysInstaller:
   def __init__(self):
     return
@@ -128,6 +129,7 @@ class SysInstaller:
     exit_code, output = common.run_command([which('grep'), 'ID_LIKE', '/etc/os-release'])
     return output.split("=")[1].rstrip()
 
+
 class MavenCentralInstaller:
   # https://search.maven.org/remotecontent?filepath=
   def __init__(self, url_base="https://repo1.maven.org/maven2/", lib_dir="lib"):
@@ -140,7 +142,6 @@ class MavenCentralInstaller:
       self.install_file(name, version, details, "jar")
       self.install_file(name, version, details, "pom")
       self.install_transitive_dependencies(name, version, details, "pom")
-
 
   def install_transitive_dependencies(self, name, version, details, extension):
     if self.local_pom_exists(details["group_id"], name, version):
