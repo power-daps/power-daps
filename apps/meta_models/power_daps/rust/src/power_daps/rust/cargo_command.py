@@ -38,7 +38,7 @@ class CargoCommand:
     self.command = command
 
   def run(self):
-    common.stop_if_not_installed('cargo', "Is rust installed?")
+    common.stop_if_not_installed('cargo', "Is rust installed?\nYou can install it with:\n    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh")
     cmd = common.which('cargo') + ' ' + self.verbose_flag() + ' ' + self.command
     exit_code, output = common.run_command_in_shell(cmd)
     common.print_verbose("Returning " + str(exit_code))
