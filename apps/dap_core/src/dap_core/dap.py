@@ -21,7 +21,7 @@ import sys, pathlib
 
 sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute()))
 
-from dap_core import common
+from dap_core import common, actions
 from dap_core.meta_model import MetaModel
 
 
@@ -31,6 +31,7 @@ def run(log_level="info", meta_model_name="power_daps/python3", actions_to_run=[
   common.set_meta_model(meta_model_name)
 
   valid_actions = meta_model.actions()
+  valid_actions += actions.local_actions()
   valid_action_names = [common.action_name(va) for va in valid_actions]
 
   common.print_verbose('Actions to run ' + str(actions_to_run))
