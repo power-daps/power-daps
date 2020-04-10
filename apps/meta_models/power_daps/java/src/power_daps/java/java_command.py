@@ -32,7 +32,7 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
 from dap_core import common
-from power_daps.java9 import java_helper
+from power_daps.java import java_helper
 
 class JavaCommand:
   def __init__(self, main_class, args_to_main_class, classpath):

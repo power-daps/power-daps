@@ -16,7 +16,7 @@
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
 from dap_core.base_actions.dap_action_base import DapActionBase
-from power_daps.java9.javac_command import JavacCommand
+from power_daps.java.javac_command import JavacCommand
 
 
 class CompileAction(DapActionBase):

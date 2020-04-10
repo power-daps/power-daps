@@ -73,7 +73,7 @@ class TestMetaModel(unittest.TestCase):
     self.assertEqual(8, len(actions_found_in_meta_model))
 
   def test_template_for_action(self):
-    meta_model = MetaModel("power_daps/java9")
+    meta_model = MetaModel("power_daps/java")
     template_for_init = meta_model.template_for_action("init")
     assert "templates/init" in template_for_init, "'%s' does not contain '%s'" % (template_for_init, "templates/init")
 

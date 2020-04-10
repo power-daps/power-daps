@@ -31,7 +31,7 @@ Java, Python 3, ES 6 and Rust. Here is how you initialize apps with dap
 in these languages.
 
 #### Java
-`dap init --meta-model power_daps/java9`
+`dap init --meta-model power_daps/java`
 
 #### Python
 `dap init --meta-model power_daps/python3`

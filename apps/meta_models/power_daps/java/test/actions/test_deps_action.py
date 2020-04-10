@@ -17,11 +17,10 @@
 
 import os, sys, inspect
 import unittest
-from unittest.mock import MagicMock
 
 dap_src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../../../../dap_core/src")))
 src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../src")))
-actions_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../src/power_daps/java9/actions")))
+actions_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"../../src/power_daps/java/actions")))
 
 
 if dap_src_dir not in sys.path:
@@ -33,19 +32,24 @@ if src_dir not in sys.path:
 if actions_dir not in sys.path:
   sys.path.insert(0, actions_dir)
 
-import init_action
-from dap_core import common
-from dap_core.util import template_util
-from dap_core.meta_model import MetaModel
+import deps_action
 
-class TestInitAction(unittest.TestCase):
-  def test_copies_init_template(self):
-    common.run_command = MagicMock()
-    action = init_action.action()
-    template_util.copy_template_files_to = MagicMock()
-    action.run()
-    template_util.copy_template_files_to.assert_called_once()
 
+class TestDepsAction(unittest.TestCase):
+  def test_other_details_of_a_dependency_come_through(self):
+    self.ensure_dependencies_file_with_jar_dependency()
+    deps = deps_action.action().load_dependencies("dependencies.yml")
+
+    self.assertEqual(deps.dependencies_for("default")[0].details, {"group_id": "org.mockito"})
+    self.ensure_empty_dependencies_file()
+
+  def ensure_empty_dependencies_file(self):
+    open("dependencies.yml", 'w').close()
+
+  def ensure_dependencies_file_with_jar_dependency(self):
+    dependencies_file = open("dependencies.yml", 'w')
+    dependencies_file.write("default:\n  mockito-core:\n    version: 1.10.19\n    installer: jar\n    group_id: org.mockito\n")
+    dependencies_file.close()
 
 if __name__ == '__main__':
   unittest.main()

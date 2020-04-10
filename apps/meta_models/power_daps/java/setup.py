@@ -41,16 +41,16 @@ setuptools.setup(
   version="0.0.3",
   author="Prasanna Pendse",
   author_email="prasanna.pendse@gmail.com",
-  description="Java 9 meta-model for power-daps - a build tool that builds apps in multiple languages",
+  description="Java meta-model for power-daps - a build tool that builds apps in multiple languages",
   long_description=long_description,
   long_description_content_type="text/markdown",
   url="https://github.com/power-daps/power-daps",
   package_dir={"": "src"},
   packages=setuptools.find_packages(where="src"),
   entry_points = {'power_daps.meta_model.actions': [
-    'power_daps.java9.actions=power_daps.java9.actions']},
+    'power_daps.java.actions=power_daps.java.actions']},
   package_data = {
-    "power_daps.java9.templates": package_data_patterns, # ["**/*", "**/**/**", "**/.*", "*/.*/*", "*/**/.*"],
+    "power_daps.java.templates": package_data_patterns, # ["**/*", "**/**/**", "**/.*", "*/.*/*", "*/**/.*"],
   },
   classifiers=[
     "Programming Language :: Python :: 3",
