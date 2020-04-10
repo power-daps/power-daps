@@ -50,9 +50,9 @@ class TestMetaModel(unittest.TestCase):
 
 
   def test_non_existent_metamodel_fails_gracefully(self):
-    common.exit_with_error_message = self.assert_called_with_string_containing("Meta-model 'non-existent' not found")
+    common.exit_with_error_message = self.assert_called_with_string_containing("Meta-model 'non/existent' not found")
 
-    meta_model = MetaModel("non-existent")
+    meta_model = MetaModel("non/existent")
     actions = meta_model.actions()
 
   def test_invalid_metamodel_fails_gracefully(self):
@@ -64,6 +64,11 @@ class TestMetaModel(unittest.TestCase):
     meta_model.actions_dir.return_value = "."
     actions = meta_model.actions()
     meta_model.actions_dir = old_actions_dir
+
+  def test_python3_defaults_to_power_daps_python3(self):
+    python3_mm = MetaModel("python3")
+    power_daps_python3_mm = MetaModel("power_daps/python3")
+    self.assertEqual(power_daps_python3_mm.name(), python3_mm.name())
 
   def test_actions_found_in_returns_the_right_actions(self):
     meta_model = MetaModel("power_daps/python3")

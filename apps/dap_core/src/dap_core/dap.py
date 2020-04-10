@@ -60,7 +60,10 @@ def main():
                       const="error", help="Quiet output. Only errors will be written out.")
   parser.add_argument("-m", "--meta-model", dest="meta_model",
                       default=default_meta_model,
-                      help="Use the specified meta-model. Defaults to 'power_daps/python3'")
+                      help="Use the specified meta-model. Defaults to 'power_daps/python3'. " +
+                           "Options are: power_daps/python3, power_daps/rust, power_daps/java and " +
+                           "power_daps/es6. You can also just use 'python3', 'rust', 'java' or 'es6'. " +
+                           "The 'power_daps/' will automatically get added.")
   parser.add_argument("action",
                       help="List of actions to run. Defaults to 'default' for the given meta-model",
                       default=["default"], nargs="*")

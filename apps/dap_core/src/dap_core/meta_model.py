@@ -38,6 +38,8 @@ class MetaModel:
   n = ""
 
   def __init__(self, name="power_daps/python3"):
+    if '/' not in name:
+      name = "power_daps/" + name
     self.n = name
 
   def name(self):
