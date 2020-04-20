@@ -46,15 +46,18 @@ class LocalAction(DapActionBase):
 def local_actions():
   actions_file_location = "./actions.yml"
   actions = []
-  with open(actions_file_location) as f:
-    actions_file_contents = f.read()
-    for stage in yaml.load(actions_file_contents, Loader=yaml.SafeLoader).items():
-      action_name = stage[0]
-      list_of_sub_actions = stage[1]
-      if action_name != "default":
-        actions.append(LocalAction(action_name, list_of_sub_actions))
+  try:
+    with open(actions_file_location) as f:
+      actions_file_contents = f.read()
+      for stage in yaml.load(actions_file_contents, Loader=yaml.SafeLoader).items():
+        action_name = stage[0]
+        list_of_sub_actions = stage[1]
+        if action_name != "default":
+          actions.append(LocalAction(action_name, list_of_sub_actions))
+    f.closed
+  except(OSError, IOError) as e:
+    common.print_verbose("No actions file found at " + actions_file_location)
 
-  f.closed
   return actions
 
 

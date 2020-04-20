@@ -62,7 +62,8 @@ class PipInstaller:
       common.stop_if_failed(exit_code, output)
 
     elif status == PipInstaller.NEWER_VERSION_INSTALLED:
-      common.print_verbose("Newer version of " + dep_name + " installed. Uninstalling and installing " + dep_version + " version.")
+      common.print_verbose(
+        "Newer version of " + dep_name + " installed. Uninstalling and installing " + dep_version + " version.")
 
       command_to_run = [which('pip3'), '-q', 'uninstall', package_name]
       exit_code, output = common.run_command(command_to_run)
@@ -97,7 +98,8 @@ class SysInstaller:
     return
 
   def install(self, dep_name, dep_version="latest", details={}):
-    install_command = [self.installer(), "install", self.dependency_with_version(dep_name, dep_version, self.installer())]
+    install_command = [self.installer(), "install",
+                       self.dependency_with_version(dep_name, dep_version, self.installer())]
     common.print_raw(install_command)
 
   def dependency_with_version(self, dep_name, dep_version, sys_installer):
@@ -121,7 +123,8 @@ class SysInstaller:
       elif self.linux_distribution().startswith('rhel'):
         return 'yum'
       else:
-        common.print_error("Cannot install system dependencies because /etc/os-release does not exist. It is required to determine linux distribution.")
+        common.print_error(
+          "Cannot install system dependencies because /etc/os-release does not exist. It is required to determine linux distribution.")
     else:
       common.exit_with_error_message("Sorry, only Linux (Ubuntu, CentOS) and Mac OS X are currently supported")
 
@@ -135,6 +138,7 @@ class MavenCentralInstaller:
   def __init__(self, url_base="https://repo1.maven.org/maven2/", lib_dir="lib"):
     self.url_base = url_base
     self.lib_dir = lib_dir
+    self.latest_versions_cache = {}
     return
 
   def install(self, name, version, details):
@@ -145,7 +149,7 @@ class MavenCentralInstaller:
 
   def install_transitive_dependencies(self, name, version, details, extension):
     if self.local_pom_exists(details["group_id"], name, version):
-      namespaces = {'xmlns' : 'http://maven.apache.org/POM/4.0.0'}
+      namespaces = {'xmlns': 'http://maven.apache.org/POM/4.0.0'}
       tree = ElementTree.parse(self.local_location(details["group_id"], name, version, "pom"))
       root = tree.getroot()
       deps = root.findall("./xmlns:dependencies/xmlns:dependency", namespaces=namespaces)
@@ -155,7 +159,16 @@ class MavenCentralInstaller:
         artifactId = d.find("xmlns:artifactId", namespaces=namespaces).text
         version_elem = d.find("xmlns:version", namespaces=namespaces)
         if version_elem is not None:
-          version = version_elem.text
+          if version_elem.text.startswith("${"):
+            version_var_name = re.findall("\$\{(.*?)\}", version_elem.text)[0]
+            common.print_verbose("Looking for property " + version_var_name)
+            props = root.findall("./xmlns:properties", namespaces=namespaces)
+            for el in props[0].iter():
+              if el.tag == "{http://maven.apache.org/POM/4.0.0}" + version_var_name:
+                version = el.text
+                common.print_verbose("Found property " + version_var_name + " = " + version)
+          else:
+            version = version_elem.text
         self.install(artifactId, version, {"group_id": groupId})
 
   def install_file(self, name, version, details, extension):
@@ -174,18 +187,31 @@ class MavenCentralInstaller:
     group_id_with_slashes = group_id.replace(".", "/")
 
     if version != "latest":
-      return self.url_base + "/".join([group_id_with_slashes, artifact_id, version, artifact_id]) + "-" + version + "." + file_extension
+      return self.url_base + "/".join(
+        [group_id_with_slashes, artifact_id, version, artifact_id]) + "-" + version + "." + file_extension
     else:
       metadata_file = self.metadata_local_location(group_id, artifact_id)
-      #TODO: If metadata file is present, don't fetch again
+      # TODO: If metadata file is present, don't fetch again
       metadata_url = self.url_base + "/".join([group_id_with_slashes, artifact_id]) + "/maven-metadata.xml"
       self.fetch(metadata_url, metadata_file)
-      #TODO: Parse metadata file and return the latest version.
-      namespaces = {'xmlns' : ''}
+      # TODO: Parse metadata file and return the latest version.
+      namespaces = {'xmlns': ''}
       tree = ElementTree.parse(metadata_file)
       root = tree.getroot()
       latest_version = root.find(".//latest").text
-      return self.url_base + "/".join([group_id_with_slashes, artifact_id, latest_version, artifact_id]) + "-" + latest_version + "." + file_extension
+      self.add_latest_version_to_cache(group_id, artifact_id, version, file_extension, latest_version)
+      return self.url_base + "/".join(
+        [group_id_with_slashes, artifact_id, latest_version, artifact_id]) + "-" + latest_version + "." + file_extension
+
+  def add_latest_version_to_cache(self, group_id, artifact_id, version, file_extension, latest_version):
+    self.latest_versions_cache["_".join([group_id, artifact_id, version, file_extension])] = latest_version
+
+  def get_latest_version_from_cache(self, group_id, artifact_id, version, file_extension):
+    key = "_".join([group_id, artifact_id, version, file_extension])
+    if key in self.latest_versions_cache:
+      return self.latest_versions_cache[key]
+    else:
+      return "latest"
 
   def metadata_local_location(self, group_id, artifact_id):
     group_id_with_slashes = group_id.replace(".", "/")
@@ -193,8 +219,12 @@ class MavenCentralInstaller:
            "/" + "maven-metadata.xml"
 
   def local_location(self, group_id, artifact_id, version, file_extension):
-    return self.local_lib_directory(group_id, artifact_id, version) + \
-           "/" + artifact_id + "-" + version + "." + file_extension
+    v = version
+    if version == "latest":
+      v = self.get_latest_version_from_cache(group_id, artifact_id, version, file_extension)
+
+    return self.local_lib_directory(group_id, artifact_id, v) + \
+           "/" + artifact_id + "-" + v + "." + file_extension
 
   def local_lib_directory(self, group_id, artifact_id, version):
     group_id_with_slashes = group_id.replace(".", "/")
