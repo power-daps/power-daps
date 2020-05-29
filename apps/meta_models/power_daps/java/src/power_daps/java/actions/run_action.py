@@ -15,31 +15,27 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
-
 from dap_core import common
+from dap_core.base_actions.dap_action_base import DapActionBase
+from power_daps.java import java_helper
+from power_daps.java.java_command import JavaCommand
 
 
-def classpath_string(classpath=""):
-  if classpath != "":
-    cp_string = " -cp " + classpath + ":" + libs_classpath()
-  else:
-    cp_string = " -cp " + libs_classpath()
-  return cp_string
+class RunAction(DapActionBase):
 
+  def __init__(self):
+    super().__init__()
 
-def libs_classpath():
-  libs = common.run_command_in_shell('find lib/java -type f -name "*.jar" -print')[1]
-  return ":".join(libs.splitlines())
+  def run(self):
+    super().run()
+    main_files = common.find_files_containing("public static void main(")
+    common.print_verbose(main_files)
 
+    for main_file in main_files:
+      main_class = main_file.replace("./src/", '').replace('.java', '').replace('/', '.')
+      JavaCommand(main_class, [], java_helper.production_classpath()).run()
 
-def production_classpath():
-  return "target/production"
+    return 0, ""
 
-
-def test_classpath():
-  return "target/test"
-
-
-def list_of_test_classes(test_source_dir):
-  test_classes = common.run_command_in_shell('find ' + test_source_dir +  ' -type f -name "*Test.java" -print')[1].splitlines()
-  return [test_class.replace(test_source_dir + "/", "").replace(".java", "").replace("/", ".") for test_class in test_classes]
+def action():
+  return RunAction()

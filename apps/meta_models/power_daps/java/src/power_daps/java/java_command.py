@@ -31,27 +31,31 @@
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
 
+import os
 from dap_core import common
 from power_daps.java import java_helper
 
 class JavaCommand:
-  def __init__(self, main_class, args_to_main_class, classpath):
+  def __init__(self, main_class, args_to_main_class=[], classpath=""):
     self.main_class = main_class
     self.args_to_main_class = args_to_main_class
     self.classpath = classpath
+    self.java_opts = os.getenv("JAVA_OPTS", "")
+    common.print_raw("JAVA_OPTS=" + self.java_opts)
+
 
   def run(self):
     cp_string = java_helper.classpath_string(self.classpath)
     run_unit_test_command = " ".join([
       common.which('java'),
-      cp_string, self.main_class] + self.args_to_main_class)
+      cp_string.lstrip(), self.java_opts, self.main_class] + self.args_to_main_class).split(" ")
 
-    exit_code, output = common.run_command_in_shell(run_unit_test_command)
+    exit_code, output = common.run_with_io(run_unit_test_command)
     try:
       output = output.decode()
     except (UnicodeDecodeError, AttributeError):
       pass
-    common.print_raw(output)
+    # common.print_raw(output)
     return exit_code, output
 
 

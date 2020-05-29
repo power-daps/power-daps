@@ -116,6 +116,39 @@ def run_command_in_shell(command):
   return subprocess_exit_code, output
 
 
+def run_with_io(command):
+  subprocess_exit_code = SUCCESS
+  output = ""
+
+  if not str(command):
+    print_error("Trying to run None")
+
+  print_verbose("Running command " + str(command))
+  try:
+    process = subprocess.Popen(command)
+    output, error = process.communicate()
+    if output:
+      print_verbose(output)
+  except FileNotFoundError as err:
+    subprocess_exit_code = err.errno
+    output = err.strerror
+    print_error("Exit code: " + str(subprocess_exit_code))
+    print_error(output)
+  except subprocess.CalledProcessError as err:
+    subprocess_exit_code = err.returncode
+    output = err.stdout
+    print_error("Exit code: " + str(subprocess_exit_code))
+    if output:
+      print_error(output.decode())
+
+  try:
+    output = output.decode()
+  except (UnicodeDecodeError, AttributeError):
+    pass
+
+  return subprocess_exit_code, output
+
+
 def print_warning(warning):
     global LOG_LEVEL
     if LOG_LEVEL == "verbose" or LOG_LEVEL == "info" or LOG_LEVEL == "warning":
@@ -142,7 +175,7 @@ def print_info_no_eol(info):
 
 def print_verbose(verbose_info):
     if LOG_LEVEL == "verbose":
-        print_raw("VERBOSE: " + verbose_info)
+        print_raw("VERBOSE: " + str(verbose_info))
 
 
 def print_verbose_no_eol(verbose_info):
@@ -272,6 +305,12 @@ def stop_if_not_installed(command_name, additional_error_message=""):
 def which(command_name):
   stop_if_not_installed(command_name)
   return shutil.which(command_name)
+
+
+def find_files_containing(search_string):
+  grep_files_command = [shutil.which('find'), ".", "!", "-name", '*.pyc', "!", "-path", '*.git*', "-type", "f", "-exec",
+                        shutil.which("grep"), "-l", search_string, '{}', ";", "-print"]
+  return list(set(run_command(grep_files_command)[1].splitlines()))
 
 
 if __name__ == '__main__':
