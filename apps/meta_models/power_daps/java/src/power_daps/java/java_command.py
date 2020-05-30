@@ -46,9 +46,19 @@ class JavaCommand:
 
   def run(self):
     cp_string = java_helper.classpath_string(self.classpath)
-    run_unit_test_command = " ".join([
-      common.which('java'),
-      cp_string.lstrip(), self.java_opts, self.main_class] + self.args_to_main_class).split(" ")
+    command_array = []
+    command_array.append(common.which('java'))
+    command_array.append(cp_string.lstrip())
+    if self.java_opts:
+      command_array.append(self.java_opts)
+    command_array.append(self.main_class)
+    command_array.extend(self.args_to_main_class)
+
+    # run_unit_test_command = " ".join([
+    #   common.which('java'),
+    #   cp_string.lstrip(), self.java_opts, self.main_class] + self.args_to_main_class).split(" ")
+
+    run_unit_test_command = " ".join(command_array).split(" ")
 
     exit_code, output = common.run_with_io(run_unit_test_command)
     try:
