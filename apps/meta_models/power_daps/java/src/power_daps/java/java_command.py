@@ -54,10 +54,6 @@ class JavaCommand:
     command_array.append(self.main_class)
     command_array.extend(self.args_to_main_class)
 
-    # run_unit_test_command = " ".join([
-    #   common.which('java'),
-    #   cp_string.lstrip(), self.java_opts, self.main_class] + self.args_to_main_class).split(" ")
-
     run_unit_test_command = " ".join(command_array).split(" ")
 
     exit_code, output = common.run_with_io(run_unit_test_command)
