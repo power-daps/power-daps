@@ -62,7 +62,7 @@ Examples:
 ```
 default:
   junit:
-    version: "4.12"
+    version: "4.13"
     installer: jar
     group_id: junit
 ```
