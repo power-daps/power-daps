@@ -38,7 +38,7 @@ package_data_patterns = generate_glob_patterns(6)
 
 setuptools.setup(
   name="power-daps-meta-model-java-9",
-  version="0.0.4",
+  version="0.0.5",
   author="Prasanna Pendse",
   author_email="prasanna.pendse@gmail.com",
   description="Java meta-model for power-daps - a build tool that builds apps in multiple languages",

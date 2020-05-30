@@ -23,7 +23,7 @@ print(setuptools.find_packages(where="src"))
 
 setuptools.setup(
   name="power-daps-core",
-  version="0.0.4",
+  version="0.0.5",
   author="Prasanna Pendse",
   author_email="prasanna.pendse@gmail.com",
   description="Core part of a build tool that builds apps in multiple languages",
