@@ -98,9 +98,14 @@ class SysInstaller:
     return
 
   def install(self, dep_name, dep_version="latest", details={}):
+    if details and details['env_vars']:
+      for env_var_name, env_var_value in details['env_vars'].items():
+        os.environ[env_var_name] = str(env_var_value)
+        common.print_verbose("set " + str(env_var_name) + "=" + str(env_var_value))
     install_command = [self.installer(), "install",
                        self.dependency_with_version(dep_name, dep_version, self.installer())]
-    common.print_raw(install_command)
+    common.print_verbose(install_command)
+    return common.run_command(install_command)
 
   def dependency_with_version(self, dep_name, dep_version, sys_installer):
     if dep_version == "latest":
