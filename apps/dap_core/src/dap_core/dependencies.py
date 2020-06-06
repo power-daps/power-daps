@@ -19,7 +19,8 @@
 import sys, platform, yaml
 from shutil import which
 from dap_core import common
-from dap_core.dependency_installers import CommandLineInstaller, MavenCentralInstaller, PipInstaller, SysInstaller
+from dap_core.dependency_installers import CommandLineInstaller, PipInstaller, SysInstaller
+from dap_core.jar_dependency_installer import MavenCentralInstaller
 
 
 class Dependencies():
