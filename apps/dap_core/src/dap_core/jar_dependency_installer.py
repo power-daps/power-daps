@@ -15,16 +15,17 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with power-daps.  If not, see <https://www.gnu.org/licenses/>.
-import os, re
+import os, re, io
 from xml.etree import ElementTree
+
 from dap_core import common
 import urllib.request
 
 
 class MavenCentralInstaller:
   # https://search.maven.org/remotecontent?filepath=
-  def __init__(self, url_base="https://repo1.maven.org/maven2/", lib_dir="lib"):
-    self.url_base = url_base
+  def __init__(self, base_url="https://repo1.maven.org/maven2/", lib_dir="lib"):
+    self.base_url = base_url
     self.lib_dir = lib_dir
     self.latest_versions_cache = {}
     return
@@ -79,12 +80,12 @@ class MavenCentralInstaller:
     group_id_with_slashes = group_id.replace(".", "/")
 
     if version != "latest":
-      return self.url_base + "/".join(
+      return self.base_url + "/".join(
         [group_id_with_slashes, artifact_id, version, artifact_id]) + "-" + version + "." + file_extension
     else:
       metadata_file = self.metadata_local_location(group_id, artifact_id)
       # TODO: If metadata file is present, don't fetch again
-      metadata_url = self.url_base + "/".join([group_id_with_slashes, artifact_id]) + "/maven-metadata.xml"
+      metadata_url = self.base_url + "/".join([group_id_with_slashes, artifact_id]) + "/maven-metadata.xml"
       self.fetch(metadata_url, metadata_file)
       # TODO: Parse metadata file and return the latest version.
       namespaces = {'xmlns': ''}
@@ -92,7 +93,7 @@ class MavenCentralInstaller:
       root = tree.getroot()
       latest_version = root.find(".//latest").text
       self.add_latest_version_to_cache(group_id, artifact_id, version, file_extension, latest_version)
-      return self.url_base + "/".join(
+      return self.base_url + "/".join(
         [group_id_with_slashes, artifact_id, latest_version, artifact_id]) + "-" + latest_version + "." + file_extension
 
   def add_latest_version_to_cache(self, group_id, artifact_id, version, file_extension, latest_version):
@@ -130,3 +131,79 @@ class MavenCentralInstaller:
 
   def local_pom_exists(self, group_id, artifact_id, version):
     return os.path.exists(self.local_location(group_id, artifact_id, version, "pom"))
+
+
+class MavenCentralArtifact:
+  def __init__(self, base_url, group_id, artifact_id, version):
+    self.base_url = base_url
+    self.group_id = group_id
+    self.artifact_id = artifact_id
+    self.specified_version = version
+    self.latest_versions_cache = {}
+
+  def version(self):
+    if self.specified_version != "latest":
+      return self.specified_version
+    else:
+      return self.latest_version_from_metadata()
+
+  def latest_version_from_metadata(self):
+    latest_version_from_cache = self.get_latest_version_from_cache()
+    if latest_version_from_cache != "latest":
+      return latest_version_from_cache
+    else:
+      tree = ElementTree.parse(self.metadata_file())
+      root = tree.getroot()
+      latest_version = root.find(".//latest").text
+      self.add_latest_version_to_cache(latest_version)
+
+      return latest_version
+
+  def metadata_file(self):
+    metadata_file = self.metadata_local_location(self.group_id, self.artifact_id)
+    if os.path.exists(metadata_file):
+      return metadata_file
+    else:
+      group_id_with_slashes = self.group_id.replace(".", "/")
+      metadata_url = self.base_url + "/".join([group_id_with_slashes, self.artifact_id]) + "/maven-metadata.xml"
+      self.fetch(metadata_url, metadata_file)
+      return metadata_file
+
+  def remote_location(self):
+    if not self.file_extension:
+      common.print_error("File extension is not set for " + self.artifact_id)
+      self.file_extension.length
+
+    group_id_with_slashes = self.group_id.replace(".", "/")
+
+    return self.base_url + "/".join(
+      [group_id_with_slashes, self.artifact_id, self.version(), self.artifact_id]
+    ) + "-" + self.version() + "." + self.file_extension
+
+  def local_location(self):
+    return self.local_lib_directory() + \
+           "/" + self.artifact_id + "-" + self.version() + "." + self.file_extension
+
+  def local_lib_directory(self):
+    group_id_with_slashes = self.group_id.replace(".", "/")
+    return "lib/java/" + "/".join([group_id_with_slashes, self.artifact_id, self.version()])
+
+  def add_latest_version_to_cache(self, latest_version):
+    self.latest_versions_cache["_".join([self.group_id, self.artifact_id, self.specified_version, self.file_extension])] = latest_version
+
+  def get_latest_version_from_cache(self):
+    key = "_".join([self.group_id, self.artifact_id, self.specified_version, self.file_extension])
+    if key in self.latest_versions_cache:
+      return self.latest_versions_cache[key]
+    else:
+      return "latest"
+
+class Pom(MavenCentralArtifact):
+
+  def __init__(self, base_url, group_id, artifact_id, version):
+    super().__init__(base_url, group_id, artifact_id, version)
+    self.file_extension = "pom"
+
+  def transitive_dependencies(self):
+    return []
+

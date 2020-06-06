@@ -27,7 +27,8 @@ if src_dir not in sys.path:
 
 from dap_core import common
 
-from dap_core.dependency_installers import MavenCentralInstaller, PipInstaller
+from dap_core.dependency_installers import PipInstaller
+from dap_core.jar_dependency_installer import MavenCentralInstaller
 from pathlib import Path
 
 class TestPipInstaller(unittest.TestCase):
