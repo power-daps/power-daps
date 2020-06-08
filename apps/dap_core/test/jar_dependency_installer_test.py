@@ -26,50 +26,44 @@ src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.ge
 if src_dir not in sys.path:
   sys.path.insert(0, src_dir)
 
-from dap_core import common
-
-from dap_core.jar_dependency_installer import MavenCentralInstaller, MavenCentralArtifact, Pom
+from dap_core.jar_dependency_installer import JarDependency, MavenCentralArtifact, Pom
 from pathlib import Path
 
+
 class TestPom(unittest.TestCase):
-  def test_knows_its_remote_location(self):
-    expected_location = self.base_url + self.group_id_with_slashes + "/" + self.artifact_id + "/" + self.version + "/" + self.artifact_id + "-" + self.version + "." + self.file_extension
-    pom = Pom(self.base_url, self.group_id, self.artifact_id, self.version)
-    self.assertEqual(expected_location, pom.remote_location())
+  def test_knows_its_relative_remote_location(self):
+    expected_location = self.group_id_with_slashes + "/" + self.artifact_id + "/" + self.version + "/" + self.artifact_id + "-" + self.version + "." + self.file_extension
+    pom = Pom(self.group_id, self.artifact_id, self.version)
+    self.assertEqual(expected_location, pom.relative_remote_location())
 
   def test_knows_its_version_if_specified(self):
-    pom = Pom(self.base_url, self.group_id, self.artifact_id, "1.1.1")
+    pom = Pom(self.group_id, self.artifact_id, "1.1.1")
     self.assertEqual("1.1.1", pom.version())
 
   def test_gets_latest_version_from_metadata_if_latest_is_specified(self):
-    pom = Pom(self.base_url, self.group_id, self.artifact_id, "latest")
+    pom = Pom(self.group_id, self.artifact_id, "latest")
     pom.latest_version_from_metadata = MagicMock(return_value="1.2.3")
     self.assertEqual("1.2.3", pom.version())
 
   def test_parses_metadata_to_get_latest_version(self):
-    pom = Pom(self.base_url, self.group_id, self.artifact_id, "latest")
-    stub_metadata_xml = io.StringIO("""<?xml version="1.0" encoding="UTF-8"?>
-      <metadata>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <versioning>
-          <latest>4.13</latest>
-          <release>4.13</release>
-          <versions>
-            <version>3.7</version>
-            <version>4.13</version>
-          </versions>
-          <lastUpdated>20200101155122</lastUpdated>
-        </versioning>
-      </metadata>
-    """)
+    pom = Pom(self.group_id, self.artifact_id, "latest")
+    stub_metadata_xml = io.StringIO(junit_short_metadata())
     pom.metadata_file = MagicMock(return_value=stub_metadata_xml)
     self.assertEqual("4.13", pom.version())
 
   def test_knows_its_local_location(self):
     expected_location = "/".join(["lib", "java", self.group_id_with_slashes, self.artifact_id, self.version, self.artifact_id]) + "-" + self.version + "." + self.file_extension
-    pom = Pom(self.base_url, self.group_id, self.artifact_id, self.version)
+    pom = Pom(self.group_id, self.artifact_id, self.version)
     self.assertEqual(expected_location, pom.local_location())
+
+  def test_finds_dependencies_in_pom(self):
+    jd = JarDependency(self.group_id, self.artifact_id, self.version)
+    jd.pom.pom_file = MagicMock(return_value=io.StringIO(junit_shortened_pom_with_dependencies()))
+    expected_dependencies = [
+      JarDependency("org.hamcrest", "hamcrest-core", "1.3"),
+      JarDependency("org.hamcrest", "hamcrest-library", "1.3")
+    ]
+    self.assertEqual(expected_dependencies, jd.dependencies())
 
   def ensure_dependency_exists_in_dir(self, dir_name, dep_file_name):
     dependency_location = dir_name + "/" + dep_file_name
@@ -80,7 +74,6 @@ class TestPom(unittest.TestCase):
     shutil.rmtree(dir_name, ignore_errors=True)
 
   def setUp(self):
-    self.base_url = "base_url/stuff="
     self.group_id = "a.b.c"
     self.group_id_with_slashes = "a/b/c"
     self.artifact_id = "something"
@@ -94,3 +87,51 @@ class TestPom(unittest.TestCase):
   def tearDown(self) -> None:
     self.ensure_dir_tree_does_not_exist(self.tmp_dir)
     self.ensure_dir_tree_does_not_exist("lib")
+
+
+class TestJarDependency(unittest.TestCase):
+
+  def test_two_instances_with_same_group_id_artifiact_id_and_version_are_equal(self):
+    one = JarDependency("a", "b", "c")
+    two = JarDependency("a", "b", "c")
+    self.assertEqual(one, two)
+
+
+def junit_short_metadata():
+    return """<?xml version="1.0" encoding="UTF-8"?>
+      <metadata>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <versioning>
+          <latest>4.13</latest>
+          <release>4.13</release>
+          <versions>
+            <version>3.7</version>
+            <version>4.13</version>
+          </versions>
+          <lastUpdated>x</lastUpdated>
+        </versioning>
+      </metadata>
+    """
+
+
+def junit_shortened_pom_with_dependencies():
+  return """<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <dependencies>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <version>1.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
+    """
+
