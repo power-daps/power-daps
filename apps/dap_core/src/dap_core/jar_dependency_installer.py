@@ -280,10 +280,11 @@ class JarDependency:
       else:
         scope = "unspecified"
 
-      common.print_info(self.group_id + "/" + self.artifact_id + " v" + self.version + " depends on " + groupId + "/" + artifactId + " version " + version + " in scope " + scope)
-
-      dep = JarDependency(groupId, artifactId, version)
-      jar_deps.append(dep)
+      common.print_verbose(self.group_id + "/" + self.artifact_id + " v" + self.version + " depends on " + groupId + "/" + artifactId + " version " + version + " in scope " + scope)
+      if scope in ["unspecified", "compile", "runtime"]:
+        dep = JarDependency(groupId, artifactId, version)
+        jar_deps.append(dep)
+        
     return jar_deps
 
   def __eq__(self, other):
@@ -380,11 +381,13 @@ class Pom(MavenCentralArtifact):
     prop_value = "dunno"
     root = self.pom_tree().getroot()
 
-    common.print_verbose("Looking for property " + prop_name)
+    common.print_verbose("Looking for property " + prop_name + " in " + self.local_location())
 
-    if prop_value.startswith("${project."):
-      project_property = prop_value.split(".")[1].rstrip("}")
+    if prop_name.startswith("${project.") or prop_name.startswith("project."):
+      common.print_verbose("Looking for project property " + prop_name)
+      project_property = prop_name.split(".")[1].rstrip("}")
       prop_value = self.project_property(project_property)
+      common.print_verbose("Project property " + prop_name + " = " + prop_value)
       return prop_value
     else:
       props = root.findall("./xmlns:properties", namespaces=self.namespaces)
@@ -397,7 +400,6 @@ class Pom(MavenCentralArtifact):
               return self.resolve_property(prop_value)
             else:
               return prop_value
-
     common.print_verbose("Property " + prop_name + " is not defined in pom. Looking at parent.")
     parent_pom = self.parent_pom()
     if parent_pom:
@@ -422,16 +424,16 @@ class Pom(MavenCentralArtifact):
           prop_value = el.text
           common.print_verbose("Found property " + prop_name + " = " + prop_value)
           return prop_value
-        common.print_raw(el.tag + " = " + el.text)
+
       return "no clue"
     return "don't know"
-
 
   def parent_pom(self):
     root = self.pom_tree().getroot()
     parents = root.findall("./xmlns:parent", namespaces=self.namespaces)
 
-    if parents is None:
+    if not parents:
+      common.print_verbose("No parent found in " + self.local_location())
       return None
 
     parent_group_id = ""
@@ -454,7 +456,6 @@ class Pom(MavenCentralArtifact):
       return None
 
 
-
 class Jar(MavenCentralArtifact):
 
   def __init__(self, group_id, artifact_id, version):
@@ -465,6 +466,7 @@ class Jar(MavenCentralArtifact):
 
 def fetch(remote_location, local_location, error_callback=common.exit_with_error_message):
   try:
+    common.print_verbose("Fetching " + remote_location + " to " + local_location)
     urllib.request.urlretrieve(remote_location, local_location)
   except urllib.error.HTTPError as err:
     error_callback(str(err.code) + " - Could not retrieve " + remote_location)
