@@ -26,7 +26,7 @@ src_dir = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.ge
 if src_dir not in sys.path:
   sys.path.insert(0, src_dir)
 
-from dap_core.jar_dependency_installer import JarDependency, MavenCentralArtifact, Pom
+from dap_core.jar_dependency_installer import JarDependency, JarDependencyMetadata, Pom
 from pathlib import Path
 
 
@@ -38,18 +38,7 @@ class TestPom(unittest.TestCase):
 
   def test_knows_its_version_if_specified(self):
     pom = Pom(self.group_id, self.artifact_id, "1.1.1")
-    self.assertEqual("1.1.1", pom.version())
-
-  def test_gets_latest_version_from_metadata_if_latest_is_specified(self):
-    pom = Pom(self.group_id, self.artifact_id, "latest")
-    pom.latest_version_from_metadata = MagicMock(return_value="1.2.3")
-    self.assertEqual("1.2.3", pom.version())
-
-  def test_parses_metadata_to_get_latest_version(self):
-    pom = Pom(self.group_id, self.artifact_id, "latest")
-    stub_metadata_xml = io.StringIO(junit_short_metadata())
-    pom.metadata_file = MagicMock(return_value=stub_metadata_xml)
-    self.assertEqual("4.13", pom.version())
+    self.assertEqual("1.1.1", pom.version)
 
   def test_knows_its_local_location(self):
     expected_location = "/".join(["lib", "java", self.group_id_with_slashes, self.artifact_id, self.version, self.artifact_id]) + "-" + self.version + "." + self.file_extension
@@ -95,6 +84,14 @@ class TestJarDependency(unittest.TestCase):
     one = JarDependency("a", "b", "c")
     two = JarDependency("a", "b", "c")
     self.assertEqual(one, two)
+
+
+class TestJarDependencyMetadata:
+  def test_parses_metadata_to_get_latest_version(self):
+    metadata = JarDependencyMetadata("a", "b")
+    stub_metadata_xml = io.StringIO(junit_short_metadata())
+    metadata.metadata_file = MagicMock(return_value=stub_metadata_xml)
+    self.assertEqual("4.13", metadata.latest_version())
 
 
 def junit_short_metadata():

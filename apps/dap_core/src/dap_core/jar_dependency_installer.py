@@ -21,10 +21,11 @@ from xml.etree import ElementTree
 from dap_core import common
 import urllib.request
 
+BASE_URL = "https://repo1.maven.org/maven2/"
 
-class MavenCentralInstaller:
+class MavenCentralInstallerOld:
   # https://search.maven.org/remotecontent?filepath=
-  def __init__(self, base_url="https://repo1.maven.org/maven2/", lib_dir="lib"):
+  def __init__(self, base_url=BASE_URL, lib_dir="lib"):
     self.base_url = base_url
     self.lib_dir = lib_dir
     self.latest_versions_cache = {}
@@ -133,18 +134,26 @@ class MavenCentralInstaller:
     return os.path.exists(self.local_location(group_id, artifact_id, version, "pom"))
 
 
+class MavenCentralInstaller:
+  def __init__(self, base_url=BASE_URL, lib_dir="lib"):
+    self.base_url = base_url
+    self.lib_dir = lib_dir
+    self.latest_versions_cache = {}
+    return
+
+  def install(self, artifact_id, version, details):
+    group_id = details["group_id"]
+    jar_dependency = JarDependency(group_id, artifact_id, version)
+
+    jar_dependency.install(self.base_url)
+
+
 class MavenCentralArtifact:
   def __init__(self, group_id, artifact_id, version):
     self.group_id = group_id
     self.artifact_id = artifact_id
-    self.specified_version = version
+    self.version = version
     self.latest_versions_cache = {}
-
-  def version(self):
-    if self.specified_version != "latest":
-      return self.specified_version
-    else:
-      return self.latest_version_from_metadata()
 
   def latest_version_from_metadata(self):
     latest_version_from_cache = self.get_latest_version_from_cache()
@@ -176,16 +185,16 @@ class MavenCentralArtifact:
     group_id_with_slashes = self.group_id.replace(".", "/")
 
     return "/".join(
-      [group_id_with_slashes, self.artifact_id, self.version(), self.artifact_id]
-    ) + "-" + self.version() + "." + self.file_extension
+      [group_id_with_slashes, self.artifact_id, self.version, self.artifact_id]
+    ) + "-" + self.version + "." + self.file_extension
 
   def local_location(self):
     return self.local_lib_directory() + \
-           "/" + self.artifact_id + "-" + self.version() + "." + self.file_extension
+           "/" + self.artifact_id + "-" + self.version + "." + self.file_extension
 
   def local_lib_directory(self):
     group_id_with_slashes = self.group_id.replace(".", "/")
-    return "lib/java/" + "/".join([group_id_with_slashes, self.artifact_id, self.version()])
+    return "lib/java/" + "/".join([group_id_with_slashes, self.artifact_id, self.version])
 
   def add_latest_version_to_cache(self, latest_version):
     self.latest_versions_cache["_".join([self.group_id, self.artifact_id, self.specified_version, self.file_extension])] = latest_version
@@ -197,29 +206,82 @@ class MavenCentralArtifact:
     else:
       return "latest"
 
+  def has_been_installed(self):
+    installed = os.path.exists(self.local_location())
+    return installed
+
+  def install(self, base_url):
+    if not self.has_been_installed():
+      common.run_command(["mkdir", "-p", self.local_lib_directory()])
+      fetch(base_url + self.relative_remote_location(), self.local_location(), self.error_callback)
+
+
 class JarDependency:
   def __init__(self, group_id, artifact_id, version):
     self.group_id = group_id
     self.artifact_id = artifact_id
-    self.version = version
-    self.pom = Pom(group_id, artifact_id, version)
-    self.jar = Jar(group_id, artifact_id, version)
+    self.specified_version = version
     self.metadata = JarDependencyMetadata(group_id, artifact_id)
+    self.version = self.determine_version()
+    self.pom = Pom(group_id, artifact_id, self.version)
+    self.jar = Jar(group_id, artifact_id, self.version)
 
+  def determine_version(self):
+    if self.specified_version != "latest":
+      return self.specified_version
+    return self.metadata.latest_version()
+
+  def install(self, base_url):
+    if not self.has_been_installed():
+      common.print_info("Downloading " + self.group_id + "/" + self.artifact_id + " v" + self.version)
+      self.pom.install(base_url)
+      self.jar.install(base_url)
+
+      for d in self.dependencies():
+        d.install(base_url)
+
+  def has_been_installed(self):
+    common.print_verbose("Checking if " + self.group_id + "/" + self.artifact_id + " is installed.")
+    common.print_verbose("           v" + self.version)
+    installed = self.pom.has_been_installed() and self.jar.has_been_installed()
+    if installed:
+      common.print_verbose(self.group_id + "/" + self.artifact_id + " v" + self.version + " already installed.")
+    else:
+      common.print_verbose(self.group_id + "/" + self.artifact_id + " v" + self.version + " not installed.")
+    return installed
 
   def dependencies(self):
     jar_deps = []
     namespaces = {'xmlns': 'http://maven.apache.org/POM/4.0.0'}
-    tree = ElementTree.parse(self.pom.pom_file())
-    root = tree.getroot()
+    if self.pom.pom_file() is  None:
+      return jar_deps
+
+    root = self.pom.pom_tree().getroot()
 
     deps = root.findall("./xmlns:dependencies/xmlns:dependency", namespaces=namespaces)
     for d in deps:
       groupId = d.find("xmlns:groupId", namespaces=namespaces).text
+      if groupId.startswith("${"):
+        groupId = self.pom.resolve_property(groupId)
+
       artifactId = d.find("xmlns:artifactId", namespaces=namespaces).text
-      version = d.find("xmlns:version", namespaces=namespaces).text
+      version = "latest"
+
+      version_elem = d.find("xmlns:version", namespaces=namespaces)
+      if version_elem is not None:
+        version = version_elem.text
+
       if version.startswith("${"):
         version = self.pom.resolve_property(version)
+
+      scope_elem = d.find("xmlns:scope", namespaces=namespaces)
+      if scope_elem is not None:
+        scope = scope_elem.text
+      else:
+        scope = "unspecified"
+
+      common.print_info(self.group_id + "/" + self.artifact_id + " v" + self.version + " depends on " + groupId + "/" + artifactId + " version " + version + " in scope " + scope)
+
       dep = JarDependency(groupId, artifactId, version)
       jar_deps.append(dep)
     return jar_deps
@@ -245,7 +307,7 @@ class JarDependencyMetadata:
     self.group_id = group_id
     self.artifact_id = artifact_id
     self.latest_versions_cache = {}
-    self.base_url="https://repo1.maven.org/maven2/"
+    self.base_url = BASE_URL
 
   def latest_version(self):
     latest_version_from_cache = self.get_latest_version_from_cache()
@@ -254,34 +316,43 @@ class JarDependencyMetadata:
     else:
       tree = ElementTree.parse(self.metadata_file())
       root = tree.getroot()
-      latest_version = root.find(".//latest").text
-      self.add_latest_version_to_cache(latest_version)
+      latest_version = "cannot find"
+      latest_version_element = root.find(".//latest")
+      version_element = root.find(".//version")
+      if latest_version_element is not None:
+        latest_version = latest_version_element.text
+      elif version_element is not None:
+        latest_version = version_element.text
 
+      self.add_latest_version_to_cache(latest_version)
+      common.print_verbose("Determined version of " + self.group_id + "/" + self.artifact_id + " to be " + latest_version + " from metadata")
       return latest_version
 
   def metadata_file(self):
-    metadata_file = self.metadata_local_location(self.group_id, self.artifact_id)
+    metadata_file = self.metadata_local_location()
     if os.path.exists(metadata_file):
       return metadata_file
     else:
-      metadata_url = self.metadata_remote_location()
-      self.fetch(metadata_url, metadata_file)
+      common.run_command(["mkdir", "-p", self.metadata_local_directory()])
+      fetch(self.metadata_remote_location(), self.metadata_local_location())
       return metadata_file
 
-  def metadata_local_location(self):
+  def metadata_local_directory(self):
     group_id_with_slashes = self.group_id.replace(".", "/")
-    return "lib/java/" + "/".join([group_id_with_slashes, self.artifact_id]) + \
-           "/" + "maven-metadata.xml"
+    return "lib/java/" + "/".join([group_id_with_slashes, self.artifact_id]) + "/"
+
+  def metadata_local_location(self):
+    return self.metadata_local_directory() + "maven-metadata.xml"
 
   def metadata_remote_location(self):
     group_id_with_slashes = self.group_id.replace(".", "/")
     return self.base_url + "/".join([group_id_with_slashes, self.artifact_id]) + "/maven-metadata.xml"
 
   def add_latest_version_to_cache(self, latest_version):
-    self.latest_versions_cache["_".join([self.group_id, self.artifact_id, self.specified_version, self.file_extension])] = latest_version
+    self.latest_versions_cache["_".join([self.group_id, self.artifact_id, "latest"])] = latest_version
 
   def get_latest_version_from_cache(self):
-    key = "_".join([self.group_id, self.artifact_id, self.specified_version, self.file_extension])
+    key = "_".join([self.group_id, self.artifact_id, "latest"])
     if key in self.latest_versions_cache:
       return self.latest_versions_cache[key]
     else:
@@ -293,25 +364,95 @@ class Pom(MavenCentralArtifact):
   def __init__(self, group_id, artifact_id, version):
     super().__init__(group_id, artifact_id, version)
     self.file_extension = "pom"
+    self.namespaces = {'xmlns': 'http://maven.apache.org/POM/4.0.0'}
+    self.tree = ""
+    self.error_callback = common.print_warning
 
   def pom_file(self):
-    return self.local_location()
+    if os.path.exists(self.local_location()):
+      return self.local_location()
+    else:
+      common.print_warning("POM for " + self.group_id + "/" + self.artifact_id + " v" + self.version + " was not found locally. Assuming it has no dependencies.")
+      return None
 
   def resolve_property(self, property_name):
     prop_name = property_name.strip("${}")
-
-    namespaces = {'xmlns': 'http://maven.apache.org/POM/4.0.0'}
-    pom_xml = self.pom_file()
-    tree = ElementTree.parse(pom_xml)
-    root = tree.getroot()
+    prop_value = "dunno"
+    root = self.pom_tree().getroot()
 
     common.print_verbose("Looking for property " + prop_name)
-    props = root.findall("./xmlns:properties", namespaces=namespaces)
-    for el in props[0].iter():
-      if el.tag == "{http://maven.apache.org/POM/4.0.0}" + prop_name:
-        prop_value = el.text
-        common.print_verbose("Found property " + prop_name + " = " + prop_value)
-        return prop_value
+
+    if prop_value.startswith("${project."):
+      project_property = prop_value.split(".")[1].rstrip("}")
+      prop_value = self.project_property(project_property)
+      return prop_value
+    else:
+      props = root.findall("./xmlns:properties", namespaces=self.namespaces)
+      if len(props) > 0:
+        for el in props[0].iter():
+          if el.tag == "{http://maven.apache.org/POM/4.0.0}" + prop_name:
+            prop_value = el.text
+            common.print_verbose("Found property " + prop_name + " = " + prop_value)
+            if prop_value.startswith("${"):
+              return self.resolve_property(prop_value)
+            else:
+              return prop_value
+
+    common.print_verbose("Property " + prop_name + " is not defined in pom. Looking at parent.")
+    parent_pom = self.parent_pom()
+    if parent_pom:
+      prop_value = parent_pom.resolve_property(prop_name)
+      common.print_verbose("Parent says " + prop_name + " is " + prop_value)
+    else:
+      common.print_verbose("No parent found?!")
+    return prop_value
+
+  def pom_tree(self):
+    if not self.tree:
+      self.tree = ElementTree.parse(self.pom_file())
+    return self.tree
+
+  def project_property(self, prop_name):
+    root = self.pom_tree().getroot()
+    # find the project version - need to figure out the xpath
+    props = root.findall(".", namespaces=self.namespaces)
+    if len(props) > 0:
+      for el in props[0].iter():
+        if el.tag == "{http://maven.apache.org/POM/4.0.0}" + prop_name:
+          prop_value = el.text
+          common.print_verbose("Found property " + prop_name + " = " + prop_value)
+          return prop_value
+        common.print_raw(el.tag + " = " + el.text)
+      return "no clue"
+    return "don't know"
+
+
+  def parent_pom(self):
+    root = self.pom_tree().getroot()
+    parents = root.findall("./xmlns:parent", namespaces=self.namespaces)
+
+    if parents is None:
+      return None
+
+    parent_group_id = ""
+    parent_artifact_id = ""
+    parent_version = ""
+
+    for el in parents[0].iter():
+      if el.tag == "{http://maven.apache.org/POM/4.0.0}" + "groupId":
+        parent_group_id = el.text
+      elif el.tag == "{http://maven.apache.org/POM/4.0.0}" + "artifactId":
+        parent_artifact_id = el.text
+      elif el.tag == "{http://maven.apache.org/POM/4.0.0}" + "version":
+        parent_version = el.text
+
+    if parent_group_id:
+      parent = Pom(parent_group_id, parent_artifact_id, parent_version)
+      parent.install("https://repo1.maven.org/maven2/")
+      return parent
+    else:
+      return None
+
 
 
 class Jar(MavenCentralArtifact):
@@ -319,3 +460,16 @@ class Jar(MavenCentralArtifact):
   def __init__(self, group_id, artifact_id, version):
     super().__init__(group_id, artifact_id, version)
     self.file_extension = "jar"
+    self.error_callback = common.exit_with_error_message
+
+  # DELETE ME
+  def install(self, base_url):
+    common.run_command(["touch", self.local_location()])
+    return
+
+
+def fetch(remote_location, local_location, error_callback=common.exit_with_error_message):
+  try:
+    urllib.request.urlretrieve(remote_location, local_location)
+  except urllib.error.HTTPError as err:
+    error_callback(str(err.code) + " - Could not retrieve " + remote_location)

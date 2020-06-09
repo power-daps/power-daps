@@ -166,7 +166,7 @@ def print_info(info):
 
 
 def print_raw(s):
-    print(s)
+    print(s, flush=True)
 
 
 def print_info_no_eol(info):

@@ -28,7 +28,7 @@ if src_dir not in sys.path:
 from dap_core import common
 
 from dap_core.dependency_installers import PipInstaller
-from dap_core.jar_dependency_installer import MavenCentralInstaller
+from dap_core.jar_dependency_installer import MavenCentralInstallerOld
 from pathlib import Path
 
 class TestPipInstaller(unittest.TestCase):
@@ -61,16 +61,16 @@ class TestPipInstaller(unittest.TestCase):
     common.run_command.assert_called_with(command)
 
 
-class TestMavenCentralInstaller(unittest.TestCase):
+class TestMavenCentralInstallerOld(unittest.TestCase):
   def test_knows_the_right_remote_location_to_fetch_jar_from(self):
     expected_location = self.base_url + self.group_id_with_slashes + "/" + self.artifact_id + "/" + self.version + "/" + self.artifact_id + "-" + self.version + "." + self.file_extension
-    installer = MavenCentralInstaller(self.base_url)
+    installer = MavenCentralInstallerOld(self.base_url)
     self.assertEqual(expected_location, installer.remote_location(self.group_id, self.artifact_id, self.version, self.file_extension))
 
   def test_knows_the_right_remote_location_to_fetch_pom_from(self):
     self.file_extension = "pom"
     expected_location = self.base_url + self.group_id_with_slashes + "/" + self.artifact_id + "/" + self.version + "/" + self.artifact_id + "-" + self.version + "." + self.file_extension
-    installer = MavenCentralInstaller(self.base_url)
+    installer = MavenCentralInstallerOld(self.base_url)
     self.assertEqual(expected_location, installer.remote_location(self.group_id, self.artifact_id, self.version, self.file_extension))
 
   def test_knows_the_right_remote_location_to_fetch_a_different_jar(self):
@@ -80,16 +80,16 @@ class TestMavenCentralInstaller(unittest.TestCase):
     self.version = "3.0"
 
     expected_location = self.base_url + self.group_id_with_slashes + "/" + self.artifact_id + "/" + self.version + "/" + self.artifact_id + "-" + self.version + "." + self.file_extension
-    installer = MavenCentralInstaller(self.base_url)
+    installer = MavenCentralInstallerOld(self.base_url)
     self.assertEqual(expected_location, installer.remote_location(self.group_id, self.artifact_id, self.version, self.file_extension))
 
   def test_knows_the_right_location_location_to_put_a_jar(self):
     expected_location = "/".join(["lib", "java", self.group_id_with_slashes, self.artifact_id, self.version, self.artifact_id]) + "-" + self.version + "." + self.file_extension
-    installer = MavenCentralInstaller(self.base_url)
+    installer = MavenCentralInstallerOld(self.base_url)
     self.assertEqual(expected_location, installer.local_location(self.group_id, self.artifact_id, self.version, self.file_extension))
 
   def test_knows_whether_the_dependency_has_already_been_downloaded(self):
-    installer = MavenCentralInstaller(self.base_url)
+    installer = MavenCentralInstallerOld(self.base_url)
     self.ensure_dir_tree_does_not_exist(self.tmp_dir)
 
     self.assertFalse(installer.has_already_been_downloaded(self.group_id, self.artifact_id, self.version, self.file_extension))
@@ -102,7 +102,7 @@ class TestMavenCentralInstaller(unittest.TestCase):
     self.ensure_dir_tree_does_not_exist(self.tmp_dir)
 
   def test_fetches_when_dependency_has_not_already_been_downloaded(self):
-    installer = MavenCentralInstaller(self.base_url)
+    installer = MavenCentralInstallerOld(self.base_url)
     self.ensure_dir_tree_does_not_exist(self.tmp_dir)
     installer.local_location = MagicMock(side_effect=self.change_local_location_by_extension_in_mock)
     installer.fetch = MagicMock()
@@ -112,7 +112,7 @@ class TestMavenCentralInstaller(unittest.TestCase):
     installer.fetch.assert_called()
 
   def test_does_not_fetch_when_dependency_has_already_been_downloaded(self):
-    installer = MavenCentralInstaller(self.base_url)
+    installer = MavenCentralInstallerOld(self.base_url)
     self.ensure_dependency_exists_in_dir(self.tmp_dir, self.dependency_file_name)
     installer.local_location = MagicMock(return_value=self.tmp_dependency_location)
     installer.fetch = MagicMock()
