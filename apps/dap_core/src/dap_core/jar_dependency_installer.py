@@ -462,11 +462,6 @@ class Jar(MavenCentralArtifact):
     self.file_extension = "jar"
     self.error_callback = common.exit_with_error_message
 
-  # DELETE ME
-  def install(self, base_url):
-    common.run_command(["touch", self.local_location()])
-    return
-
 
 def fetch(remote_location, local_location, error_callback=common.exit_with_error_message):
   try:
