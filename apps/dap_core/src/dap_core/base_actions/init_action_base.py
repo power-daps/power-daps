@@ -47,7 +47,7 @@ class InitActionBase(DapActionBase):
       "PROJECT_NAME": self.project_name,
       "PROJECT_CAMELIZED_NAME": str_util.camelize(self.project_name)}
 
-    additional_find_and_replace_dict.update(self.find_and_replace_dict)
+    self.find_and_replace_dict.update(additional_find_and_replace_dict)
     self.pre_copy_commands = pre_copy_commands
 
   def run(self):

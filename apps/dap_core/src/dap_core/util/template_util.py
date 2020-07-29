@@ -44,9 +44,8 @@ def find_and_replace_in_file_names_and_content(dir, find_and_replace_dict):
         rename_command = ['/bin/mv', f, f.replace(str_to_find, str_to_replace_with)]
         common.run_command(rename_command)
 
-    grep_files_command = [shutil.which('find'), ".", "!", "-name", '*.pyc', "!", "-path", '*.git*', "-type", "f", "-exec", shutil.which("grep"), "-l", "PROJECT_NAME", '{}', ";", "-print"]
+    grep_files_command = [shutil.which('find'), ".", "!", "-name", '*.pyc', "!", "-path", '*.git*', "-type", "f", "-exec", shutil.which("grep"), "-l", str_to_find, '{}', ";", "-print"]
     files_to_search_and_replace_within = common.run_command(grep_files_command)[1].splitlines()
-
     for f in files_to_search_and_replace_within:
       sed_command = sed_find_and_replace_command(str_to_find, str_to_replace_with, f)
       common.run_command(sed_command)
